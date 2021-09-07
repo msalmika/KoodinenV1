@@ -16,6 +16,7 @@ namespace KoodinenV1.Controllers
             _context = context;
         }
         public IActionResult Index()
+        public IActionResult Oppitunti1()
         {
             return View();
         }

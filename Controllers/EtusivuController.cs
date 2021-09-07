@@ -10,14 +10,16 @@ using System.Threading.Tasks;
 
 namespace KoodinenV1.Controllers
 {
-    public class HomeController : Controller
+    public class EtusivuController : Controller
     {
+        private readonly ILogger<EtusivuController> _logger;
         private readonly KoodinenDBContext _context;
 
         private readonly ILogger<HomeController> _logger;
 
         private readonly IConfiguration _configuration;
         //
+        public EtusivuController(ILogger<EtusivuController> logger)
         public HomeController(ILogger<HomeController> logger, KoodinenDBContext context, IConfiguration configuration)
         {
             _logger = logger;
@@ -26,6 +28,26 @@ namespace KoodinenV1.Controllers
         }
 
         public IActionResult Index()
+        {
+            return View();
+        }
+
+        public IActionResult Kirjautuminen()
+        {
+            return View();
+        }
+
+        public IActionResult Chat()
+        {
+            return View();
+        }
+
+        public IActionResult Kurssit()
+        {
+            return View();
+        }
+
+        public IActionResult About()
         {
             return View();
         }
