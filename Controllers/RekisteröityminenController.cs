@@ -8,7 +8,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using TestiAlusta;
 
 namespace KoodinenV1.Controllers
 {
@@ -65,14 +64,14 @@ namespace KoodinenV1.Controllers
         {
             return View();
         }
-        public IActionResult Testaus()
-        {
-            TestiLuokka tl = new TestiLuokka();
-            //tl.KirjoitaPäälle();
-            tl.MuodostaTesti("public int Palauta(){\treturn 2;}\n");
-            var onnistuiko = tl.TestaaSyöte();
-            tl.KirjoitaPäälle();
-            return Content(onnistuiko);
-        }
+        //public IActionResult Testaus()
+        //{
+        //    TestiLuokka tl = new TestiLuokka();
+        //    //tl.KirjoitaPäälle();
+        //    tl.MuodostaTesti("public int Palauta(){\treturn 2;}\n");
+        //    var onnistuiko = tl.TestaaSyöte();
+        //    tl.KirjoitaPäälle();
+        //    return Content(onnistuiko);
+        //}
     }
 }
