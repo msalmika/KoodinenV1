@@ -54,8 +54,8 @@ namespace KoodinenV1.Controllers
         }
         public IActionResult RekOnnistui()
         {
-            HttpContext.Session.SetInt32("id", käyttäjä.PersonId);
-            HttpContext.Session.SetInt32("id", käyttäjä.PersonId);
+            //HttpContext.Session.SetInt32("id", käyttäjä.PersonId);
+            //HttpContext.Session.SetInt32("id", käyttäjä.PersonId);
             return View();
         }
         public IActionResult RekEpäonnistui()
