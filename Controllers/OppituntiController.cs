@@ -8,7 +8,7 @@ namespace KoodinenV1.Controllers
 {
     public class OppituntiController : Controller
     {
-        public IActionResult Index()
+        public IActionResult Oppitunti1()
         {
             return View();
         }

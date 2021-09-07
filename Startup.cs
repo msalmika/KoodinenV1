@@ -52,6 +52,12 @@ namespace KoodinenV1
                     name: "default",
                     pattern: "{controller=Etusivu}/{action=Index}/{id?}");
             });
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllerRoute(
+                    name: "oppitunti",
+                    pattern: "{controller=Oppitunti}/{action=Index}/{id?}");
+            });
         }
     }
 }
