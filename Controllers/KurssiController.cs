@@ -18,6 +18,7 @@ namespace KoodinenV1.Controllers
      
         public IActionResult Oppitunti1()
         {
+
             return View();
         }
     }
