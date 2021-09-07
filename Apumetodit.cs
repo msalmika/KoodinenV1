@@ -21,7 +21,7 @@ namespace KoodinenV1
         /// </summary>
         /// <param name="id">int id</param>
         /// <returns>Palauttaa Kayttaja-olion</returns>
-        public Kayttaja HaeKäyttjä(int id)
+        public Kayttaja HaeKäyttäjä(int id)
         {
             var käyttäjä = new Kayttaja();
             käyttäjä = _context.Kayttajas.Find(id);
@@ -33,7 +33,7 @@ namespace KoodinenV1
         /// </summary>
         /// <param name="email"></param>
         /// <returns></returns>
-        public Kayttaja HaeKäyttjä(string email)
+        public Kayttaja HaeKäyttäjä(string email)
         {
             var käyttäjä = new Kayttaja();
             käyttäjä = _context.Kayttajas.Where(k => k.Email == email).First();
