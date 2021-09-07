@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace KoodinenV1.Controllers
 {
-    public class OppituntiController : Controller
+    public class KurssiController : Controller
     {
         private readonly KoodinenDBContext _context;
 
-        public OppituntiController(KoodinenDBContext context)
+        public KurssiController(KoodinenDBContext context)
         {
             _context = context;
         }
