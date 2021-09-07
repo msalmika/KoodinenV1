@@ -19,6 +19,7 @@ namespace KoodinenV1.Models
         public string Nimi { get; set; }
         public string Email { get; set; }
         public string Salasana { get; set; }
+        public bool OnAdmin { get; set; }
 
         public virtual ICollection<KurssiSuoritu> KurssiSuoritus { get; set; }
         public virtual ICollection<Kurssi> Kurssis { get; set; }
