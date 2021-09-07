@@ -61,6 +61,7 @@ namespace KoodinenV1
             app.UseStaticFiles();
             app.UseSession();
             app.UseRouting();
+            //
 
             app.UseAuthorization();
 
