@@ -1,4 +1,5 @@
 ﻿using KoodinenV1.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -42,7 +43,8 @@ namespace KoodinenV1.Controllers
             {
                 _context.Kayttajas.Add(kayttaja);
                 _context.SaveChanges();
-                return RedirectToAction("RekOnnistui");
+
+                return RedirectToAction("RekOnnistui", kayttaja);
             }
             catch (Exception e)
             {
@@ -52,6 +54,8 @@ namespace KoodinenV1.Controllers
         }
         public IActionResult RekOnnistui()
         {
+            HttpContext.Session.SetInt32("id", käyttäjä.PersonId);
+            HttpContext.Session.SetInt32("id", käyttäjä.PersonId);
             return View();
         }
         public IActionResult RekEpäonnistui()
