@@ -55,14 +55,76 @@ namespace KoodinenV1
         /// <summary>
         /// Metodi hakee listan kurssisuorituksista tietokannasta.
         /// </summary>
-        /// <param name="id"></param>
+        /// <param></param>
         /// <returns>Palauttaa listan KurssiSuoritu-olioita</returns>
-        public List<KurssiSuoritu> HaeKurssi()
+        public List<KurssiSuoritu> HaeKurssisuoritukset()
         {
             var kurssisuoritukset = _context.KurssiSuoritus.Select(k => k).ToList();
             return kurssisuoritukset;
         }
 
+        /// <summary>
+        /// Metodi hakee listan tietyn käyttäjän kurssisuorituksista tietokannasta.
+        /// </summary>
+        /// <param name="käyttäjäId">int käyttäjäId</param>
+        /// <returns>Palauttaa listan KurssiSuoritu-olioita</returns>
+        public List<KurssiSuoritu> HaeKäyttäjänKurssisuoritukset(int käyttäjäId)
+        {
+            var kurssisuoritukset = _context.KurssiSuoritus.Where(k => k.KayttajaId == käyttäjäId).Select(k => k).ToList();
+            return kurssisuoritukset;
+        }
+
+        /// <summary>
+        /// Metodi hakee listan tietyn käyttäjän hyväksytysti suorittamista oppitunneista.
+        /// </summary>
+        /// <param name="käyttäjäId">int käyttäjäId</param>
+        /// <returns>Palauttaa listan OppituntiSuoritu-olioita</returns>
+        public List<OppituntiSuoritu> HaeKäyttäjänOppituntisuoritukset(int käyttäjäId)
+        {
+            var oppituntisuoritukset = _context.OppituntiSuoritus.Where(k => k.KayttajaId == käyttäjäId).Select(k => k).ToList();
+            return oppituntisuoritukset;
+        }
+
+        /// <summary>
+        /// Metodi hakee listan tietyn käyttäjän hyväksytysti suorittamista tehtävistä.
+        /// </summary>
+        /// <param name="käyttäjäId">int käyttäjäId</param>
+        /// <returns>Palauttaa listan TehtavaSuoritu-olioita</returns>
+        public List<TehtavaSuoritu> HaeKäyttäjänTehtäväsuoritukset(int käyttäjäId)
+        {
+            var tehtäväsuoritukset = _context.TehtavaSuoritus.Where(k => k.KayttajaId == käyttäjäId).Select(k => k).ToList();
+            return tehtäväsuoritukset;
+        }
+
+        /// <summary>
+        /// Metodi hakee listan oppituntisuorituksista tietokannasta.
+        /// </summary>
+        /// <param></param>
+        /// <returns>Palauttaa listan OppituntiSuoritu-olioita</returns>
+        public List<OppituntiSuoritu> HaeOppituntiSuoritukset()
+        {
+            var oppituntisuoritukset = _context.OppituntiSuoritus.Select(k => k).ToList();
+            return oppituntisuoritukset;
+        }
+
+        /// <summary>
+        /// Metodi hakee listan tehtäväsuorituksista tietokannasta.
+        /// </summary>
+        /// <param></param>
+        /// <returns>Palauttaa listan TehtavaSuoritu-olioita</returns>
+        public List<TehtavaSuoritu> TehtäväiSuoritukset()
+        {
+            var tehtäväSuoritukset = _context.TehtavaSuoritus.Select(k => k).ToList();
+            return tehtäväSuoritukset;
+        }
+        /// <summary>
+        /// Lisää käyttäjän tietokantaan, ja palauttaa true, jos se onnistuu. Jos käyttäjän lisääminen ei onnistu,
+        /// metodi palauttaa false. 
+        /// </summary>
+        /// <param name="email"></param>
+        /// <param name="salasana"></param>
+        /// <param name="nimi"></param>
+        /// <returns>Boolean, joka kertoo, onnistuiko lisäys.</returns>
         public bool LisääKäyttäjä(string email, string salasana, string nimi = null)
         {
             var uusiKäyttäjä = new Kayttaja();
@@ -81,6 +143,84 @@ namespace KoodinenV1
             }
             return true;
         }
+        /// <summary>
+        /// Lisää tietokantaan uuden kurssisuoritustiedon. Palauttaa true, jos onnistui,
+        /// falsen, jos ei.
+        /// </summary>
+        /// <param name="käyttäjäId"></param>
+        /// <param name="kurssiId"></param>
+        /// <returns>Boolean true/false</returns>
+        public bool LisääKurssiSuoritus(int käyttäjäId, int kurssiId)
+        {
+            var uusiKurssisuoritus = new KurssiSuoritu();
+            uusiKurssisuoritus.SuoritusPvm = DateTime.Today;
+            uusiKurssisuoritus.KayttajaId = käyttäjäId;
+            uusiKurssisuoritus.KurssiId = kurssiId;
+
+            try
+            {
+                _context.KurssiSuoritus.Add(uusiKurssisuoritus);
+                _context.SaveChanges();
+            }
+            catch
+            {
+                return false;
+            }
+            return true;
+        }
+        /// <summary>
+        /// Lisää tietokantaan uuden oppituntisuoritustiedon. Palauttaa true, jos onnistui,
+        /// falsen, jos ei.
+        /// </summary>
+        /// <param name="käyttäjäId"></param>
+        /// <param name="oppituntiId"></param>
+        /// <returns>Boolean true/false</returns>
+        public bool LisääOppituntiSuoritus(int käyttäjäId, int oppituntiId)
+        {
+            var uusiOppituntisuoritus = new OppituntiSuoritu();
+            uusiOppituntisuoritus.SuoritusPvm = DateTime.Today;
+            uusiOppituntisuoritus.KayttajaId = käyttäjäId;
+            uusiOppituntisuoritus.OppituntiId = oppituntiId;
+
+            try
+            {
+                _context.OppituntiSuoritus.Add(uusiOppituntisuoritus);
+                _context.SaveChanges();
+            }
+            catch
+            {
+                return false;
+            }
+            return true;
+        }
+
+        /// <summary>
+        /// Lisää tietokantaan uuden tehtäväsuoritustiedon. Palauttaa true, jos onnistui,
+        /// falsen, jos ei.
+        /// </summary>
+        /// <param name="käyttäjäId"></param>
+        /// <param name="tehtäväId"></param>
+        /// <returns>Boolean true/false</returns>
+        public bool LisääTehtäväSuoritus(int käyttäjäId, int tehtäväId)
+        {
+            var uusiTehtäväsuoritus = new TehtavaSuoritu();
+            uusiTehtäväsuoritus.SuoritusPvm = DateTime.Today;
+            uusiTehtäväsuoritus.KayttajaId = käyttäjäId;
+            uusiTehtäväsuoritus.TehtavaId = tehtäväId;
+
+            try
+            {
+                _context.TehtavaSuoritus.Add(uusiTehtäväsuoritus);
+                _context.SaveChanges();
+            }
+            catch
+            {
+                return false;
+            }
+            return true;
+        }
+
+
         public string HashSalasana(string salasana)
         {
             var sha1 = new SHA1CryptoServiceProvider();
