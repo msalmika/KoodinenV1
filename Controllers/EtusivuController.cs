@@ -13,14 +13,14 @@ namespace KoodinenV1.Controllers
     public class EtusivuController : Controller
     {
         private readonly ILogger<EtusivuController> _logger;
+
         private readonly KoodinenDBContext _context;
 
-        private readonly ILogger<HomeController> _logger;
 
         private readonly IConfiguration _configuration;
         //
-        public EtusivuController(ILogger<EtusivuController> logger)
-        public HomeController(ILogger<HomeController> logger, KoodinenDBContext context, IConfiguration configuration)
+        
+        public EtusivuController(ILogger<EtusivuController> logger, KoodinenDBContext context, IConfiguration configuration)
         {
             _logger = logger;
             _context = context;
