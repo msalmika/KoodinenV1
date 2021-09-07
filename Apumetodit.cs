@@ -1,4 +1,5 @@
 ﻿using KoodinenV1.Models;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -246,5 +247,26 @@ namespace KoodinenV1
             byte[] encrypted_bytes = sha1.ComputeHash(salasana_bytes);
             return Convert.ToBase64String(encrypted_bytes);
         }
+        //public Kayttaja HaeKäyttäjäIDLLÄ(int id)
+        //{
+        //    var käyttäjä = new Kayttaja();
+        //    käyttäjä = _context.Kayttajas.Where(k => k.KayttajaId == id).First();
+        //    return käyttäjä;
+        //}
+        //public bool KurssiSuoritettu(int id)
+        //{
+        //    Apumetodit am = new Apumetodit(_context); 
+            
+        //    var hlö = am.HaeKäyttäjäIDLLÄ(id);
+
+        //    var oppituntisuoritukset = from h in _context.Kayttajas
+        //                               join k in _context.Kurssis on h.KayttajaId equals k.KayttajaId
+        //                               join o in _context.Oppituntis on k.KurssiId equals o.KurssiId
+        //                               join v in _context.
+    
+           
+
+        //}
+
     }
 }
