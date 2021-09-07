@@ -81,6 +81,12 @@ namespace KoodinenV1
             }
             return true;
         }
+
+        /// <summary>
+        /// Muuttaa salasana-stringin hashcodeksi.
+        /// </summary>
+        /// <param name="salasana">string salasana</param>
+        /// <returns>string salasana</returns>
         public string HashSalasana(string salasana)
         {
             var sha1 = new SHA1CryptoServiceProvider();
