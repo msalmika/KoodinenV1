@@ -29,6 +29,18 @@ namespace KoodinenV1
         }
 
         /// <summary>
+        /// Metodi palauttaa käyttäjän tietokannasta Emailin perusteella.
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
+        public Kayttaja HaeKäyttjä(string email)
+        {
+            var käyttäjä = new Kayttaja();
+            käyttäjä = _context.Kayttajas.Where(k => k.Email == email).First();
+            return käyttäjä;
+        }
+
+        /// <summary>
         /// Metodi hakee kurssin tietokannasta id:n perusteella.
         /// </summary>
         /// <param name="id">int id</param>
