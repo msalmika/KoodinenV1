@@ -9,16 +9,36 @@ using System.Threading.Tasks;
 
 namespace KoodinenV1.Controllers
 {
-    public class HomeController : Controller
+    public class EtusivuController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ILogger<EtusivuController> _logger;
         //
-        public HomeController(ILogger<HomeController> logger)
+        public EtusivuController(ILogger<EtusivuController> logger)
         {
             _logger = logger;
         }
 
         public IActionResult Index()
+        {
+            return View();
+        }
+
+        public IActionResult Kirjautuminen()
+        {
+            return View();
+        }
+
+        public IActionResult Chat()
+        {
+            return View();
+        }
+
+        public IActionResult Kurssit()
+        {
+            return View();
+        }
+
+        public IActionResult About()
         {
             return View();
         }
