@@ -112,7 +112,7 @@ namespace KoodinenV1
         /// </summary>
         /// <param></param>
         /// <returns>Palauttaa listan TehtavaSuoritu-olioita</returns>
-        public List<TehtavaSuoritu> TehtäväiSuoritukset()
+        public List<TehtavaSuoritu> TehtäväSuoritukset()
         {
             var tehtäväSuoritukset = _context.TehtavaSuoritus.Select(k => k).ToList();
             return tehtäväSuoritukset;
