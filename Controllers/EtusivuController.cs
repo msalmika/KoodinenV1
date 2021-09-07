@@ -1,5 +1,6 @@
 ﻿using KoodinenV1.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -12,10 +13,18 @@ namespace KoodinenV1.Controllers
     public class EtusivuController : Controller
     {
         private readonly ILogger<EtusivuController> _logger;
+
+        private readonly KoodinenDBContext _context;
+
+
+        private readonly IConfiguration _configuration;
         //
-        public EtusivuController(ILogger<EtusivuController> logger)
+        
+        public EtusivuController(ILogger<EtusivuController> logger, KoodinenDBContext context, IConfiguration configuration)
         {
             _logger = logger;
+            _context = context;
+            _configuration = configuration;
         }
 
         public IActionResult Index()
