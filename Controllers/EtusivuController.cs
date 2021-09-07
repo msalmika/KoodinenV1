@@ -1,4 +1,5 @@
 ﻿using KoodinenV1.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -36,6 +37,15 @@ namespace KoodinenV1.Controllers
         {
             return View();
         }
+
+        [HttpPost]
+        public IActionResult Kirjautuminen(string username, string password)
+        {
+            int? id = HttpContext.Session.GetInt32("id");
+            string? nimi = HttpContext.Session.GetString("Nimi");
+            return View();
+        }
+
         
         public IActionResult Chat()
         {

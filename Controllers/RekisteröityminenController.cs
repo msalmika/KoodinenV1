@@ -43,7 +43,10 @@ namespace KoodinenV1.Controllers
             {
                 _context.Kayttajas.Add(kayttaja);
                 _context.SaveChanges();
-
+                Apumetodit am = new Apumetodit(_context);
+                var k = am.HaeKäyttäjä(kayttaja.Email);
+                HttpContext.Session.SetInt32("id", k.KayttajaId);
+                HttpContext.Session.SetString("Nimi", k.Nimi);
                 return RedirectToAction("RekOnnistui", kayttaja);
             }
             catch (Exception e)
@@ -54,8 +57,7 @@ namespace KoodinenV1.Controllers
         }
         public IActionResult RekOnnistui()
         {
-            //HttpContext.Session.SetInt32("id", käyttäjä.PersonId);
-            //HttpContext.Session.SetInt32("id", käyttäjä.PersonId);
+            
             return View();
         }
         public IActionResult RekEpäonnistui()
