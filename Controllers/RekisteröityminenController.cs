@@ -46,7 +46,7 @@ namespace KoodinenV1.Controllers
                 _context.SaveChanges();
                 Apumetodit am = new Apumetodit(_context);
                 var k = am.HaeKäyttäjä(kayttaja.Email);
-                HttpContext.Session.SetInt32("id", k.KayttajaId);
+                HttpContext.Session.SetInt32("Id", k.KayttajaId);
                 HttpContext.Session.SetString("Nimi", k.Nimi);
                 return RedirectToAction("RekOnnistui", kayttaja);
             }
@@ -70,13 +70,8 @@ namespace KoodinenV1.Controllers
             TestiLuokka tl = new TestiLuokka();
             //tl.KirjoitaPäälle();
             tl.MuodostaTesti("public int Palauta(){\treturn 2;}\n");
-            return Content("Kirjoitettu");
-        }
-        public IActionResult TestausAjo()
-        {
-            TestiLuokka tl = new TestiLuokka();
-            //tl.KirjoitaPäälle();
             var onnistuiko = tl.TestaaSyöte();
+            tl.KirjoitaPäälle();
             return Content(onnistuiko);
         }
     }
