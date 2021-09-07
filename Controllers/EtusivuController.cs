@@ -41,7 +41,7 @@ namespace KoodinenV1.Controllers
         [HttpPost]
         public IActionResult Kirjautuminen(string username, string password)
         {
-            int? id = HttpContext.Session.GetInt32("id");
+            int? id = HttpContext.Session.GetInt32("Id");
             string? nimi = HttpContext.Session.GetString("Nimi");
             return View();
         }

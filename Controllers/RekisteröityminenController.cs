@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using TestiAlusta;
 
 namespace KoodinenV1.Controllers
 {
@@ -45,7 +46,7 @@ namespace KoodinenV1.Controllers
                 _context.SaveChanges();
                 Apumetodit am = new Apumetodit(_context);
                 var k = am.HaeKäyttäjä(kayttaja.Email);
-                HttpContext.Session.SetInt32("id", k.KayttajaId);
+                HttpContext.Session.SetInt32("Id", k.KayttajaId);
                 HttpContext.Session.SetString("Nimi", k.Nimi);
                 return RedirectToAction("RekOnnistui", kayttaja);
             }
@@ -63,6 +64,15 @@ namespace KoodinenV1.Controllers
         public IActionResult RekEpäonnistui()
         {
             return View();
+        }
+        public IActionResult Testaus()
+        {
+            TestiLuokka tl = new TestiLuokka();
+            //tl.KirjoitaPäälle();
+            tl.MuodostaTesti("public int Palauta(){\treturn 2;}\n");
+            var onnistuiko = tl.TestaaSyöte();
+            tl.KirjoitaPäälle();
+            return Content(onnistuiko);
         }
     }
 }
