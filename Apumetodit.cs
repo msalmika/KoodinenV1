@@ -67,6 +67,12 @@ namespace KoodinenV1
             return tehtävä;
         }
 
+        public List<Kurssi> HaeKurssit()
+        {
+            var kurssit = _context.Kurssis.Select(k => k).ToList();
+            return kurssit;
+        }
+
         /// <summary>
         /// Metodi hakee listan kurssisuorituksista tietokannasta.
         /// </summary>

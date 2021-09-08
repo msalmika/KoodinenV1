@@ -2,6 +2,9 @@
 
 @{
     ViewData["Title"] = "Profiili";
+    var kurssisuoritukset = ViewBag.kurssisuoritukset;
+    //List<OppituntiSuoritu>oppituntisuoritukset = ViewBag.oppituntisuoritukset;
+    //List<TehtavaSuoritu> tehtäväsuoritukset = ViewBag.tehtäväsuoritukset;
 
 }
 
@@ -31,6 +34,34 @@
         </dd>
     </dl>
 </div>
+<h6 font="bold">Kurssisuoritukset</h6>
+<br />
+<ul>
+    @foreach (var item in kurssisuoritukset)
+     {
+        
+            <li>
+                @item.Kurssi.Nimi
+            </li>
+      
+        
+            <li>
+                @item.KurssiId
+            </li>
+        
+        
+            <li>
+                @item.KurssiSuoritusId
+            </li>
+        
+            <li>
+                @item.SuoritusPvm
+            </li>
+        
+     }
+
+
+</ul>
 
 <div>
     @*<a asp-action="Muokkaa" asp-route-id="@Model.KayttajaId">Muokkaa profiilia</a>*@ 

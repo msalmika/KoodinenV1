@@ -10,6 +10,8 @@ namespace KoodinenV1.Testaus
     {
 
         const string template = @"
+using System;
+
         public class ScriptedClass
             {
                 public string DoPrint()

@@ -32,10 +32,10 @@ namespace KoodinenV1.Controllers
        
         public IActionResult Profiili(int id)
         {
-            //id = 1; // kovakoodattu, korvataan
-            Kayttaja kayttaja = new();
+            id = 1; // kovakoodattu, korvataan
+            //Kayttaja kayttaja = new();
 
-            int? kayttaja_Id = HttpContext.Session.GetInt32("id"); // KORVAAMAAN KOVAKOODIA
+           /* HttpContext.Session.SetInt32("id", kayttaja.KayttajaId); */// KORVAAMAAN KOVAKOODIA
             
             //kayttaja.KayttajaId = id;
             //KoodinenDBContext db = _context;
@@ -43,11 +43,21 @@ namespace KoodinenV1.Controllers
             var käyttäjä = (from k in _context.Kayttajas
                            where k.KayttajaId == id
                            select k).FirstOrDefault();
-           
-            //ViewBag.kurssisuoritukset = käyttäjä.KurssiSuoritus.ToList();
-            //ViewBag.oppituntisuoritukset = käyttäjä.OppituntiSuoritus.ToList();
-            //ViewBag.tehtäväsuoritukset = käyttäjä.TehtavaSuoritus.ToList();
 
+
+            var kurssisuoritukset = from x in _context.KurssiSuoritus
+                                         where x.KayttajaId == id
+                                         select x;
+
+            ViewBag.oppituntisuoritukset = (from z in _context.OppituntiSuoritus
+                                            where z.KayttajaId == id
+                                            select z).FirstOrDefault();
+
+            ViewBag.tehtäväsuoritukset = (from t in _context.TehtavaSuoritus
+                                         where t.KayttajaId == id
+                                         select t).FirstOrDefault();
+
+            ViewBag.kurssisuoritukset = kurssisuoritukset.ToList();
             //haetaaan käyttäjän suoritukset
             //foreach (var x in käyttäjä)
             //{
@@ -65,6 +75,8 @@ namespace KoodinenV1.Controllers
 
             return View(käyttäjä);
         }
+
+        public IActionResult testi()
 
         public async Task<IActionResult> Muokkaa(int? id)
         {
@@ -116,5 +128,6 @@ namespace KoodinenV1.Controllers
             }
             return View(kayttaja);
         }
+
     }
 }
