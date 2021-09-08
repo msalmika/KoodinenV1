@@ -31,10 +31,10 @@ namespace KoodinenV1.Controllers
        
         public IActionResult Profiili(int id)
         {
-            //id = 1; // kovakoodattu, korvataan
-            Kayttaja kayttaja = new();
+            id = 1; // kovakoodattu, korvataan
+            //Kayttaja kayttaja = new();
 
-            HttpContext.Session.SetInt32("id", kayttaja.KayttajaId); // KORVAAMAAN KOVAKOODIA
+           /* HttpContext.Session.SetInt32("id", kayttaja.KayttajaId); */// KORVAAMAAN KOVAKOODIA
             
             //kayttaja.KayttajaId = id;
             //KoodinenDBContext db = _context;
@@ -42,11 +42,21 @@ namespace KoodinenV1.Controllers
             var käyttäjä = (from k in _context.Kayttajas
                            where k.KayttajaId == id
                            select k).FirstOrDefault();
-           
-            ViewBag.kurssisuoritukset = käyttäjä.KurssiSuoritus.ToList();
-            ViewBag.oppituntisuoritukset = käyttäjä.OppituntiSuoritus.ToList();
-            ViewBag.tehtäväsuoritukset = käyttäjä.TehtavaSuoritus.ToList();
 
+
+            var kurssisuoritukset = from x in _context.KurssiSuoritus
+                                         where x.KayttajaId == id
+                                         select x;
+
+            ViewBag.oppituntisuoritukset = (from z in _context.OppituntiSuoritus
+                                            where z.KayttajaId == id
+                                            select z).FirstOrDefault();
+
+            ViewBag.tehtäväsuoritukset = (from t in _context.TehtavaSuoritus
+                                         where t.KayttajaId == id
+                                         select t).FirstOrDefault();
+
+            ViewBag.kurssisuoritukset = kurssisuoritukset.ToList();
             //haetaaan käyttäjän suoritukset
             //foreach (var x in käyttäjä)
             //{
@@ -64,36 +74,6 @@ namespace KoodinenV1.Controllers
 
             return View(käyttäjä);
         }
-        public IActionResult Profiili2(int id)
-        {
-            id = 2; // kovakoodattu, korvataan
-            //var id= HttpContext.Session.GetInt32("personId");
-
-            Kayttaja kayttaja = new();
-            kayttaja.KayttajaId = id;
-            KoodinenDBContext db = _context;
-            // käyttäjän tiedot
-            ViewBag.käyttäjä = (from k in db.Kayttajas
-                            where k.KayttajaId == id
-                            select k).FirstOrDefault();
-
-            // haetaaan käyttäjän suoritukset
-            //foreach (var x in käyttäjä)
-            //{
-            //    _context.Entry(x).Collection(e => e.KurssiSuoritus).Load();
-            //}
-            //foreach (var x in käyttäjä)
-            //{
-            //    _context.Entry(x).Collection(e => e.OppituntiSuoritus).Load();
-            //}
-            //foreach (var x in käyttäjä)
-            //{
-            //    _context.Entry(x).Collection(e => e.TehtavaSuoritus).Load();
-            //}
-
-
-            return View(ViewBag.käyttäjä);
-        }
-
+        
     }
 }
