@@ -4,4 +4,51 @@
 }
 
 <h1>Oppitunti 1</h1>
+<h3>Hello World!</h3>
+<hr />
+<p>
+    Ohjelmointi on ohjelmistojen suunnittelua ja toteutusta. Toteutettava toiminnallisuus määräytyy ohjelmiston tilaajien ja käyttäjien toiveiden ja 
+    vaatimusten perusteella. Ohjelmia toteutetaan (eli kirjoitetaan tai "koodataan") tyypillisesti ihmisten kirjoitettavaksi ja luettavaksi tarkoitetulla 
+    ohjelmointikielellä.
+</p>
+<p>
+    Ohjelmointikieliä on satoja ja tällä kurssilla keskitytään näistä kielistä yhteen. Kurssin kielenä on C#.
+</p>
+<p>
+    "Hello World!"" on eräs ohjelmointiin liittyvistä clichéistä ja usein ensimmäisiä asioita joita uudelle
+    ohjelmoijalle/koodarille opetetaan. Näin teemme myös me. Tekstin "Hei maailma!" tulostukseen käytetään komentoa <b>Console.WriteLine("Hei maailma!);".</b> 
+    Komento toimii vain, jos 
+</p>
+<p>
+   
+</p>
+
+
+
+<div class="card">
+    <form method="post">
+        <div class="form-group" action="Oppitunti1" padding: 20px">
+            <label for="Tekstialue">Kirjoita edellinen komento tähän: </label>
+            <textarea class="form-control" id="Tekstialue" name="Tekstialue" rows="3"></textarea>
+        </div>
+        <input type="submit" value="Tarkista" class="btn btn-outline-primary" style="margin-left:20px" />
+    </form>
+    <br />
+
+    @*@if (ViewBag.Tekstialue != null)
+        {
+        <textarea id="Palautus" name="Palautus" rows="3" style="background-color:black; color:forestgreen; text-align:left">
+                       @ViewBag.Tekstialue
+        </textarea>
+        }*@
+
+    @if (ViewBag.Tekstialue != null)
+    {
+        <div style="padding:20px">
+            <div>Tuloste</div>
+            <textarea class="form-control" rows="3">@ViewBag.Tekstialue</textarea>
+        </div>
+    }
+</div>
+
 

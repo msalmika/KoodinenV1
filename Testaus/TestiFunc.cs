@@ -19,7 +19,7 @@ namespace KoodinenV1.Testaus
             }";
         public static string TestaaKoodi(string syöte)
         {
-            string data = "Terve mualima!";
+            string data = "Hei maailma!";
             Console.WriteLine($"Kirjoita metodin koodi joka palauttaa tekstin {data} paluuarvona");
 
             string code = template.Replace("@code", syöte);
