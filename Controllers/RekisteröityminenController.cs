@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using KoodinenV1.Testaus;
+//using KoodinenV1.Testaus;
 
 namespace KoodinenV1.Controllers
 {
@@ -56,13 +56,16 @@ namespace KoodinenV1.Controllers
         {
             return View();
         }
-        public IActionResult Testaus()
-        {
-            string syöte = "return " + '"' + "Terve mualima!" +'"' + ';';
-            string expected = "Terve mualima!";
-            string onnistuiko = TestiFunc.TestaaKoodi(syöte, expected);
-            return Content(onnistuiko);
-        }
+        //public IActionResult Testaus()
+        //{
+        //    //            string syöte = @"
+        //    //string nimi = Console.ReadLine();
+        //    //return nimi;";
+        //    string syöte = "return " + '"' + "Terve mualima!" + '"' + ';';
+        //    string expected = "Terve mualima!";
+        //    string onnistuiko = TestiFunc.TestaaKoodi(syöte, expected);
+        //    return Content(onnistuiko);
+        //}
 
         //public IActionResult TestausUT()
         //{

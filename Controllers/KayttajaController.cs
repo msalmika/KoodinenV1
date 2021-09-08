@@ -74,6 +74,11 @@ namespace KoodinenV1.Controllers
 
             return View(käyttäjä);
         }
+
+        public IActionResult testi()
+        {
+            return View();
+        }
         
     }
 }
