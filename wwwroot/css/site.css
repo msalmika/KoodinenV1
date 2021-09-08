@@ -126,13 +126,11 @@ body {
 }
 
 
+
+
 /*TÄSTÄ ETEENPÄIN OPPITUNTILAYOUT-MUOTOILUA*/
 
 
-html,
-body {
-    height: 100%;
-}
 
 #sidebar {
     height: 100%;
