@@ -1,4 +1,5 @@
 ﻿using KoodinenV1.Models;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -232,8 +233,6 @@ namespace KoodinenV1
             return true;
         }
 
-
-
         /// <summary>
         /// Muuttaa salasana-stringin hashcodeksi.
         /// </summary>
@@ -245,6 +244,54 @@ namespace KoodinenV1
             byte[] salasana_bytes = Encoding.ASCII.GetBytes(salasana);
             byte[] encrypted_bytes = sha1.ComputeHash(salasana_bytes);
             return Convert.ToBase64String(encrypted_bytes);
+        }
+
+        public bool KäyttäjäOnOlemassa(int id)
+        {
+            var q = (from k in _context.Kayttajas
+                     where k.KayttajaId == id
+                     select k).FirstOrDefault().KayttajaId;
+            return (q == id) ? true : false;
+        }
+
+        public bool KäyttäjäOnAdmin(int id)
+        {
+            var onAdmin = (from k in _context.Kayttajas
+                           where k.KayttajaId == id
+                           select k).FirstOrDefault().OnAdmin;
+            return onAdmin;
+        }
+        
+        public int? HaeAdmin(ISession sessio)
+        {
+            string käyttäjäserialized = sessio.GetString("käyttäjä");
+            if (!string.IsNullOrEmpty(käyttäjäserialized))
+            {
+                int käyttäjä = Convert.ToInt32(käyttäjäserialized);
+                return käyttäjä;
+            }
+            return null;
+        }
+
+        public void LisääAdminSessioon(ISession session, int? id)
+        {
+            session.SetString("käyttäjä", id.ToString());
+        }
+        public bool OnkoSessiossa(ISession sessio)
+        {
+            int? id = null;
+            KoodinenV1.Apumetodit am = new(_context);
+            var käyttäjä = from k in _context.Kayttajas
+                           select k;
+            foreach (var k in käyttäjä)
+            {
+                id = k.KayttajaId;
+            }
+            if (am.HaeAdmin(sessio) == id)
+            {
+                return true;
+            }
+            return false;
         }
     }
 }
