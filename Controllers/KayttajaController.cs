@@ -1,6 +1,7 @@
 ﻿using KoodinenV1.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
@@ -34,7 +35,7 @@ namespace KoodinenV1.Controllers
             //id = 1; // kovakoodattu, korvataan
             Kayttaja kayttaja = new();
 
-            HttpContext.Session.SetInt32("id", kayttaja.KayttajaId); // KORVAAMAAN KOVAKOODIA
+            int? kayttaja_Id = HttpContext.Session.GetInt32("id"); // KORVAAMAAN KOVAKOODIA
             
             //kayttaja.KayttajaId = id;
             //KoodinenDBContext db = _context;
@@ -43,9 +44,9 @@ namespace KoodinenV1.Controllers
                            where k.KayttajaId == id
                            select k).FirstOrDefault();
            
-            ViewBag.kurssisuoritukset = käyttäjä.KurssiSuoritus.ToList();
-            ViewBag.oppituntisuoritukset = käyttäjä.OppituntiSuoritus.ToList();
-            ViewBag.tehtäväsuoritukset = käyttäjä.TehtavaSuoritus.ToList();
+            //ViewBag.kurssisuoritukset = käyttäjä.KurssiSuoritus.ToList();
+            //ViewBag.oppituntisuoritukset = käyttäjä.OppituntiSuoritus.ToList();
+            //ViewBag.tehtäväsuoritukset = käyttäjä.TehtavaSuoritus.ToList();
 
             //haetaaan käyttäjän suoritukset
             //foreach (var x in käyttäjä)
@@ -64,36 +65,56 @@ namespace KoodinenV1.Controllers
 
             return View(käyttäjä);
         }
-        public IActionResult Profiili2(int id)
+
+        public async Task<IActionResult> Muokkaa(int? id)
         {
-            id = 2; // kovakoodattu, korvataan
-            //var id= HttpContext.Session.GetInt32("personId");
+            if (id == null)
+            {
+                return NotFound();
+            }
 
-            Kayttaja kayttaja = new();
-            kayttaja.KayttajaId = id;
-            KoodinenDBContext db = _context;
-            // käyttäjän tiedot
-            ViewBag.käyttäjä = (from k in db.Kayttajas
-                            where k.KayttajaId == id
-                            select k).FirstOrDefault();
-
-            // haetaaan käyttäjän suoritukset
-            //foreach (var x in käyttäjä)
-            //{
-            //    _context.Entry(x).Collection(e => e.KurssiSuoritus).Load();
-            //}
-            //foreach (var x in käyttäjä)
-            //{
-            //    _context.Entry(x).Collection(e => e.OppituntiSuoritus).Load();
-            //}
-            //foreach (var x in käyttäjä)
-            //{
-            //    _context.Entry(x).Collection(e => e.TehtavaSuoritus).Load();
-            //}
-
-
-            return View(ViewBag.käyttäjä);
+            var kayttaja = await _context.Kayttajas.FindAsync(id);
+            if (kayttaja == null)
+            {
+                return NotFound();
+            }
+            return View(kayttaja);
         }
 
+        // POST: People/Edit/5
+        /// Lähettää kirjautuneen henkilön pävitetyt tiedot muokkauksen lomakkeesta
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Muokkaa(int id, [Bind("KayttajaId,Nimi,Email,Salasana")] Kayttaja kayttaja)
+        {
+            KoodinenV1.Apumetodit am = new Apumetodit(_context);
+            if (id != kayttaja.KayttajaId)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    kayttaja.Salasana = am.HashSalasana(kayttaja.Salasana);
+                    _context.Update(kayttaja);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!am.KäyttäjäOnOlemassa(kayttaja.KayttajaId))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Profiili), new { id = kayttaja.KayttajaId });
+            }
+            return View(kayttaja);
+        }
     }
 }

@@ -46,10 +46,9 @@ namespace KoodinenV1.Controllers
 
             var kirjautuja = _context.Kayttajas.Where(k => k.Email == email).FirstOrDefault();
 
-            if (kirjautuja != null)
+            if (!(string.IsNullOrEmpty(email) || string.IsNullOrEmpty(salasana)))
             {
-
-                if (kirjautuja.Salasana == am.HashSalasana(salasana))
+                if (kirjautuja != null && kirjautuja.Email == email && kirjautuja.Salasana == am.HashSalasana(salasana))
                 {
                     id = kirjautuja.KayttajaId;
                     var k = am.HaeKäyttäjä(kirjautuja.KayttajaId);
@@ -62,14 +61,19 @@ namespace KoodinenV1.Controllers
                             am.LisääAdminSessioon(this.HttpContext.Session, id);
                             return RedirectToAction("AdminPääsivu", "Admin");
                         }
-                        return RedirectToAction("Pääsivu", "Kurssi");
-                    }
-                    else
-                    {
-                        ModelState.AddModelError("Salasana", "Väärä käyttäjätunnus tai salasana");
-                    return View(kirjautuja);
+                        return RedirectToAction("Profiili", "Kayttaja");
                     }
                 }
+                else
+                {
+                    ModelState.AddModelError("Salasana", "Väärä sähköpostiosoite tai salasana");
+                    return View(kirjautuja);
+                }
+            }
+
+            else
+            {
+                ModelState.AddModelError("Email", "Kirjoita sähköpostiosoite ja salasana");
             }
             return View();
         }

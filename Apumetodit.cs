@@ -1,11 +1,13 @@
 ﻿using KoodinenV1.Models;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Http.ModelBinding;
 
 namespace KoodinenV1
 {
@@ -138,19 +140,29 @@ namespace KoodinenV1
         /// <param name="salasana"></param>
         /// <param name="nimi"></param>
         /// <returns>Boolean, joka kertoo, onnistuiko lisäys.</returns>
-        public bool LisääKäyttäjä(string email, string salasana, string nimi = " ")
+        public bool LisääKäyttäjä(string email, string salasana, string tarkistaSalasana, string nimi)
         {
-            var uusiKäyttäjä = new Kayttaja();
-            uusiKäyttäjä.Nimi = nimi;
-            uusiKäyttäjä.Email = email;
-            uusiKäyttäjä.Salasana = HashSalasana(salasana);
-
-            try
+            if (salasana == tarkistaSalasana)
             {
-                _context.Kayttajas.Add(uusiKäyttäjä);
-                _context.SaveChanges();
+
+
+                var uusiKäyttäjä = new Kayttaja();
+                uusiKäyttäjä.Nimi = nimi;
+                uusiKäyttäjä.Email = email;
+                uusiKäyttäjä.Salasana = HashSalasana(salasana);
+
+                try
+                {
+                    _context.Kayttajas.Add(uusiKäyttäjä);
+                    _context.SaveChanges();
+                }
+
+                catch
+                {
+                    return false;
+                }
             }
-            catch
+            else
             {
                 return false;
             }
