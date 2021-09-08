@@ -1,4 +1,5 @@
 ﻿using KoodinenV1.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,13 @@ namespace KoodinenV1.Controllers
             _context = context;
         }
      
+        public IActionResult Pääsivu()
+        {
+            int? id = HttpContext.Session.GetInt32("Id");
+            string? nimi = HttpContext.Session.GetString("Nimi");
+            ViewBag.nimi = nimi;
+            return View();
+        }
         public IActionResult Oppitunti1()
         {
 

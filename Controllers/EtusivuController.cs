@@ -39,10 +39,39 @@ namespace KoodinenV1.Controllers
         }
 
         [HttpPost]
-        public IActionResult Kirjautuminen(string username, string password)
+        public IActionResult Kirjautuminen(string email, string salasana)
         {
-            int? id = HttpContext.Session.GetInt32("Id");
-            string? nimi = HttpContext.Session.GetString("Nimi");
+            int id = 0;
+            KoodinenV1.Apumetodit am = new Apumetodit(_context);
+
+            var kirjautuja = _context.Kayttajas.Where(k => k.Email == email).FirstOrDefault();
+
+            if (kirjautuja != null)
+            {
+
+                if (kirjautuja.Salasana == salasana)
+                {
+                    id = kirjautuja.KayttajaId;
+                    var k = am.HaeKäyttäjä(kirjautuja.KayttajaId);
+                    HttpContext.Session.SetInt32("Id", k.KayttajaId);
+                    HttpContext.Session.SetString("Nimi", k.Nimi);
+                    if (am.KäyttäjäOnOlemassa(id) == true)
+                    {
+
+                        if (am.KäyttäjäOnAdmin(id) == true)
+                        {
+                            am.LisääAdminSessioon(this.HttpContext.Session, id);
+                            return RedirectToAction("Pääsivu", "Kurssi");
+                        }
+                        return RedirectToAction("Pääsivu", "Kurssi");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("Salasana", "Väärä käyttäjätunnus tai salasana");
+                    return View(kirjautuja);
+                    }
+                }
+            }
             return View();
         }
 

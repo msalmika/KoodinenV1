@@ -24,18 +24,19 @@
             </div>
             <div class="form-group">
                 <label asp-for="Salasana" class="control-label"></label>
-                <input asp-for="Salasana" class="form-control" />
+                <input asp-for="Salasana" type="password" class="form-control" />
                 <span asp-validation-for="Salasana" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Rekisteröidy" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    Onko sinulla jo käyttäjätunnus? 
+    <a @Html.ActionLink("Kirjaudu tästä", "Kirjautuminen", "Etusivu")></a>
 </div>
 
 @section Scripts {

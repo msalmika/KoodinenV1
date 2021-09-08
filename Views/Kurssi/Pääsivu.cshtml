@@ -1,0 +1,32 @@
+﻿@model KoodinenV1.Models.Kurssi
+
+@{
+    ViewData["Title"] = "Pääsivu";
+}
+
+<h1>Pääsivu</h1>
+
+<div>
+    <h4>Kurssi</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Nimi)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Nimi)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Kuvaus)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Kuvaus)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Kayttaja)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Kayttaja.Email)
+        </dd>
+    </dl>
+</div>

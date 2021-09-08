@@ -45,9 +45,7 @@ namespace KoodinenV1.Controllers
                 _context.SaveChanges();
                 Apumetodit am = new Apumetodit(_context);
                 var k = am.HaeKäyttäjä(kayttaja.Email);
-                HttpContext.Session.SetInt32("Id", k.KayttajaId);
-                HttpContext.Session.SetString("Nimi", k.Nimi);
-                return RedirectToAction("RekOnnistui", kayttaja);
+                return RedirectToAction("Kirjautuminen", "Etusivu");
             }
             catch (Exception e)
             {
