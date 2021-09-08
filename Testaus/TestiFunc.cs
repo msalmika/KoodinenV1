@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace KoodinenV1.Testaus
 {
-    public class TestiLuokka
+    public class TestiFunc
     {
 
         const string template = @"
