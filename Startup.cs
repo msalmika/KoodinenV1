@@ -77,6 +77,12 @@ namespace KoodinenV1
                     name: "oppitunti",
                     pattern: "{controller=Oppitunti}/{action=Index}/{id?}");
             });
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllerRoute(
+                    name: "profiili",
+                    pattern: "{controller=Kayttaja}/{action=Profiili}/{id?}");
+            });
         }
     }
 }

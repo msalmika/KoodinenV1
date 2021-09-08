@@ -59,7 +59,8 @@ namespace KoodinenV1.Controllers
         public IActionResult Testaus()
         {
             string syöte = "return " + '"' + "Terve mualima!" +'"' + ';';
-            string onnistuiko = TestiFunc.TestaaKoodi(syöte);
+            string expected = "Terve mualima!";
+            string onnistuiko = TestiFunc.TestaaKoodi(syöte, expected);
             return Content(onnistuiko);
         }
 
