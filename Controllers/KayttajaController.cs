@@ -76,8 +76,6 @@ namespace KoodinenV1.Controllers
             return View(käyttäjä);
         }
 
-        public IActionResult testi()
-
         public async Task<IActionResult> Muokkaa(int? id)
         {
             if (id == null)
