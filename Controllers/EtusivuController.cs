@@ -60,7 +60,7 @@ namespace KoodinenV1.Controllers
                         if (am.KäyttäjäOnAdmin(id) == true)
                         {
                             am.LisääAdminSessioon(this.HttpContext.Session, id);
-                            return RedirectToAction("Pääsivu", "Kurssi");
+                            return RedirectToAction("AdminPääsivu", "Admin");
                         }
                         return RedirectToAction("Pääsivu", "Kurssi");
                     }
