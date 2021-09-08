@@ -8,16 +8,16 @@ using System.Threading.Tasks;
 
 namespace KoodinenV1.Controllers
 {
-    public class KurssiController : Controller
+    public class CSharpAlkeetController : Controller
     {
         private readonly KoodinenDBContext _context;
 
-        public KurssiController(KoodinenDBContext context)
+        public CSharpAlkeetController(KoodinenDBContext context)
         {
             _context = context;
         }
      
-        public IActionResult Pääsivu()
+        public IActionResult Esittely()
         {
             int? id = HttpContext.Session.GetInt32("Id");
             return View();
@@ -25,6 +25,10 @@ namespace KoodinenV1.Controllers
         public IActionResult Oppitunti1()
         {
 
+            return View();
+        }
+        public IActionResult Oppitunti2()
+        {
             return View();
         }
     }
