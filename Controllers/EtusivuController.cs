@@ -17,9 +17,7 @@ namespace KoodinenV1.Controllers
 
         private readonly KoodinenDBContext _context;
 
-
         private readonly IConfiguration _configuration;
-        //
         
         public EtusivuController(ILogger<EtusivuController> logger, KoodinenDBContext context, IConfiguration configuration)
         {
@@ -29,11 +27,6 @@ namespace KoodinenV1.Controllers
         }
 
         public IActionResult Index()
-        {
-            return View();
-        }
-
-        public IActionResult Kirjautuminen()
         {
             return View();
         }
@@ -82,7 +75,9 @@ namespace KoodinenV1.Controllers
 
         public IActionResult Kurssit()
         {
-            return View();
+            Apumetodit am = new Apumetodit(_context);
+            var kurssit = am.HaeKurssit();
+            return View(kurssit);
         }
 
         public IActionResult About()
