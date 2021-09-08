@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using KoodinenV1.Testaus;
 
 namespace KoodinenV1.Controllers
 {
@@ -36,18 +37,14 @@ namespace KoodinenV1.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Rekisteröityminen(Kayttaja kayttaja)
+        public IActionResult Rekisteröityminen(string Nimi, string Email, string Salasana)
         {
 
             try
             {
-                _context.Kayttajas.Add(kayttaja);
-                _context.SaveChanges();
                 Apumetodit am = new Apumetodit(_context);
-                var k = am.HaeKäyttäjä(kayttaja.Email);
-                HttpContext.Session.SetInt32("Id", k.KayttajaId);
-                HttpContext.Session.SetString("Nimi", k.Nimi);
-                return RedirectToAction("RekOnnistui", kayttaja);
+                am.LisääKäyttäjä(Email, Salasana, Nimi);
+                return RedirectToAction("Kirjautuminen", "Etusivu");
             }
             catch (Exception e)
             {
@@ -55,16 +52,18 @@ namespace KoodinenV1.Controllers
                 return RedirectToAction("RekEpäonnistui");
             }
         }
-        public IActionResult RekOnnistui()
-        {
-            
-            return View();
-        }
         public IActionResult RekEpäonnistui()
         {
             return View();
         }
-        //public IActionResult Testaus()
+        public IActionResult Testaus()
+        {
+            string syöte = "return " + '"' + "Terve mualima!" +'"' + ';';
+            string onnistuiko = TestiFunc.TestaaKoodi(syöte);
+            return Content(onnistuiko);
+        }
+
+        //public IActionResult TestausUT()
         //{
         //    TestiLuokka tl = new TestiLuokka();
         //    //tl.KirjoitaPäälle();

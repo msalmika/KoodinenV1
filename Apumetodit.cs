@@ -138,7 +138,7 @@ namespace KoodinenV1
         /// <param name="salasana"></param>
         /// <param name="nimi"></param>
         /// <returns>Boolean, joka kertoo, onnistuiko lisäys.</returns>
-        public bool LisääKäyttäjä(string email, string salasana, string nimi = null)
+        public bool LisääKäyttäjä(string email, string salasana, string nimi = " ")
         {
             var uusiKäyttäjä = new Kayttaja();
             uusiKäyttäjä.Nimi = nimi;
@@ -233,8 +233,6 @@ namespace KoodinenV1
             return true;
         }
 
-
-
         /// <summary>
         /// Muuttaa salasana-stringin hashcodeksi.
         /// </summary>
@@ -247,24 +245,53 @@ namespace KoodinenV1
             byte[] encrypted_bytes = sha1.ComputeHash(salasana_bytes);
             return Convert.ToBase64String(encrypted_bytes);
         }
-        public Kayttaja HaeKäyttäjäIDLLÄ(int id)
+
+        public bool KäyttäjäOnOlemassa(int id)
         {
-            var käyttäjä = new Kayttaja();
-            käyttäjä = _context.Kayttajas.Where(k => k.KayttajaId == id).First();
-            return käyttäjä;
+            var q = (from k in _context.Kayttajas
+                     where k.KayttajaId == id
+                     select k).FirstOrDefault().KayttajaId;
+            return (q == id) ? true : false;
         }
-        //public bool KurssiSuoritettu(int id)
-        //{
-        //    Apumetodit am = new Apumetodit(_context);
 
-        //    var hlö = am.HaeKäyttäjäIDLLÄ(id);
+        public bool KäyttäjäOnAdmin(int id)
+        {
+            var onAdmin = (from k in _context.Kayttajas
+                           where k.KayttajaId == id
+                           select k).FirstOrDefault().OnAdmin;
+            return onAdmin;
+        }
+        
+        public int? HaeAdmin(ISession sessio)
+        {
+            string käyttäjäserialized = sessio.GetString("käyttäjä");
+            if (!string.IsNullOrEmpty(käyttäjäserialized))
+            {
+                int käyttäjä = Convert.ToInt32(käyttäjäserialized);
+                return käyttäjä;
+            }
+            return null;
+        }
 
-        //    var oppituntisuoritukset = from h in _context.Kayttajas
-        //                               join k in _context.Kurssis on h.KayttajaId equals k.KayttajaId
-        //                               join o in _context.Oppituntis on k.KurssiId equals o.KurssiId
-        //                               join v in _context.
-
-
-        //}
+        public void LisääAdminSessioon(ISession session, int? id)
+        {
+            session.SetString("käyttäjä", id.ToString());
+        }
+        public bool OnkoSessiossa(ISession sessio)
+        {
+            int? id = null;
+            KoodinenV1.Apumetodit am = new(_context);
+            var käyttäjä = from k in _context.Kayttajas
+                           select k;
+            foreach (var k in käyttäjä)
+            {
+                id = k.KayttajaId;
+            }
+            if (am.HaeAdmin(sessio) == id)
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }
