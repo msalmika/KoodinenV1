@@ -1,0 +1,42 @@
+﻿
+@{
+    ViewData["Title"] = "Oppitunti2";
+}
+
+<h1>Oppitunti 2</h1>
+<hr />
+<p>
+    Testaillaan vähän Console.ReadLine() toimintaa.
+</p>
+
+<div class="card">
+    <form method="post">
+        <div class="form-group" style="padding: 20px">
+            <label for="Tekstialue">Kirjoita tervehdyksesi tähän: </label>
+            <textarea class="form-control" id="Tekstialue" name="Tekstialue" rows="3">@if (ViewBag.Tekstialue != null) {@ViewBag.Tekstialue }</textarea>
+        </div>
+        <input type="submit" value="Tarkista" class="btn btn-outline-primary" style="margin-left:20px" />
+        @if (ViewBag.Tekstialue != null)
+        {
+    <div class="card" style="padding: 20px">
+        <label for="Palautus">@ViewBag.CW</label>
+        <div class="form-group">
+            <textarea id="Palautus" name="Palautus" rows="3" style="background-color:black; color:lightgrey; text-align:left"></textarea>
+        </div>
+    </div>
+            
+        }
+    </form>
+    <br />
+
+    
+
+
+    @*@if (ViewBag.Tekstialue != null)
+    {
+        <div style="padding:20px">
+            <div>Tuloste</div>
+            <textarea class="form-control" rows="3">@ViewBag.Tekstialue</textarea>
+        </div>
+    }*@
+</div>
