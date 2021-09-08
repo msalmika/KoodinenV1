@@ -17,10 +17,10 @@ namespace KoodinenV1.Testaus
                     @code
                 }
             }";
-        public static string TestaaKoodi(string syöte)
+        public static string TestaaKoodi(string syöte, string data)
         {
-            string data = "Terve mualima!";
-            Console.WriteLine($"Kirjoita metodin koodi joka palauttaa tekstin {data} paluuarvona");
+            //string data = "Terve mualima!";
+            //Console.WriteLine($"Kirjoita metodin koodi joka palauttaa tekstin {data} paluuarvona");
 
             string code = template.Replace("@code", syöte);
             CSharpScriptEngine.Execute(code);
