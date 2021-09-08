@@ -49,12 +49,11 @@ namespace KoodinenV1.Controllers
             if (kirjautuja != null)
             {
 
-                if (kirjautuja.Salasana == salasana)
+                if (kirjautuja.Salasana == am.HashSalasana(salasana))
                 {
                     id = kirjautuja.KayttajaId;
                     var k = am.HaeKäyttäjä(kirjautuja.KayttajaId);
                     HttpContext.Session.SetInt32("Id", k.KayttajaId);
-                    HttpContext.Session.SetString("Nimi", k.Nimi);
                     if (am.KäyttäjäOnOlemassa(id) == true)
                     {
 

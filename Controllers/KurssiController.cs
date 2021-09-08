@@ -20,8 +20,6 @@ namespace KoodinenV1.Controllers
         public IActionResult Pääsivu()
         {
             int? id = HttpContext.Session.GetInt32("Id");
-            string? nimi = HttpContext.Session.GetString("Nimi");
-            ViewBag.nimi = nimi;
             return View();
         }
         public IActionResult Oppitunti1()

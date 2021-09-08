@@ -36,15 +36,13 @@ namespace KoodinenV1.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Rekisteröityminen(Kayttaja kayttaja)
+        public IActionResult Rekisteröityminen(string Nimi, string Email, string Salasana)
         {
 
             try
             {
-                _context.Kayttajas.Add(kayttaja);
-                _context.SaveChanges();
                 Apumetodit am = new Apumetodit(_context);
-                var k = am.HaeKäyttäjä(kayttaja.Email);
+                am.LisääKäyttäjä(Email, Salasana, Nimi);
                 return RedirectToAction("Kirjautuminen", "Etusivu");
             }
             catch (Exception e)
@@ -52,11 +50,6 @@ namespace KoodinenV1.Controllers
                 Trace.WriteLine(e);
                 return RedirectToAction("RekEpäonnistui");
             }
-        }
-        public IActionResult RekOnnistui()
-        {
-            
-            return View();
         }
         public IActionResult RekEpäonnistui()
         {

@@ -138,7 +138,7 @@ namespace KoodinenV1
         /// <param name="salasana"></param>
         /// <param name="nimi"></param>
         /// <returns>Boolean, joka kertoo, onnistuiko lisäys.</returns>
-        public bool LisääKäyttäjä(string email, string salasana, string nimi = null)
+        public bool LisääKäyttäjä(string email, string salasana, string nimi = " ")
         {
             var uusiKäyttäjä = new Kayttaja();
             uusiKäyttäjä.Nimi = nimi;
