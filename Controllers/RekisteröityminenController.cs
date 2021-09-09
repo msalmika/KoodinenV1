@@ -41,7 +41,7 @@ namespace KoodinenV1.Controllers
         {
             KoodinenDBContext db = _context;
             //Tarkistetaan että jokaisessa kentässä on tekstiä, email on uniikki ja salasanat täsmäävät 
-            if (!(string.IsNullOrWhiteSpace(Nimi) && string.IsNullOrWhiteSpace(Email) && string.IsNullOrWhiteSpace(Salasana) && string.IsNullOrWhiteSpace(TarkistaSalasana)))
+            if (!string.IsNullOrWhiteSpace(Nimi) && !string.IsNullOrWhiteSpace(Email) && !string.IsNullOrWhiteSpace(Salasana) && !string.IsNullOrWhiteSpace(TarkistaSalasana))
             {
                 var emailTarkistus = from a in db.Kayttajas
                         select a.Email;
