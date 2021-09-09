@@ -29,6 +29,9 @@
                 <span asp-validation-for="Salasana" class="text-danger"></span>
             </div>
             <div class="form-group">
+                
+            </div>   
+            <div class="form-group">
                 <input type="submit" value="Tallenna" class="btn btn-primary" />
             </div>
         </form>
@@ -36,7 +39,7 @@
 </div>
 
 <div>
-    <a asp-action="Profiili" asp-route-id="@Model.KayttajaId">Takaisin profiiliin</a>
+    <a asp-action="Profiili">Takaisin profiiliin</a>
 </div>
 
 @section Scripts {
