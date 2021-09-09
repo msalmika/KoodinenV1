@@ -60,7 +60,7 @@ namespace KoodinenV1.Controllers
                             return View();
                         }
                     }
-                    if (Salasana.Length == 6 && Salasana.Any(c => char.IsUpper(c)) && Salasana.Any(d => char.IsLower(d)) && Salasana.Any(e => char.IsDigit(e)))
+                    if (Salasana.Length >= 6 && Salasana.Any(c => char.IsUpper(c)) && Salasana.Any(d => char.IsLower(d)) && Salasana.Any(e => char.IsDigit(e)))
                     {
 
                         if (Salasana == tarkistaSalasana)
