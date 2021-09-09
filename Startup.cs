@@ -82,6 +82,9 @@ namespace KoodinenV1
                 endpoints.MapControllerRoute(
                     name: "profiili",
                     pattern: "{controller=Kayttaja}/{action=Profiili}/{id?}");
+                endpoints.MapControllerRoute(
+                 name: "kurssistasuoritetut",
+                 pattern: "{controller=Kayttaja}/{action=KurssistaSuoritetut}/{id?}");
             });
         }
     }

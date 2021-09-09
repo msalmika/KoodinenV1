@@ -32,50 +32,53 @@ namespace KoodinenV1.Controllers
        
         public IActionResult Profiili(int id)
         {
-            id = 14; // kovakoodattu, korvataan
-            //Kayttaja kayttaja = new();
+            id = 1; // kovakoodattu, korvataan alla:
+            //id = (int)HttpContext.Session.GetInt32("id");
 
-           /* HttpContext.Session.SetInt32("id", kayttaja.KayttajaId); */// KORVAAMAAN KOVAKOODIA
-            
-            //kayttaja.KayttajaId = id;
-            //KoodinenDBContext db = _context;
-            // käyttäjän tiedot
             var käyttäjä = (from k in _context.Kayttajas
-                           where k.KayttajaId == id
-                           select k).FirstOrDefault();
+                            where k.KayttajaId == id
+                            select k).FirstOrDefault();
 
+            var kurssisuoritukset = from x in _context.KurssiSuoritus
+                                    where x.KayttajaId == id
+                                    orderby x.SuoritusPvm
+                                    select x;
 
-            //var kurssisuoritukset = from x in _context.KurssiSuoritus
-            //                             where x.KayttajaId == id
-            //                             select x;
-
-            //ViewBag.oppituntisuoritukset = (from z in _context.OppituntiSuoritus
-            //                                where z.KayttajaId == id
-            //                                select z).FirstOrDefault();
-
-            //ViewBag.tehtäväsuoritukset = (from t in _context.TehtavaSuoritus
-            //                             where t.KayttajaId == id
-            //                             select t).FirstOrDefault();
-
-            //ViewBag.kurssisuoritukset = kurssisuoritukset.ToList();
-            //haetaaan käyttäjän suoritukset
-            //foreach (var x in käyttäjä)
-            //{
-            //    _context.Entry(x).Collection(e => e.KurssiSuoritus).Load();
-            //}
-            //foreach (var x in käyttäjä)
-            //{
-            //    _context.Entry(x).Collection(e => e.OppituntiSuoritus).Load();
-            //}
-            //foreach (var x in käyttäjä)
-            //{
-            //    _context.Entry(x).Collection(e => e.TehtavaSuoritus).Load();
-            //}
-
-
+            ViewBag.kurssisuoritukset = kurssisuoritukset;
             return View(käyttäjä);
         }
+        public IActionResult KurssistaSuoritetut(int id, int kurssiId)
+        {
+            id = 1; //korvataan sessionin käyttäjäIdllä
+            //id = (int)HttpContext.Session.GetInt32("id");
 
+            kurssiId = 2; // kovakoodattu
+
+            KoodinenDBContext db = _context;
+
+            var käyt = db.Kayttajas.Where(k => k.KayttajaId == id).FirstOrDefault();
+            db.Entry(käyt).Collection(ku => ku.Kurssis).Load();
+
+            //LISÄTÄÄN VÄLIAIKAISEEN db:hen KÄYTTÄJÄN KURSSIEN OPPITUNNIT JA TEHTÄVÄT
+            foreach (var kurssi in käyt.Kurssis)
+            {
+                db.Entry(kurssi).Collection(x => x.Oppituntis).Load();
+                foreach (var oppitunti in kurssi.Oppituntis)
+                {
+                    db.Entry(oppitunti).Collection(x => x.Tehtavas).Load();
+                }
+            }
+
+            var oppitunnit = db.Oppituntis.Where(x => x.KurssiId == kurssiId).ToList();
+            var tehtävät = db.Tehtavas.ToList();
+
+            ViewBag.kurssinimi = "C# perusteet"; // kovakoodattu, korvataan
+            ViewBag.oppitunnit = oppitunnit;
+            ViewBag.tehtävät = tehtävät;
+
+            return View(käyt);
+            
+        }
         public async Task<IActionResult> Muokkaa(int? id)
         {
             if (id == null)
