@@ -131,7 +131,7 @@ namespace KoodinenV1.Controllers
         }
         public IActionResult Testi()
         {
-            var query = _context.TehtavaSuoritus.Where(x => x.KayttajaId == 1).ToList();
+            var query = _context.TehtavaSuoritus.Where(x => x.KayttajaId != 0).ToList();
             string res = "";
             foreach (var q in query)
             {
