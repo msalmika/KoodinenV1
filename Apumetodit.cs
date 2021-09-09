@@ -146,12 +146,8 @@ namespace KoodinenV1
         /// <param name="salasana"></param>
         /// <param name="nimi"></param>
         /// <returns>Boolean, joka kertoo, onnistuiko lisäys.</returns>
-        public bool LisääKäyttäjä(string email, string salasana, string tarkistaSalasana, string nimi)
+        public bool LisääKäyttäjä(string email, string salasana, string nimi)
         {
-            if (salasana == tarkistaSalasana)
-            {
-
-
                 var uusiKäyttäjä = new Kayttaja();
                 uusiKäyttäjä.Nimi = nimi;
                 uusiKäyttäjä.Email = email;
@@ -167,11 +163,6 @@ namespace KoodinenV1
                 {
                     return false;
                 }
-            }
-            else
-            {
-                return false;
-            }
             return true;
         }
         /// <summary>
