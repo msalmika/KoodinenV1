@@ -129,6 +129,18 @@ namespace KoodinenV1.Controllers
             }
             return View(kayttaja);
         }
+        public IActionResult Testi()
+        {
+            var query = _context.TehtavaSuoritus.Where(x => x.KayttajaId != 0).ToList();
+            string res = "";
+            foreach (var q in query)
+            {
+                res += q.KayttajaId + " " + q.SuoritusPvm + " " + q.TehtavaId + Environment.NewLine;
+            }
+            return Content(res);
+        }
+
         
+
     }
 }
