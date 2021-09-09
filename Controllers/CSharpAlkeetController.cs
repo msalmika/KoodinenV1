@@ -28,11 +28,17 @@ namespace KoodinenV1.Controllers
 
             return View();
         }
+        
         [HttpPost]
-        public IActionResult Oppitunti1([FromForm] string Tekstialue)
+        public IActionResult Oppitunti1(string Tekstialue)
         {
-            TestiFunc.TestaaKoodi(Tekstialue);
-            
+            if(Tekstialue.Contains("Console.WriteLine"))
+            {
+                Tekstialue.Replace("(", "");
+                Tekstialue.Replace(")", "");
+                Tekstialue.Replace("Console.WriteLine", "");
+            }
+            ViewBag.Tekstialue = TestiFunc.TestaaKoodiTehtävä1(Tekstialue);
             return View();
         }
         public IActionResult Oppitunti2()
