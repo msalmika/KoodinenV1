@@ -45,6 +45,38 @@ namespace KoodinenV1.Controllers
         {
             return View();
         }
+        [HttpPost]
+        public IActionResult Oppitunti2(string Tekstialue, string Palautus)
+        {
+            var TekstinPalat = Tekstialue.Split(";");
+            ViewBag.CW = null;
+            foreach(var teksti in TekstinPalat)
+            {
+                if (teksti.Contains("Console.WriteLine"))
+                {
+                    ViewBag.CW = teksti
+                        .Replace("(", "")
+                        .Replace(")", "")
+                        .Replace("\"", "")
+                        .Replace("Console.WriteLine", "");
+                }
+            }
+
+            //if (Tekstialue.Contains("Console.WriteLine"))
+            //{
+            //    ViewBag.CW = null;
+            //}
+
+            ViewBag.Tekstialue = Tekstialue;
+            if (Palautus != null)
+            {
+                return Content(Testaus.TestiFunc.TestaaKoodi(Palautus, @"Pekka
+Pekka
+Pekka"));
+            }
+            return View();
+            
+        }
     }
 
 

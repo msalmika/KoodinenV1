@@ -1,6 +1,7 @@
 ﻿using KoodinenV1.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
@@ -74,6 +75,57 @@ namespace KoodinenV1.Controllers
 
             return View(käyttäjä);
         }
-        
+
+        public async Task<IActionResult> Muokkaa(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var kayttaja = await _context.Kayttajas.FindAsync(id);
+            if (kayttaja == null)
+            {
+                return NotFound();
+            }
+            return View(kayttaja);
+        }
+
+        // POST: People/Edit/5
+        /// Lähettää kirjautuneen henkilön pävitetyt tiedot muokkauksen lomakkeesta
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Muokkaa(int id, [Bind("KayttajaId,Nimi,Email,Salasana")] Kayttaja kayttaja)
+        {
+            KoodinenV1.Apumetodit am = new Apumetodit(_context);
+            if (id != kayttaja.KayttajaId)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    kayttaja.Salasana = am.HashSalasana(kayttaja.Salasana);
+                    _context.Update(kayttaja);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!am.KäyttäjäOnOlemassa(kayttaja.KayttajaId))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Profiili), new { id = kayttaja.KayttajaId });
+            }
+            return View(kayttaja);
+        }
+
     }
 }
