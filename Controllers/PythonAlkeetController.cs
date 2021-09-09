@@ -12,5 +12,10 @@ namespace KoodinenV1.Controllers
         {
             return View();
         }
+
+        public IActionResult Esittely()
+        {
+            return View();
+        }
     }
 }
