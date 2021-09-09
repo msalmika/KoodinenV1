@@ -90,25 +90,7 @@ namespace KoodinenV1.Controllers
             string onnistuiko = TestiFunc.TestaaKoodi(syöte, expected);
             return Content(onnistuiko);
         }
-        public IActionResult Rekisteröityminen(string Nimi, string Email, string Salasana)
-        {
-
-            try
-            {
-                Apumetodit am = new Apumetodit(_context);
-                am.LisääKäyttäjä(Email, Salasana, Nimi);
-                return RedirectToAction("Kirjautuminen", "Etusivu");
-            }
-            catch (Exception e)
-            {
-                Trace.WriteLine(e);
-                return RedirectToAction("RekEpäonnistui");
-            }
-        }
-        public IActionResult RekEpäonnistui()
-        {
-            return View();
-        }
+      
         //public IActionResult Testaus()
         //{
         //    string syöte = "return " + '"' + "Terve mualima!" +'"' + ';';
