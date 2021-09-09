@@ -30,6 +30,10 @@ namespace KoodinenV1.Controllers
         {
             return View();
         }
+        public IActionResult Kirjautuminen()
+        {
+            return View();
+        }
 
 
         [HttpPost]

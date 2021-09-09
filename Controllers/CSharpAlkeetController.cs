@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using KoodinenV1.Testaus;
 
 namespace KoodinenV1.Controllers
 {
@@ -25,6 +26,19 @@ namespace KoodinenV1.Controllers
         public IActionResult Oppitunti1()
         {
 
+            return View();
+        }
+        
+        [HttpPost]
+        public IActionResult Oppitunti1(string Tekstialue)
+        {
+            if(Tekstialue.Contains("Console.WriteLine"))
+            {
+                Tekstialue.Replace("(", "");
+                Tekstialue.Replace(")", "");
+                Tekstialue.Replace("Console.WriteLine", "");
+            }
+            ViewBag.Tekstialue = TestiFunc.TestaaKoodiTehtävä1(Tekstialue);
             return View();
         }
         public IActionResult Oppitunti2()
