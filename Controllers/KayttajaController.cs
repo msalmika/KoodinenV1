@@ -32,7 +32,7 @@ namespace KoodinenV1.Controllers
        
         public IActionResult Profiili(int id)
         {
-            id = 1; // kovakoodattu, korvataan
+            id = 14; // kovakoodattu, korvataan
             //Kayttaja kayttaja = new();
 
            /* HttpContext.Session.SetInt32("id", kayttaja.KayttajaId); */// KORVAAMAAN KOVAKOODIA
@@ -45,19 +45,19 @@ namespace KoodinenV1.Controllers
                            select k).FirstOrDefault();
 
 
-            var kurssisuoritukset = from x in _context.KurssiSuoritus
-                                         where x.KayttajaId == id
-                                         select x;
+            //var kurssisuoritukset = from x in _context.KurssiSuoritus
+            //                             where x.KayttajaId == id
+            //                             select x;
 
-            ViewBag.oppituntisuoritukset = (from z in _context.OppituntiSuoritus
-                                            where z.KayttajaId == id
-                                            select z).FirstOrDefault();
+            //ViewBag.oppituntisuoritukset = (from z in _context.OppituntiSuoritus
+            //                                where z.KayttajaId == id
+            //                                select z).FirstOrDefault();
 
-            ViewBag.tehtäväsuoritukset = (from t in _context.TehtavaSuoritus
-                                         where t.KayttajaId == id
-                                         select t).FirstOrDefault();
+            //ViewBag.tehtäväsuoritukset = (from t in _context.TehtavaSuoritus
+            //                             where t.KayttajaId == id
+            //                             select t).FirstOrDefault();
 
-            ViewBag.kurssisuoritukset = kurssisuoritukset.ToList();
+            //ViewBag.kurssisuoritukset = kurssisuoritukset.ToList();
             //haetaaan käyttäjän suoritukset
             //foreach (var x in käyttäjä)
             //{
@@ -108,8 +108,8 @@ namespace KoodinenV1.Controllers
                 try
                 {
                     kayttaja.Salasana = am.HashSalasana(kayttaja.Salasana);
-                    _context.Update(kayttaja);
-                    await _context.SaveChangesAsync();
+                        _context.Update(kayttaja);
+                        await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
