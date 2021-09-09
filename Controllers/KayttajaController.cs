@@ -97,7 +97,7 @@ namespace KoodinenV1.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Muokkaa(int id, [Bind("KayttajaId,Nimi,Email,Salasana")] Kayttaja kayttaja)
         {
-            KoodinenV1.Apumetodit am = new Apumetodit(_context);
+            Apumetodit am = new Apumetodit(_context);
             if (id != kayttaja.KayttajaId)
             {
                 return NotFound();
