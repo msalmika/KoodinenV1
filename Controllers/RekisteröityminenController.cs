@@ -91,13 +91,6 @@ namespace KoodinenV1.Controllers
             return Content(onnistuiko);
         }
       
-        //public IActionResult Testaus()
-        //{
-        //    string syöte = "return " + '"' + "Terve mualima!" +'"' + ';';
-        //    string expected = "Terve mualima!";
-        //    string onnistuiko = TestiFunc.TestaaKoodi(syöte, expected);
-        //    return Content(onnistuiko);
-        //}
 
         //public IActionResult TestausUT()
         //{
