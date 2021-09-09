@@ -11,8 +11,9 @@
 
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Etusivu" asp-action="Index">KoodinenV1</a>
+            <span class="navbar-brand" onmouseover="openNav()"><img src="~/Images/KoodinenLogoDemo.png" style="max-block-size: 50px"></span>
+            <div class="container" >
+                <a class="navbar-brand" asp-area="" asp-controller="Etusivu" asp-action="Index"></a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -23,7 +24,10 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Etusivu" asp-action="Index">Etusivu</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Etusivu" asp-action="Kurssit">Kurssit</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Rekisteröityminen" asp-action="Rekisteröityminen">Rekisteröidy</a>
                         </li>
                     </ul>
                 </div>
@@ -41,7 +45,6 @@
             </div>
 
             <!-- Use any element to open the sidenav -->
-            <span onmouseover="openNav()">open</span>
 
             <!-- Add all page content inside this div if you want the side nav to push page content to the right (not used if you only want the sidenav to sit on top of the page -->
             <div id="main">
