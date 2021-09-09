@@ -39,51 +39,59 @@ namespace KoodinenV1.Controllers
         [HttpPost]
         public IActionResult Rekisteröityminen(string Nimi, string Email, string Salasana, string tarkistaSalasana)
         {
+            Apumetodit am = new Apumetodit(_context);
             KoodinenDBContext db = _context;
             //Tarkistetaan että jokaisessa kentässä on tekstiä, email on uniikki, salasanat täsmäävät ja salasana on tietyn mallinen
             if (!string.IsNullOrWhiteSpace(Nimi) && !string.IsNullOrWhiteSpace(Email) && !string.IsNullOrWhiteSpace(Salasana) && !string.IsNullOrWhiteSpace(tarkistaSalasana))
             {
-                var emailTarkistus = from a in db.Kayttajas
-                        select a.Email;
-                foreach (var email in emailTarkistus)
+                if (am.TarkistaEmail(Email) == true)
                 {
-                    if (Email != email)
+                    var emailTarkistus = from a in db.Kayttajas
+                                         select a.Email;
+                    foreach (var email in emailTarkistus)
                     {
-                        continue;
-                    }
-                    else
-                    {
-                        ModelState.AddModelError("Email", "Sähköpostiosoitteella on jo käyttäjätunnus!");
-                        return View();
-                    }
-                }
-                if (Salasana.Length == 6 && Salasana.Any(c => char.IsUpper(c)) && Salasana.Any(d => char.IsLower(d)) && Salasana.Any(e => char.IsDigit(e)))
-                {
-
-                    if (Salasana == tarkistaSalasana)
-                    {
-                        try
+                        if (Email != email)
                         {
-                            Apumetodit am = new Apumetodit(_context);
-                            am.LisääKäyttäjä(Email, Salasana, Nimi);
-                            return RedirectToAction("Kirjautuminen", "Etusivu");
+                            continue;
                         }
-                        catch (Exception e)
+                        else
                         {
-                            Trace.WriteLine(e);
+                            ModelState.AddModelError("Email", "Sähköpostiosoitteella on jo käyttäjätunnus!");
+                            return View();
+                        }
+                    }
+                    if (Salasana.Length == 6 && Salasana.Any(c => char.IsUpper(c)) && Salasana.Any(d => char.IsLower(d)) && Salasana.Any(e => char.IsDigit(e)))
+                    {
+
+                        if (Salasana == tarkistaSalasana)
+                        {
+                            try
+                            {
+                                am.LisääKäyttäjä(Email, Salasana, Nimi);
+                                return RedirectToAction("Kirjautuminen", "Etusivu");
+                            }
+                            catch (Exception e)
+                            {
+                                Trace.WriteLine(e);
+                                return View();
+                            }
+                        }
+                        else
+                        {
+                            ModelState.AddModelError("Salasana", "Salasanat eivät täsmää!");
                             return View();
                         }
                     }
                     else
                     {
-                        ModelState.AddModelError("Salasana", "Salasanat eivät täsmää!");
+                        ModelState.AddModelError("Salasana", "Salasanan täytyy olla vähintään 6 merkkiä pitkä ja sen täytyy sisältää\n" +
+                            "vähintään yksi pieni kirjain, yksi iso kirjain ja yksi numero");
                         return View();
                     }
                 }
                 else
                 {
-                    ModelState.AddModelError("Salasana", "Salasanan täytyy olla vähintään 6 merkkiä pitkä ja sen täytyy sisältää\n" +
-                        "vähintään yksi pieni kirjain, yksi iso kirjain ja yksi numero");
+                    ModelState.AddModelError("Email", "Sähköpostiosoite on väärässä muodossa");
                     return View();
                 }
             }
