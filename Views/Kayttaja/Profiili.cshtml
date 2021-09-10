@@ -63,9 +63,9 @@
 @foreach (var item in suoritetut)
 {
     <li>
-        <strong>Suoritettu: </strong> @Html.ActionLink($"{@item.Nimi} / {@item.SuoritusPVM.ToShortDateString()}", "Esittely", "CSharpAlkeet");
+        <strong>Suoritettu: </strong> @Html.ActionLink($"{@item.Nimi} / {@item.SuoritusPVM.ToShortDateString()}", "Esittely", @*"CSharpAlkeet"*@ $"{@item.Nimi}");
     </li>
-   
+
 }
 <br />
 <br />
