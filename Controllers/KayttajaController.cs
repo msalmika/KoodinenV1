@@ -32,51 +32,12 @@ namespace KoodinenV1.Controllers
        
         public IActionResult Profiili(int id)
         {
-            id = 1; // kovakoodattu, korvataan alla:
-            //id = (int)HttpContext.Session.GetInt32("id");
 
-            var käyttäjä = (from k in _context.Kayttajas
-                            where k.KayttajaId == id
-                            select k).FirstOrDefault();
-
-            var kurssisuoritukset = from x in _context.KurssiSuoritus
-                                    where x.KayttajaId == id
-                                    orderby x.SuoritusPvm
-                                    select x;
-
-            ViewBag.kurssisuoritukset = kurssisuoritukset;
+            Apumetodit am = new Apumetodit(_context);
+            var käyttäjä = am.HaeKäyttäjä(id);
             return View(käyttäjä);
-        }
-        public IActionResult KurssistaSuoritetut(int id, int kurssiId)
-        {
-            id = 1; //korvataan sessionin käyttäjäIdllä
-            //id = (int)HttpContext.Session.GetInt32("id");
 
-            kurssiId = 2; // kovakoodattu
 
-            KoodinenDBContext db = _context;
-
-            var käyt = db.Kayttajas.Where(k => k.KayttajaId == id).FirstOrDefault();
-            db.Entry(käyt).Collection(ku => ku.Kurssis).Load();
-
-            //LISÄTÄÄN VÄLIAIKAISEEN db:hen KÄYTTÄJÄN KURSSIEN OPPITUNNIT JA TEHTÄVÄT
-            foreach (var kurssi in käyt.Kurssis)
-            {
-                db.Entry(kurssi).Collection(x => x.Oppituntis).Load();
-                foreach (var oppitunti in kurssi.Oppituntis)
-                {
-                    db.Entry(oppitunti).Collection(x => x.Tehtavas).Load();
-                }
-            }
-
-            var oppitunnit = db.Oppituntis.Where(x => x.KurssiId == kurssiId).ToList();
-            var tehtävät = db.Tehtavas.ToList();
-
-            ViewBag.kurssinimi = "C# perusteet"; // kovakoodattu, korvataan
-            ViewBag.oppitunnit = oppitunnit;
-            ViewBag.tehtävät = tehtävät;
-
-            return View(käyt);
             
         }
         public async Task<IActionResult> Muokkaa(int? id)
@@ -98,10 +59,12 @@ namespace KoodinenV1.Controllers
         /// Lähettää kirjautuneen henkilön pävitetyt tiedot muokkauksen lomakkeesta
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Muokkaa(int id, [Bind("KayttajaId,Nimi,Email,Salasana")] Kayttaja kayttaja)
+        public async Task<IActionResult> Muokkaa(int id, string nimi, string email)
         {
+
             Apumetodit am = new Apumetodit(_context);
-            if (id != kayttaja.KayttajaId)
+            var kayttaja = am.HaeKäyttäjä(id);
+            if (kayttaja == null)
             {
                 return NotFound();
             }
@@ -110,13 +73,14 @@ namespace KoodinenV1.Controllers
             {
                 try
                 {
-                    kayttaja.Salasana = am.HashSalasana(kayttaja.Salasana);
-                        _context.Update(kayttaja);
-                        await _context.SaveChangesAsync();
+                    kayttaja.Nimi = nimi;
+                    kayttaja.Email = email;
+                    _context.Update(kayttaja);
+                    await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!am.KäyttäjäOnOlemassa(kayttaja.KayttajaId))
+                    if (!am.KäyttäjäOnOlemassa(id))
                     {
                         return NotFound();
                     }
@@ -125,20 +89,11 @@ namespace KoodinenV1.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Profiili), new { id = kayttaja.KayttajaId });
+                return RedirectToAction(nameof(Profiili), new { id = id });
             }
             return View(kayttaja);
         }
-        public IActionResult Testi()
-        {
-            var query = _context.TehtavaSuoritus.Where(x => x.KayttajaId != 0).ToList();
-            string res = "";
-            foreach (var q in query)
-            {
-                res += q.KayttajaId + " " + q.SuoritusPvm + " " + q.TehtavaId + Environment.NewLine;
-            }
-            return Content(res);
-        }
+
 
         
 
