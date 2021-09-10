@@ -94,8 +94,50 @@ namespace KoodinenV1.Controllers
             return View(kayttaja);
         }
 
+        public async Task<IActionResult> SalasananVaihto(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var kayttaja = await _context.Kayttajas.FindAsync(id);
+            if (kayttaja == null)
+            {
+                return NotFound();
+            }
 
-        
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult SalasananVaihto(SalasananVaihtoViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            Apumetodit am = new Apumetodit(_context);
+            model.Id = (int)HttpContext.Session.GetInt32("id");
+            var salasana = am.HaeKäyttäjä(model.Id).Salasana;
+            if (am.HashSalasana(model.VanhaSalasana) != salasana)
+            {
+                ModelState.AddModelError("SalasananVaihto", "Vanha salasana on väärin");
+                return View();
+            }
+            if (!am.SalasanaHyväksytyssäMuodossa(model.UusiSalasana))
+            {
+                ModelState.AddModelError("SalasananVaihto", "Salasanan on oltava vähintään 6 merkkiä pitkä,\nja sen tulee sisältää ainakin yksi pieni ja suuri\nkirjain sekä numero.");
+                return View();
+            }
+            if (am.VaihdaSalasana(model.Id, model.UusiSalasana))
+            {
+                ViewBag.Viesti = "Salasana vaihdettu onnistuneesti!";
+                return View();
+            }
+            ViewBag.Viesti = "Jokin meni pieleen, yritä uudelleen. Jos ongelma toistuu, ota yhteyttä ylläpitoon.";
+            return View();
+        }
 
     }
 }

@@ -7,6 +7,11 @@
 
 
 }
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
 
 <h3>Profiili</h3>
 
@@ -26,48 +31,51 @@
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Email)
         </dd>
-        @*<dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Salasana)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Salasana)
-        </dd>*@
     </dl>
 </div>
-<br />
-<br />
-<div>
-    <a asp-action="Muokkaa" asp-route-id="@Model.KayttajaId">Muokkaa</a>
-</div>
+<table>
+    <tr>
+        <td>
+            <div>
+                <a class="btn btn-primary" asp-action="Muokkaa" asp-route-id="@Model.KayttajaId">Muokkaa</a>
+            </div>
+        </td>
+        <td>
+            <div>
+                <a class="btn btn-primary" asp-action="SalasananVaihto" asp-route-id="@Model.KayttajaId">Vaihda salasana</a>
+            </div>
+        </td>
+    </tr>
+</table>
 <br />
 <br />
 @*<h6 font="bold">Kurssisuoritukset</h6>
-<br />
-<ul>
-    @foreach (var item in kurssisuoritukset)
-    {
+    <br />
+    <ul>
+        @foreach (var item in kurssisuoritukset)
+        {
 
-        <li>
-            @item.Kurssi.Nimi
-        </li>
-
-
-        <li>
-            @item.KurssiId
-        </li>
+            <li>
+                @item.Kurssi.Nimi
+            </li>
 
 
-        <li>
-            @item.KurssiSuoritusId
-        </li>
-
-        <li>
-            @item.SuoritusPvm
-        </li>
-
-    }
+            <li>
+                @item.KurssiId
+            </li>
 
 
-</ul>*@
+            <li>
+                @item.KurssiSuoritusId
+            </li>
+
+            <li>
+                @item.SuoritusPvm
+            </li>
+
+        }
+
+
+    </ul>*@
 
 

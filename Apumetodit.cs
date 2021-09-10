@@ -313,5 +313,30 @@ namespace KoodinenV1
                 return false;
             }
         }
+
+        public bool SalasanaHyväksytyssäMuodossa(string salasana)
+        {
+            bool salasanaOk = false;
+            if (salasana.Length >= 6 && salasana.Any(c => char.IsUpper(c)) && salasana.Any(d => char.IsLower(d)) && salasana.Any(e => char.IsDigit(e)))
+            {
+                salasanaOk = true;
+            }
+            return salasanaOk;
+        }
+
+        public bool VaihdaSalasana(int id, string salasana)
+        {
+            try
+            {
+                var käyttäjä = HaeKäyttäjä(id);
+                käyttäjä.Salasana = HashSalasana(salasana);
+                _context.SaveChanges();
+            }
+            catch
+            {
+                return false;
+            }
+            return true;
+        }
     }
 }

@@ -1,0 +1,37 @@
+﻿@model KoodinenV1.Models.SalasananVaihtoViewModel
+@{
+    ViewBag.Title = "Salasanan vaihto";
+}
+
+<h1>@ViewBag.Title</h1>
+
+@using (Html.BeginForm("SalasananVaihto", "Kayttaja", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(m => m.VanhaSalasana, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.PasswordFor(m => m.VanhaSalasana, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.UusiSalasana, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.PasswordFor(m => m.UusiSalasana, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.VahvistusSalasana, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.PasswordFor(m => m.VahvistusSalasana, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Change password" class="btn btn-primary" />
+        </div>
+        <p>@ViewBag.Viesti</p>
+    </div>
+}
