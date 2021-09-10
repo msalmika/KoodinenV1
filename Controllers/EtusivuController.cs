@@ -50,7 +50,8 @@ namespace KoodinenV1.Controllers
                 {
                     id = kirjautuja.KayttajaId;
                     var k = am.HaeKäyttäjä(kirjautuja.KayttajaId);
-                    HttpContext.Session.SetInt32("Id", k.KayttajaId);
+                    HttpContext.Session.SetInt32("id", k.KayttajaId);
+                    HttpContext.Session.SetString("email", k.Email);
                     if (am.KäyttäjäOnOlemassa(id) == true)
                     {
 
