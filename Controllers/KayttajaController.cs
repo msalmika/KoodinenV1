@@ -30,9 +30,13 @@ namespace KoodinenV1.Controllers
         }
 
        
-        public IActionResult Profiili()
+        public IActionResult Profiili(string viesti = null)
         {
             int id = HttpContext.Session.GetInt32("id") ?? 0;
+            if (id == 0)
+            {
+                return RedirectToAction("Kirjautuminen", "Etusivu");
+            }
             Apumetodit am = new Apumetodit(_context);
             var käyttäjä = am.HaeKäyttäjä(id);
             
@@ -54,6 +58,11 @@ namespace KoodinenV1.Controllers
                           select new ProfiiliViewModel{ Nimi = k.Nimi}).ToList();
 
 
+            if (viesti != null)
+            {
+                ViewBag.Viesti = viesti;
+            }
+            return View(käyttäjä);
 
             ViewBag.kesken = kesken;
             ViewBag.suoritetut = suoritetut/*tehdyt*/;
@@ -61,12 +70,17 @@ namespace KoodinenV1.Controllers
             return View(käyttäjä);
 
         }
-        public async Task<IActionResult> Muokkaa(int? id)
+        public async Task<IActionResult> Muokkaa()
         {
-            if (id == null)
+            int id = HttpContext.Session.GetInt32("id") ?? 0;
+            if (id == 0)
             {
-                return NotFound();
+                return RedirectToAction("Kirjautuminen", "Etusivu");
             }
+            //if (id == null)
+            //{
+            //    return NotFound();
+            //}
 
             var kayttaja = await _context.Kayttajas.FindAsync(id);
             if (kayttaja == null)
@@ -80,9 +94,13 @@ namespace KoodinenV1.Controllers
         /// Lähettää kirjautuneen henkilön pävitetyt tiedot muokkauksen lomakkeesta
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Muokkaa(int id, string nimi, string email)
+        public async Task<IActionResult> Muokkaa(string nimi, string email)
         {
-
+            int id = HttpContext.Session.GetInt32("id") ?? 0;
+            if (id == 0)
+            {
+                return RedirectToAction("Kirjautuminen", "Etusivu");
+            }
             Apumetodit am = new Apumetodit(_context);
             var kayttaja = am.HaeKäyttäjä(id);
             if (kayttaja == null)
@@ -115,12 +133,17 @@ namespace KoodinenV1.Controllers
             return View(kayttaja);
         }
 
-        public async Task<IActionResult> SalasananVaihto(int? id)
+        public async Task<IActionResult> SalasananVaihto()
         {
-            if (id == null)
+            int id = HttpContext.Session.GetInt32("id") ?? 0;
+            if (id == 0)
             {
-                return NotFound();
+                return RedirectToAction("Kirjautuminen", "Etusivu");
             }
+            //if (id == null)
+            //{
+            //    return NotFound();
+            //}
             var kayttaja = await _context.Kayttajas.FindAsync(id);
             if (kayttaja == null)
             {
@@ -153,8 +176,8 @@ namespace KoodinenV1.Controllers
             }
             if (am.VaihdaSalasana(model.Id, model.UusiSalasana))
             {
-                ViewBag.Viesti = "Salasana vaihdettu onnistuneesti!";
-                return View();
+                string viesti = "Salasana vaihdettu onnistuneesti!";
+                return RedirectToAction("Profiili", null, new { viesti = viesti }, null);
             }
             ViewBag.Viesti = "Jokin meni pieleen, yritä uudelleen. Jos ongelma toistuu, ota yhteyttä ylläpitoon.";
             return View();

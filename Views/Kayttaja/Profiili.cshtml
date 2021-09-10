@@ -17,6 +17,10 @@
 <div>
     <h4>Opiskelija</h4>
     <hr />
+    @if(ViewBag.Viesti != null)
+            {
+                <h6 style="color: red">@ViewBag.Viesti</h6>
+            }
     <dl class="row">
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Nimi)
