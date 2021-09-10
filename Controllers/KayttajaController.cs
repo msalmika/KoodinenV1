@@ -41,28 +41,22 @@ namespace KoodinenV1.Controllers
                 return RedirectToAction("Kirjautuminen","Etusivu");
             }
 
-            KoodinenDBContext db = _context;
+            var suoritetut = (from x in _context.KurssiSuoritus
+                                join k in _context.Kurssis on x.KurssiId equals k.KurssiId
+                                where x.KayttajaId == id && x.Kesken == false
+                                orderby x.SuoritusPvm
+                                select new ProfiiliViewModel { Nimi = k.Nimi, SuoritusPVM = x.SuoritusPvm }).ToList();
 
-            //var käyt = db.Kayttajas.Where(k => k.KayttajaId == id).FirstOrDefault();
-            //db.Entry(käyt).Collection(ku => ku.Kurssis).Load();
-            //db.Entry(käyt).Collection(s => s.KurssiSuoritus).Load();
-            //db.Entry(käyt).Collection(o => o.OppituntiSuoritus).Load();
-            //db.Entry(käyt).Collection(t => t.TehtavaSuoritus).Load();
+            var kesken = (from x in _context.KurssiSuoritus
+                          join k in _context.Kurssis on x.KurssiId equals k.KurssiId
+                          where x.KayttajaId == id && x.Kesken == true
+                          orderby x.SuoritusPvm
+                          select new ProfiiliViewModel{ Nimi = k.Nimi}).ToList();
 
-            //foreach (var kurssi in käyt.Kurssis)
-            //{
-            //    db.Entry(kurssi).Collection(x => x.Oppituntis).Load();
-            //    foreach (var oppitunti in kurssi.Oppituntis)
-            //    {
-            //        db.Entry(oppitunti).Collection(x => x.Tehtavas).Load();
-            //    }
-            //}
 
-            //var tehdyt = käyt.KurssiSuoritus.Where(y => y.Kesken == false).ToList();
-            //var kesken = käyt.KurssiSuoritus.Where(x => x.Kesken == true).ToList();
 
-            //ViewBag.kesken = kesken;
-            //ViewBag.suoritetut = tehdyt;
+            ViewBag.kesken = kesken;
+            ViewBag.suoritetut = suoritetut/*tehdyt*/;
 
             return View(käyttäjä);
 

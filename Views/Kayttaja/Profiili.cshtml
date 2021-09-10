@@ -2,8 +2,8 @@
 
 @{
     ViewData["Title"] = "Profiili";
-    var suoritetut = ViewBag.tehdyt;
-    var kesken= ViewBag.kesken;
+    var suoritetut = ViewBag.suoritetut;
+    var kesken = ViewBag.kesken;
 
 }
 
@@ -34,48 +34,30 @@
 </div>
 <br />
 <br />
-<h6 font="bold">Kurssisuoritukset</h6>
+<h6 style="font-weight:bold">Kurssisuoritukset</h6>
 <br />
-@*<ul>
-   @foreach (var item in suoritetut)
+<ul>
+    @if (suoritetut == null)
     {
-
         <li>
-            @item.Kurssi.Nimi
+            Ei suoritettuja kursseja.
         </li>
+    }
+    else
 
+       @foreach (var item in suoritetut)
+        {
+            <li>
+                <strong>Kurssi:</strong>@item.Nimi / suoritettu:@item.SuoritusPVM
+            </li>  
+        }
 
-        <li>
-            @item.KurssiId
-        </li>
-
-
-        <li>
-            @item.KurssiSuoritusId
-        </li>
-
-        <li>
-            @item.SuoritusPvm
-        </li>
-
-    }*@
-    @*@foreach (var item in kesken)
+   @foreach (var item in kesken)
     {
-
         <li>
-            @item.Nimi
+            <strong>Aloitettu:</strong> @item.Nimi
         </li>
-
-
-        <li>
-            @item.KurssiId
-        </li>
-
-        <li>
-            @item.Kesken
-        </li>
-
-    }*@
+    }
 
 </ul>
 
