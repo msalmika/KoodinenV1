@@ -1,4 +1,5 @@
-﻿using KoodinenV1.Models;
+﻿using KoodinenV1.FuncServModels;
+using KoodinenV1.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -15,7 +16,6 @@ namespace KoodinenV1.Controllers
 {
     public class CSharpAlkeetController : Controller
     {
-        string URL = "https://funclogickoodinen.azurewebsites.net/api/TehtavaSuoritusTietoKantaan?code=NudohY8CkjsRXFxqHZgBaLKia5Oko0SAmidmBjCEShYaLxY9B3hIZQ==";
         
 
         private readonly KoodinenDBContext _context;
@@ -48,16 +48,8 @@ namespace KoodinenV1.Controllers
 
                 if (email != null)
                 {
-                    Suoritus s = new Suoritus() { email = email, tehtavaid = 10 };
-                    var data = JsonConvert.SerializeObject(s);
-                    using (var client = new HttpClient())
-                    {
-                        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                        var content = new StringContent(data, UTF8Encoding.UTF8, "application/json");
-                        content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-                        var response = client.PostAsync(URL, content).Result;
-                        var json = response.Content.ReadAsStringAsync().Result;
-                    }
+                    Suoritus suoritus = new Suoritus() { email = email, tehtavaid = 10 };
+                    TehtävänLähetys.Tarkista(suoritus);
                 }
             }
             else
@@ -77,10 +69,5 @@ namespace KoodinenV1.Controllers
         }
         
     }
-    class Suoritus
-    {
-        public string email { get; set; }
-        public int tehtavaid { get; set; }
-
-    }
+    
 }
