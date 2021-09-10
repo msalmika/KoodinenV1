@@ -58,7 +58,7 @@ namespace KoodinenV1.Controllers
                             am.LisääAdminSessioon(this.HttpContext.Session, id);
                             return RedirectToAction("AdminPääsivu", "Admin");
                         }
-                        return RedirectToAction("Profiili", "Kayttaja", new { Id = id});
+                        return RedirectToAction("Profiili", "Kayttaja");
                     }
                 }
                 else
