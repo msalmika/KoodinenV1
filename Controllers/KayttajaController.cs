@@ -62,7 +62,6 @@ namespace KoodinenV1.Controllers
             {
                 ViewBag.Viesti = viesti;
             }
-            return View(käyttäjä);
 
             ViewBag.kesken = kesken;
             ViewBag.suoritetut = suoritetut/*tehdyt*/;
