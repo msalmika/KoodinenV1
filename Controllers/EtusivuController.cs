@@ -48,8 +48,10 @@ namespace KoodinenV1.Controllers
                 if (kirjautuja != null && kirjautuja.Email == email && kirjautuja.Salasana == am.HashSalasana(salasana))
                 {
                     id = kirjautuja.KayttajaId;
-                    HttpContext.Session.SetInt32("id", kirjautuja.KayttajaId);
-                    if (am.KäyttäjäOnOlemassa(id))
+                    var k = am.HaeKäyttäjä(kirjautuja.KayttajaId);
+                    HttpContext.Session.SetInt32("id", k.KayttajaId);
+                    HttpContext.Session.SetString("email", k.Email);
+                    if (am.KäyttäjäOnOlemassa(id) == true)
                     {
                         if (am.KäyttäjäOnAdmin(id))
                         {
