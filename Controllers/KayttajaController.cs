@@ -35,10 +35,38 @@ namespace KoodinenV1.Controllers
 
             Apumetodit am = new Apumetodit(_context);
             var käyttäjä = am.HaeKäyttäjä(id);
+
+            KoodinenDBContext db = _context;
+
+            //var kurssisuoritukset = (from x in _context.KurssiSuoritus
+            //                         join k in _context.Kurssis on x.KurssiId equals k.KurssiId
+            //                         where x.KayttajaId == id
+            //                         orderby x.SuoritusPvm
+            //                         select new { Kurssi = k.Nimi, ID = x.KurssiId, Kuvaus = k.Kuvaus, SuoritusPvm = x.SuoritusPvm }).ToList();
+
+            var käyt = db.Kayttajas.Where(k => k.KayttajaId == id).FirstOrDefault();
+            db.Entry(käyt).Collection(ku => ku.Kurssis).Load();
+            db.Entry(käyt).Collection(s => s.KurssiSuoritus).Load();
+            db.Entry(käyt).Collection(o => o.OppituntiSuoritus).Load();
+            db.Entry(käyt).Collection(t => t.TehtavaSuoritus).Load();
+
+            foreach (var kurssi in käyt.Kurssis)
+            {
+                db.Entry(kurssi).Collection(x => x.Oppituntis).Load();
+                foreach (var oppitunti in kurssi.Oppituntis)
+                {
+                    db.Entry(oppitunti).Collection(x => x.Tehtavas).Load();
+                }
+            }
+
+            var tehdyt = käyt.KurssiSuoritus.Where(y => y.Kesken == false).ToList();
+            var kesken = käyt.KurssiSuoritus.Where(x => x.Kesken == true).ToList();
+
+            ViewBag.kesken = kesken;
+            ViewBag.suoritetut = tehdyt;
+
             return View(käyttäjä);
 
-
-            
         }
         public async Task<IActionResult> Muokkaa(int? id)
         {

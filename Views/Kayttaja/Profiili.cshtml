@@ -2,8 +2,8 @@
 
 @{
     ViewData["Title"] = "Profiili";
-    var kurssisuoritukset = ViewBag.kurssisuoritukset;
-    var keskeneräiset = ViewBag.keskeneräiset;
+    var suoritetut = ViewBag.tehdyt;
+    var kesken= ViewBag.kesken;
 
 }
 
@@ -25,12 +25,6 @@
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Email)
         </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.OnAdmin)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.OnAdmin)
-        </dd>
     </dl>
 </div>
 <br />
@@ -40,10 +34,10 @@
 </div>
 <br />
 <br />
-@*<h6 font="bold">Kurssisuoritukset</h6>
+<h6 font="bold">Kurssisuoritukset</h6>
 <br />
 <ul>
-    @foreach (var item in kurssisuoritukset)
+    @foreach (var item in suoritetut)
     {
 
         <li>
@@ -65,8 +59,24 @@
         </li>
 
     }
+    @foreach (var item in kesken)
+    {
+
+        <li>
+            @item.Nimi
+        </li>
 
 
-</ul>*@
+        <li>
+            @item.KurssiId
+        </li>
+
+        <li>
+            @item.Kesken
+        </li>
+
+    }
+
+</ul>
 
 
