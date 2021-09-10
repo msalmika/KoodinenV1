@@ -30,15 +30,36 @@ namespace KoodinenV1.Controllers
         }
 
        
-        public IActionResult Profiili(int id)
+        public IActionResult Profiili()
         {
-
+            int id = HttpContext.Session.GetInt32("id") ?? 0;
             Apumetodit am = new Apumetodit(_context);
             var käyttäjä = am.HaeKäyttäjä(id);
+            
+            if (id == 0)
+            {
+                return RedirectToAction("Kirjautuminen","Etusivu");
+            }
+
+            var suoritetut = (from x in _context.KurssiSuoritus
+                                join k in _context.Kurssis on x.KurssiId equals k.KurssiId
+                                where x.KayttajaId == id && x.Kesken == false
+                                orderby x.SuoritusPvm
+                                select new ProfiiliViewModel { Nimi = k.Nimi, SuoritusPVM = x.SuoritusPvm }).ToList();
+
+            var kesken = (from x in _context.KurssiSuoritus
+                          join k in _context.Kurssis on x.KurssiId equals k.KurssiId
+                          where x.KayttajaId == id && x.Kesken == true
+                          orderby x.SuoritusPvm
+                          select new ProfiiliViewModel{ Nimi = k.Nimi}).ToList();
+
+
+
+            ViewBag.kesken = kesken;
+            ViewBag.suoritetut = suoritetut/*tehdyt*/;
+
             return View(käyttäjä);
 
-
-            
         }
         public async Task<IActionResult> Muokkaa(int? id)
         {
