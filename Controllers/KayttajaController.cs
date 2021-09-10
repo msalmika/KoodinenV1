@@ -51,7 +51,7 @@ namespace KoodinenV1.Controllers
                                 orderby x.SuoritusPvm
                                 select new ProfiiliViewModel { Nimi = k.Nimi, SuoritusPVM = x.SuoritusPvm }).ToList();
 
-            var kesken = (from x in _context.KurssiSuoritus
+            var aloitettu = (from x in _context.KurssiSuoritus
                           join k in _context.Kurssis on x.KurssiId equals k.KurssiId
                           where x.KayttajaId == id && x.Kesken == true
                           orderby x.SuoritusPvm
@@ -62,10 +62,9 @@ namespace KoodinenV1.Controllers
             {
                 ViewBag.Viesti = viesti;
             }
-            return View(käyttäjä);
 
-            ViewBag.kesken = kesken;
-            ViewBag.suoritetut = suoritetut/*tehdyt*/;
+            ViewBag.aloitettu = aloitettu;
+            ViewBag.suoritetut = suoritetut;
 
             return View(käyttäjä);
 
