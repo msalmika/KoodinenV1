@@ -32,32 +32,33 @@ namespace KoodinenV1.Controllers
        
         public IActionResult Profiili(int id)
         {
-            id = 1; // kovakoodattu, korvataan
+            //id = 1; // kovakoodattu, korvataan
             //Kayttaja kayttaja = new();
 
-           /* HttpContext.Session.SetInt32("id", kayttaja.KayttajaId); */// KORVAAMAAN KOVAKOODIA
-            
+            /* HttpContext.Session.SetInt32("id", kayttaja.KayttajaId); */// KORVAAMAAN KOVAKOODIA
+
             //kayttaja.KayttajaId = id;
             //KoodinenDBContext db = _context;
             // käyttäjän tiedot
-            var käyttäjä = (from k in _context.Kayttajas
-                           where k.KayttajaId == id
-                           select k).FirstOrDefault();
+            
+            //var käyttäjä = (from k in _context.Kayttajas
+            //               where k.KayttajaId == id
+            //               select k).FirstOrDefault();
 
 
-            var kurssisuoritukset = from x in _context.KurssiSuoritus
-                                         where x.KayttajaId == id
-                                         select x;
+            //var kurssisuoritukset = from x in _context.KurssiSuoritus
+            //                             where x.KayttajaId == id
+            //                             select x;
 
-            ViewBag.oppituntisuoritukset = (from z in _context.OppituntiSuoritus
-                                            where z.KayttajaId == id
-                                            select z).FirstOrDefault();
+            //ViewBag.oppituntisuoritukset = (from z in _context.OppituntiSuoritus
+            //                                where z.KayttajaId == id
+            //                                select z).FirstOrDefault();
 
-            ViewBag.tehtäväsuoritukset = (from t in _context.TehtavaSuoritus
-                                         where t.KayttajaId == id
-                                         select t).FirstOrDefault();
+            //ViewBag.tehtäväsuoritukset = (from t in _context.TehtavaSuoritus
+            //                             where t.KayttajaId == id
+            //                             select t).FirstOrDefault();
 
-            ViewBag.kurssisuoritukset = kurssisuoritukset.ToList();
+            //ViewBag.kurssisuoritukset = kurssisuoritukset.ToList();
             //haetaaan käyttäjän suoritukset
             //foreach (var x in käyttäjä)
             //{
@@ -71,7 +72,8 @@ namespace KoodinenV1.Controllers
             //{
             //    _context.Entry(x).Collection(e => e.TehtavaSuoritus).Load();
             //}
-
+            Apumetodit am = new Apumetodit(_context);
+            var käyttäjä = am.HaeKäyttäjä(id);
 
             return View(käyttäjä);
         }
@@ -95,10 +97,12 @@ namespace KoodinenV1.Controllers
         /// Lähettää kirjautuneen henkilön pävitetyt tiedot muokkauksen lomakkeesta
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Muokkaa(int id, [Bind("KayttajaId,Nimi,Email,Salasana")] Kayttaja kayttaja)
+        public async Task<IActionResult> Muokkaa(int id, string nimi, string email)
         {
-            KoodinenV1.Apumetodit am = new Apumetodit(_context);
-            if (id != kayttaja.KayttajaId)
+
+            Apumetodit am = new Apumetodit(_context);
+            var kayttaja = am.HaeKäyttäjä(id);
+            if (kayttaja == null)
             {
                 return NotFound();
             }
@@ -107,13 +111,14 @@ namespace KoodinenV1.Controllers
             {
                 try
                 {
-                    kayttaja.Salasana = am.HashSalasana(kayttaja.Salasana);
+                    kayttaja.Nimi = nimi;
+                    kayttaja.Email = email;
                     _context.Update(kayttaja);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!am.KäyttäjäOnOlemassa(kayttaja.KayttajaId))
+                    if (!am.KäyttäjäOnOlemassa(id))
                     {
                         return NotFound();
                     }
@@ -122,7 +127,7 @@ namespace KoodinenV1.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Profiili), new { id = kayttaja.KayttajaId });
+                return RedirectToAction(nameof(Profiili), new { id = id });
             }
             return View(kayttaja);
         }

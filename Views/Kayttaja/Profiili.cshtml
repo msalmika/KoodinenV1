@@ -14,55 +14,60 @@
     <h4>Opiskelija</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Nimi)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Nimi)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Email)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Email)
         </dd>
-        <dt class = "col-sm-2">
+        @*<dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Salasana)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Salasana)
-        </dd>
+        </dd>*@
     </dl>
 </div>
-<h6 font="bold">Kurssisuoritukset</h6>
+<br />
+<br />
+<div>
+    <a asp-action="Muokkaa" asp-route-id="@Model.KayttajaId">Muokkaa</a>
+</div>
+<br />
+<br />
+@*<h6 font="bold">Kurssisuoritukset</h6>
 <br />
 <ul>
     @foreach (var item in kurssisuoritukset)
-     {
-        
-            <li>
-                @item.Kurssi.Nimi
-            </li>
-      
-        
-            <li>
-                @item.KurssiId
-            </li>
-        
-        
-            <li>
-                @item.KurssiSuoritusId
-            </li>
-        
-            <li>
-                @item.SuoritusPvm
-            </li>
-        
-     }
+    {
+
+        <li>
+            @item.Kurssi.Nimi
+        </li>
 
 
-</ul>
+        <li>
+            @item.KurssiId
+        </li>
 
-<div>
-    @*<a asp-action="Muokkaa" asp-route-id="@Model.KayttajaId">Muokkaa profiilia</a>*@ 
-</div>
+
+        <li>
+            @item.KurssiSuoritusId
+        </li>
+
+        <li>
+            @item.SuoritusPvm
+        </li>
+
+    }
+
+
+</ul>*@
+
+
