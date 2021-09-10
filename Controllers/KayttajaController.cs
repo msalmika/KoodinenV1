@@ -30,11 +30,12 @@ namespace KoodinenV1.Controllers
         }
 
        
-        public IActionResult Profiili(int id)
+        public IActionResult Profiili(string email)
         {
 
             Apumetodit am = new Apumetodit(_context);
-            var käyttäjä = am.HaeKäyttäjä(id);
+            var käyttäjä = am.HaeKäyttäjä(email);
+            int? id = HttpContext.Session.GetInt32("id");
 
             KoodinenDBContext db = _context;
 
