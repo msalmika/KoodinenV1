@@ -5,7 +5,6 @@
     var kurssisuoritukset = ViewBag.kurssisuoritukset;
     var keskeneräiset = ViewBag.keskeneräiset;
 
-
 }
 
 <h3>Profiili</h3>
@@ -27,12 +26,6 @@
             @Html.DisplayFor(model => model.Email)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Salasana)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Salasana)
-        </dd>
-        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.OnAdmin)
         </dt>
         <dd class="col-sm-10">
@@ -40,20 +33,40 @@
         </dd>
     </dl>
 </div>
-<h6 font="bold">Kurssisuoritukset</h6>
+<br />
+<br />
+<div>
+    <a asp-action="Muokkaa" asp-route-id="@Model.KayttajaId">Muokkaa</a>
+</div>
+<br />
+<br />
+@*<h6 font="bold">Kurssisuoritukset</h6>
+<br />
 <ul>
     @foreach (var item in kurssisuoritukset)
-     {
-    <li style="font-weight:bold">
-        Kurssi(suoritettu):   @*@item.Nimi*@(@item.SuoritusPvm) @*KESKEN*@
-    </li>
-     }
-</ul>
+    {
+
+        <li>
+            @item.Kurssi.Nimi
+        </li>
 
 
+        <li>
+            @item.KurssiId
+        </li>
 
 
-@*<div>
-    <a asp-action="Edit" asp-route-id="@Model.KayttajaId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>*@
+        <li>
+            @item.KurssiSuoritusId
+        </li>
+
+        <li>
+            @item.SuoritusPvm
+        </li>
+
+    }
+
+
+</ul>*@
+
+

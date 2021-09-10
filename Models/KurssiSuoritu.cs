@@ -11,6 +11,7 @@ namespace KoodinenV1.Models
         public DateTime? SuoritusPvm { get; set; }
         public int? KayttajaId { get; set; }
         public int? KurssiId { get; set; }
+        public bool? Kesken { get; set; }
 
         public virtual Kayttaja Kayttaja { get; set; }
         public virtual Kurssi Kurssi { get; set; }

@@ -40,12 +40,11 @@ namespace KoodinenV1.Controllers
         public IActionResult Kirjautuminen(string email, string salasana)
         {
             int id = 0;
-            KoodinenV1.Apumetodit am = new Apumetodit(_context);
-
-            var kirjautuja = _context.Kayttajas.Where(k => k.Email == email).FirstOrDefault();
+            Apumetodit am = new Apumetodit(_context);
 
             if (!(string.IsNullOrEmpty(email) || string.IsNullOrEmpty(salasana)))
             {
+                var kirjautuja = am.HaeKäyttäjä(email);
                 if (kirjautuja != null && kirjautuja.Email == email && kirjautuja.Salasana == am.HashSalasana(salasana))
                 {
                     id = kirjautuja.KayttajaId;
@@ -54,13 +53,12 @@ namespace KoodinenV1.Controllers
                     HttpContext.Session.SetString("email", k.Email);
                     if (am.KäyttäjäOnOlemassa(id) == true)
                     {
-
-                        if (am.KäyttäjäOnAdmin(id) == true)
+                        if (am.KäyttäjäOnAdmin(id))
                         {
                             am.LisääAdminSessioon(this.HttpContext.Session, id);
                             return RedirectToAction("AdminPääsivu", "Admin");
                         }
-                        return RedirectToAction("Profiili", "Kayttaja");
+                        return RedirectToAction("Profiili", "Kayttaja", new { Id = id});
                     }
                 }
                 else
