@@ -176,7 +176,22 @@ namespace KoodinenV1.Models
                 entity.HasOne(d => d.Oppitunti)
                     .WithMany(p => p.OppituntiSuoritus)
                     .HasForeignKey(d => d.OppituntiId)
-                    .HasConstraintName("FK__Oppitunti__oppit__30F848ED");
+                    .HasConstraintName("FK__Oppitunti__oppit__693CA210");
+            });
+
+            modelBuilder.Entity<Palaute>(entity =>
+            {
+                entity.ToTable("Palaute");
+
+                entity.Property(e => e.PalauteId).HasColumnName("Palaute_id");
+
+                entity.Property(e => e.Lahettaja).HasMaxLength(50);
+
+                entity.Property(e => e.Pvm)
+                    .HasColumnType("date")
+                    .HasColumnName("PVM");
+
+                entity.Property(e => e.Teksti).HasMaxLength(2000);
             });
 
             modelBuilder.Entity<Tehtava>(entity =>
