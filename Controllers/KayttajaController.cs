@@ -184,7 +184,7 @@ namespace KoodinenV1.Controllers
         public IActionResult KurssistaAloitetut(int id,/*[FromForm]*/int kurssiId)
         {
             id = HttpContext.Session.GetInt32("id") ?? 0;
-            kurssiId = 4; // otetaan myöhemmin postista
+           /* kurssiId = 4;*/ // otetaan myöhemmin postista
 
             KoodinenDBContext db = _context;
 
@@ -201,23 +201,44 @@ namespace KoodinenV1.Controllers
                 }
             }
 
-            var kurssinimi = (from x in db.Kurssis
-                              where x.KurssiId == kurssiId
-                              select x.Nimi).FirstOrDefault();
+            //var kurssinimi = (from x in db.Kurssis
+            //                  where x.KurssiId == kurssiId
+            //                  select x.Nimi).FirstOrDefault();
             
-            //var suoritetut 
-            var kaikkioppit= db.Oppituntis.Where(x => x.KurssiId == kurssiId).ToList();
-            var keskenoppit = db.OppituntiSuoritus.Where(o => o.Oppitunti.KurssiId != kurssiId).ToList();
+            var tehdytoppit= db.OppituntiSuoritus.Where(x => x.Kesken == false).ToList();
+            var keskenoppit = db.OppituntiSuoritus.Where(o => o.Kesken == true).ToList();
             var kaikkiteht = db.Tehtavas.ToList();
-            //var keskenteht = db.Tehtavas.Where(t=>t.TehtavaSuoritus.Where(s=>s.K)
 
+            var tehdytteht = new List<Tehtava>();
+            var keskenteht = new List<Tehtava>();
 
-            ViewBag.kurssinimi = kurssinimi.ToString();  /*"C# perusteet";*/ // myöhemmin 
-            ViewBag.kaikkioppit = kaikkioppit;
+            for (int i = 0; i < kaikkiteht.Count; i++)
+            {
+                foreach(var item in tehdytoppit)
+                {
+                    if(item.OppituntiId == kaikkiteht[i].OppituntiId)
+                    {
+                        tehdytteht.Add(kaikkiteht[i]);
+                    }
+                }
+            }
+            for (int i = 0; i < kaikkiteht.Count; i++)
+            {
+                foreach (var item in keskenoppit)
+                {
+                    if (item.OppituntiId == kaikkiteht[i].OppituntiId)
+                    {
+                        keskenteht.Add(kaikkiteht[i]);
+                    }
+                }
+            }
+
+            //ViewBag.kurssinimi = kurssinimi.ToString();
+            ViewBag.tehdytoppit = tehdytoppit;
             ViewBag.keskenoppit = keskenoppit;
-            ViewBag.kaikkiteht = kaikkiteht;
-            //ViewBag.keskenteht = keskenteht;
-           
+            ViewBag.tehdytteht = tehdytteht;
+            ViewBag.keskenteht = keskenteht;
+
             //ViewBag.nimi = käyttäjä.Nimi;
             //ViewBag.id = käyttäjä.KayttajaId;
 
