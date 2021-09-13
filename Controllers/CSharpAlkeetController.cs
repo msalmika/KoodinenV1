@@ -207,6 +207,18 @@ namespace KoodinenV1.Controllers
             _context.SaveChanges();
             return RedirectToAction($"Oppitunti{sivuNro}", new { OpViesti = "Onneksi olkoon! Oppitunti suoritettu onnistuneesti!" });
         }
+        public IActionResult Palaute()
+        {
+            ViewBag.Viesti = "Kiitos palautteestasi!";
+            return View();
+        }
+        [HttpPost]
+        public IActionResult Palaute(string teksti)
+        {
+            _context.Add(new Palaute() { Teksti = teksti });
+            _context.SaveChanges();
+            return View();
+        }
     }
     
 }
