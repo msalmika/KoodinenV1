@@ -18,9 +18,9 @@ namespace KoodinenV1.Controllers
     {
         
 
-        private readonly KoodinenDBContext _context;
+        private readonly dbKoodinenContext _context;
 
-        public CSharpAlkeetController(KoodinenDBContext context)
+        public CSharpAlkeetController(dbKoodinenContext context)
         {
             _context = context;
         }

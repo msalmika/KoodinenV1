@@ -12,9 +12,9 @@ namespace KoodinenV1
 {
     public class Apumetodit
     {
-        private readonly KoodinenDBContext _context;
+        private readonly dbKoodinenContext _context;
 
-        public Apumetodit(KoodinenDBContext context)
+        public Apumetodit(dbKoodinenContext context)
         {
             _context = context;
         }

@@ -16,13 +16,13 @@ namespace KoodinenV1.Controllers
 
         private readonly ILogger<RekisteröityminenController> _logger;
 
-        private readonly KoodinenDBContext _context;
+        private readonly dbKoodinenContext _context;
 
 
         private readonly IConfiguration _configuration;
         //
 
-        public KayttajaController(ILogger<RekisteröityminenController> logger, KoodinenDBContext context, IConfiguration configuration)
+        public KayttajaController(ILogger<RekisteröityminenController> logger, dbKoodinenContext context, IConfiguration configuration)
         {
             _logger = logger;
             _context = context;
@@ -186,7 +186,7 @@ namespace KoodinenV1.Controllers
             id = HttpContext.Session.GetInt32("id") ?? 0;
             kurssiId = 2; // otetaan myöhemmin postista
 
-            KoodinenDBContext db = _context;
+            dbKoodinenContext db = _context;
 
             var käyt = db.Kayttajas.Where(k => k.KayttajaId == id).FirstOrDefault();
             db.Entry(käyt).Collection(ku => ku.Kurssis).Load(); // kurssit
@@ -201,15 +201,21 @@ namespace KoodinenV1.Controllers
                 }
             }
 
-            var oppitunnit = db.Oppituntis.Where(x => x.KurssiId == kurssiId).ToList();
-            //var oppitunnit = db.Oppituntis.Where(x => x.OppituntiSuoritus.op.ToList(); // kesken, etsi keskeneröiset
+            var kurssinimi = from x in db.Kurssis
+                             where x.KurssiId == kurssiId
+                             select x.Nimi.FirstOrDefault();
+
+            var kaikkioppit= db.Oppituntis.Where(x => x.KurssiId == kurssiId).ToList();
             var keskenoppit = db.OppituntiSuoritus.Where(o => o.Oppitunti.KurssiId != kurssiId).ToList();
-            var tehtävät = db.Tehtavas.ToList();
+            var kaikkiteht = db.Tehtavas.ToList();
 
 
-            ViewBag.kurssinimi = "C# perusteet";
-            ViewBag.oppitunnit = oppitunnit;
-            ViewBag.tehtävät = tehtävät;
+            ViewBag.kurssinimi = kurssinimi.ToString();  /*"C# perusteet";*/ // myöhemmin 
+            ViewBag.kaikkioppit = kaikkioppit;
+            ViewBag.keskenoppit = keskenoppit;
+            ViewBag.kaikkiteht = kaikkiteht;
+            ViewBag.keskenteht = keskenteht;
+           
             //ViewBag.nimi = käyttäjä.Nimi;
             //ViewBag.id = käyttäjä.KayttajaId;
 

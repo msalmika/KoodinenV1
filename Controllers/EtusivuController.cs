@@ -15,11 +15,11 @@ namespace KoodinenV1.Controllers
     {
         private readonly ILogger<EtusivuController> _logger;
 
-        private readonly KoodinenDBContext _context;
+        private readonly dbKoodinenContext _context;
 
         private readonly IConfiguration _configuration;
         
-        public EtusivuController(ILogger<EtusivuController> logger, KoodinenDBContext context, IConfiguration configuration)
+        public EtusivuController(ILogger<EtusivuController> logger, dbKoodinenContext context, IConfiguration configuration)
         {
             _logger = logger;
             _context = context;

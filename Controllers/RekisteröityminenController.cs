@@ -16,13 +16,13 @@ namespace KoodinenV1.Controllers
     {
         private readonly ILogger<RekisteröityminenController> _logger;
 
-        private readonly KoodinenDBContext _context;
+        private readonly dbKoodinenContext _context;
 
 
         private readonly IConfiguration _configuration;
         //
 
-        public RekisteröityminenController(ILogger<RekisteröityminenController> logger, KoodinenDBContext context, IConfiguration configuration)
+        public RekisteröityminenController(ILogger<RekisteröityminenController> logger, dbKoodinenContext context, IConfiguration configuration)
         {
             _logger = logger;
             _context = context;
@@ -40,7 +40,7 @@ namespace KoodinenV1.Controllers
         public IActionResult Rekisteröityminen(string Nimi, string Email, string Salasana, string tarkistaSalasana)
         {
             Apumetodit am = new Apumetodit(_context);
-            KoodinenDBContext db = _context;
+            dbKoodinenContext db = _context;
             //Tarkistetaan että jokaisessa kentässä on tekstiä, email on uniikki, salasanat täsmäävät ja salasana on tietyn mallinen
             if (!string.IsNullOrWhiteSpace(Nimi) && !string.IsNullOrWhiteSpace(Email) && !string.IsNullOrWhiteSpace(Salasana) && !string.IsNullOrWhiteSpace(tarkistaSalasana))
             {
