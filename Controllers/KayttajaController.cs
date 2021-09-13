@@ -184,7 +184,7 @@ namespace KoodinenV1.Controllers
         public IActionResult KurssistaAloitetut(int id,/*[FromForm]*/int kurssiId)
         {
             id = HttpContext.Session.GetInt32("id") ?? 0;
-            kurssiId = 2; // otetaan myöhemmin postista
+            kurssiId = 4; // otetaan myöhemmin postista
 
             KoodinenDBContext db = _context;
 
@@ -201,10 +201,11 @@ namespace KoodinenV1.Controllers
                 }
             }
 
-            var kurssinimi = from x in db.Kurssis
-                             where x.KurssiId == kurssiId
-                             select x.Nimi.FirstOrDefault();
-
+            var kurssinimi = (from x in db.Kurssis
+                              where x.KurssiId == kurssiId
+                              select x.Nimi).FirstOrDefault();
+            
+            //var suoritetut 
             var kaikkioppit= db.Oppituntis.Where(x => x.KurssiId == kurssiId).ToList();
             var keskenoppit = db.OppituntiSuoritus.Where(o => o.Oppitunti.KurssiId != kurssiId).ToList();
             var kaikkiteht = db.Tehtavas.ToList();
