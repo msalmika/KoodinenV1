@@ -26,7 +26,7 @@ namespace KoodinenV1
         public void ConfigureServices(IServiceCollection services)
         {
             //Connectionstring context 
-            services.AddDbContext<dbKoodinenContext>(options =>
+            services.AddDbContext<KoodinenDBContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("KoodinenDB")));
             services.AddControllers();
             

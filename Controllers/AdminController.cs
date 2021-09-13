@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 namespace KoodinenV1.Controllers
 {
     public class AdminController : Controller
-    {dbKoodinenContext _context;
+    {KoodinenDBContext _context;
 
-        public AdminController(dbKoodinenContext context)
+        public AdminController(KoodinenDBContext context)
         {
             _context = context;
         }

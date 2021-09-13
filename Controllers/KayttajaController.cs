@@ -16,13 +16,13 @@ namespace KoodinenV1.Controllers
 
         private readonly ILogger<RekisteröityminenController> _logger;
 
-        private readonly dbKoodinenContext _context;
+        private readonly KoodinenDBContext _context;
 
 
         private readonly IConfiguration _configuration;
         //
 
-        public KayttajaController(ILogger<RekisteröityminenController> logger, dbKoodinenContext context, IConfiguration configuration)
+        public KayttajaController(ILogger<RekisteröityminenController> logger, KoodinenDBContext context, IConfiguration configuration)
         {
             _logger = logger;
             _context = context;
@@ -186,7 +186,7 @@ namespace KoodinenV1.Controllers
             id = HttpContext.Session.GetInt32("id") ?? 0;
             kurssiId = 2; // otetaan myöhemmin postista
 
-            dbKoodinenContext db = _context;
+            KoodinenDBContext db = _context;
 
             var käyt = db.Kayttajas.Where(k => k.KayttajaId == id).FirstOrDefault();
             db.Entry(käyt).Collection(ku => ku.Kurssis).Load(); // kurssit
