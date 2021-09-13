@@ -45,18 +45,9 @@
 </div>
 
 <button class="btn btn-outline-primary" style="margin-left:20px">@Html.ActionLink("Rekisteröi oppitunti", "RekisteröiOppitunti", null, new { opId = 11, sivuNro = 3 })</button>
-
-
-<button class="btn btn-outline-primary" style="margin-left:20px">@Html.ActionLink("Rekisteröi kurssi", "RekisteröiKurssi", null, new { opId = 11, sivuNro = 3 })</button>
 <p>
     @if (ViewBag.OpViesti != null)
     {
         <a style="color:red">@ViewBag.OpViesti</a>
-    }
-</p>
-<p>
-    @if (ViewBag.Viesti != null)
-    {
-        <a style="color:red">@ViewBag.Viesti</a>
     }
 </p>
