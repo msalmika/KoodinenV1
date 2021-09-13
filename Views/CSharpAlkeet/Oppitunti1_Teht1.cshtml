@@ -18,11 +18,8 @@
 <h3>Tehtävä 1: Hello World!</h3>
 <p>
     "Hello World!"" on eräs ohjelmointiin liittyvistä clichéistä ja usein ensimmäisiä asioita joita uudelle
-    ohjelmoijalle/koodarille opetetaan. Näin teemme myös me. Tekstin "Hei maailma!" tulostukseen käytetään komentoa <b>Console.WriteLine("Hei maailma!");.</b>
+    ohjelmoijalle/koodarille opetetaan. Näin teemme myös me. Tekstin "Hei maailma!" tulostukseen käytetään komentoa <b>Console.WriteLine("Hei maailma!");</b>.
     Komento toimii vain, jos jokainen merkki on täsmälleen samanlailla, eli isot kirjaimet ja symbolit ovat kaikki juuri niinkuin ohjeessa.
-</p>
-<p>
-
 </p>
 
 
@@ -47,37 +44,34 @@
 
     @if (ViewBag.Tekstialue != "Virhe" && ViewBag.Tekstialue != null)
     {
-        <h4 style="color: forestgreen;padding:20px">Tehtävä oikein!</h4>
+        <h4 style="color: forestgreen;padding:20px">Tehtävä oikein!<input type="button" value="Seuraava tehtävä" class="btn btn-outline-success" onclick="location.href='@Url.Action("Oppitunti1_Teht2")'" style="float: right" /></h4>
         <p>
-            Klikkaa oikealta päästäksesi seuraavaan tehtävään!
-            Voit myös kokeilla vaihtaa Hei maailman tilalle, mitä vain tekstiä
+            Alla on vielä yhteenveto ja klikkaamalla oikealta pääset seuraavaan tehtävään!
+            Voit myös kokeilla vaihtaa "Hei maailma":n tilalle, mitä vain tekstiä
             ja kokeilla kuinka se tulostuu Consoleen.
         </p>
-    }
+        <h4><b>Yhteenveto</b></h4>
+        <br />
+        <div>
+            <p>
+                Konsolikomennot (Console."komento") ovat aloittelevalle koodarille helpoin tapa tutustua ohjelmointikielen (eli syntaksin) kirjoittamiseen,
+                sillä koodiin kirjoitetut komennot visualisoituvat konsoli-ikkunaan.
+                Konsolille suunnatut komennot toteutetaan ohjelmointisovelluksissa Konsoli-metodiluokan välittämänä,
+                joka visualisoi komennon tuloksen Windows Command Prompt -komentoikkunaan ("cmd").
+                Komentoikkunaan tuotettua tulosta kutsutaan printiksi.
+            </p>
+            <p>
+                Tässä oppitunnissa kirjoitimme C#-syntaksin mukaisen WriteLine -konsolikomennon: Console.WriteLine(SYÖTE),
+                joka printtasi annetun syötteen mukaisen tekstin tuloskenttään.
+                Seuraavassa oppitunnissa tutustumme konsoliprintin tallentamiseen C#-muuttujaksi ohjelmointisovelluksen koodiin.
+            </p>
+        </div>
+}
     @if (ViewBag.Tekstialue == "Virhe")
     {
         <div style="color:red">
             Jotakin meni pieleen! Lue tehtävän anto huolellisesti ja yritä uudelleen.
         </div>
     }
-</div>
-<br />
-<b>Yhteenveto</b>
-<br />
-<br />
-<div>
-    <p>
-        Konsolikomennot (Console."komento") ovat aloittelevalle koodarille helpoin tapa tutustua ohjelmointikielen (eli syntaksin) kirjoittamiseen,
-        sillä koodiin kirjoitetut komennot visualisoituvat konsoli-ikkunaan.
-        Konsolille suunnatut komennot toteutetaan ohjelmointisovelluksissa Konsoli-metodiluokan välittämänä,
-        joka visualisoi komennon tuloksen Windows Command Prompt -komentoikkunaan ("cmd").
-        Komentoikkunaan tuotettua tulosta kutsutaan printiksi.
-    </p>
-    <p>
-        Tässä oppitunnissa kirjoitimme C#-syntaksin mukaisen WriteLine -konsolikomennon: Console.WriteLine(SYÖTE),
-        joka printtasi annetun syötteen mukaisen tekstin tuloskenttään.
-        Seuraavassa oppitunnissa tutustumme konsoliprintin tallentamiseen C#-muuttujaksi ohjelmointisovelluksen koodiin.
-    </p>
-    @Html.ActionLink("-> Tehtävä 2: Konsolilta lukeminen.", "Oppitunti1_Teht2", "CSharpAlkeet")
 </div>
 
