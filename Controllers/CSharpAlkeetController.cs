@@ -28,6 +28,7 @@ namespace KoodinenV1.Controllers
         public IActionResult Esittely(string viesti = null)
         {
             int? id = HttpContext.Session.GetInt32("id");
+            ViewBag.id = id;
             ViewBag.Viesti = viesti;
             return View();
         }
@@ -36,16 +37,16 @@ namespace KoodinenV1.Controllers
             int? id = HttpContext.Session.GetInt32("id");
             if (id == null)
             {
-                return RedirectToAction("Esittely", new { viesti = "Kurssille rekisteröityminen vaatii sivulle kirjautumisen!" });
+                return RedirectToAction("Esittely", new { viesti = "Kurssille rekisteröityminen vaatii sivulle kirjautumisen, " });
             }
             if (_context.KurssiSuoritus.Where(k => k.KayttajaId == id && k.KurssiId == 4 && k.Kesken == false) == null && 
                 _context.KurssiSuoritus.Where(k => k.KayttajaId == id && k.KurssiId == 4 && k.Kesken == true) == null)
             {
                 _context.KurssiSuoritus.Add(new KurssiSuoritu() { KayttajaId = id, Kesken = true, KurssiId = 4, SuoritusPvm = DateTime.Today });
                 _context.SaveChanges();
-                return RedirectToAction("Oppitunti1");
+                return RedirectToAction("Oppitunti1_Teht1");
             }
-                return RedirectToAction("Esittely", new { viesti = "Olet jo ilmoittautunut tai suorittanut kurssin" });
+            return RedirectToAction("Esittely", new { viesti = "Olet jo ilmoittautunut tai suorittanut kurssin" });
         }
         public IActionResult Oppitunti1_Teht1()
         {
