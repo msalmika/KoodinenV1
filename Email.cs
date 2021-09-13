@@ -20,7 +20,7 @@ namespace KoodinenV1
             _context = context;
         }
 
-        public bool LähetäEmail(string vastaanottajaEmail, string vastaanottajanNimi)
+        public bool LähetäEmail(string vastaanottajaEmail, string vastaanottajanNimi, string salasana)
         {
             try
             {
@@ -38,7 +38,7 @@ namespace KoodinenV1
                 };
                 smtpClient.EnableSsl = true;
 
-                var viesti = LuoViesti(vastaanottajanNimi);
+                var viesti = LuoViesti(vastaanottajanNimi, salasana);
 
                 mailMessage.BodyEncoding = System.Text.Encoding.UTF8;
                 mailMessage.IsBodyHtml = true;
@@ -52,7 +52,7 @@ namespace KoodinenV1
             return true;
         }
 
-        private string LuoViesti(string nimi)
+        private string LuoViesti(string nimi, string salasana)
         {
             StringBuilder sb = new StringBuilder();
             sb.AppendLine(@"<!DOCTYPE html>
@@ -67,7 +67,11 @@ namespace KoodinenV1
                                 <body style=""max-width: 80%"">");
             sb.AppendLine(@$"<h4>Kiitos rekisteröitymisestäsi Koodiseen, {nimi}!</h4>");
             sb.AppendLine("</br>");
-            sb.AppendLine("<p>Tervetuloa oppimaan koodaamisen saloja Koodisen kurssien avulla! :)</p>");
+            sb.AppendLine("<p>Tervetuloa oppimaan koodaamisen saloja Koodisen kurssien avulla!</p>");
+            sb.AppendLine("</br></br>");
+            sb.AppendLine($"<p>Käyttäjätunnuksesi on sähköpostiosoitteesi, ja salasanasi on <b>{salasana}</b>. Vaihdathan salasanasi, kun ensimmäisen kerran kirjaudut sisään. Pääset vaihtamaan salasanasi profiili-sivultasi.</p>");
+            sb.AppendLine("</br></br>");
+            sb.AppendLine("<p>Hyviä oppimishetkiä Koodisen kurssien parissa! :)</p>");
             sb.AppendLine("</br></br>");
             sb.AppendLine("<p>Ystävällisin terveisin,</p>");
             sb.AppendLine("</br></br>");

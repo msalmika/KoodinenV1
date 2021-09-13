@@ -338,6 +338,39 @@ namespace KoodinenV1
             }
             return true;
         }
+        public string LuoSalasana()
+        {
+            int kirjainLkm = 5;
+            int erikoismerkkiLkm = 1;
+            int numeroLkm = 2;
+            List<char> kaikkiMerkit = new List<char>();
+            for (int i = 33; i < 127; i++)
+            {
+                kaikkiMerkit.Add((char)i);
+            }
 
+            var kaikkiKirjaimet = kaikkiMerkit.Where(c => Char.IsLetter(c)).Select(c => c).ToList();
+            var kaikkiErikoismerkit = new List<char>() { '!', '?', '#'};
+            var kaikkiNumerot = kaikkiMerkit.Where(c => Char.IsDigit(c)).Select(c => c).ToList();
+
+            Random rnd = new Random();
+            List<char> salasananMerkit = new List<char>();
+
+            for (int i = 0; i < kirjainLkm; i++)
+            {
+                salasananMerkit.Add(kaikkiKirjaimet[rnd.Next(kaikkiKirjaimet.Count)]);
+            }
+            for (int i = 0; i < erikoismerkkiLkm; i++)
+            {
+                salasananMerkit.Add(kaikkiErikoismerkit[rnd.Next(kaikkiErikoismerkit.Count)]);
+            }
+            for (int i = 0; i < numeroLkm; i++)
+            {
+                salasananMerkit.Add(kaikkiNumerot[rnd.Next(kaikkiNumerot.Count)]);
+            }
+            var salasana = new String(salasananMerkit.OrderBy(a => rnd.Next()).ToArray());
+            return salasana;
+
+        }
     }
 }
