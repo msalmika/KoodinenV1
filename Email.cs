@@ -38,7 +38,7 @@ namespace KoodinenV1
                 };
                 smtpClient.EnableSsl = true;
 
-                var viesti = LuoViesti(vastaanottajaEmail, vastaanottajanNimi);
+                var viesti = LuoViesti(vastaanottajanNimi);
 
                 mailMessage.BodyEncoding = System.Text.Encoding.UTF8;
                 mailMessage.IsBodyHtml = true;
@@ -52,19 +52,29 @@ namespace KoodinenV1
             return true;
         }
 
-        private string LuoViesti(string vastaanottajaEmail, string nimi)
+        private string LuoViesti(string nimi)
         {
             StringBuilder sb = new StringBuilder();
+            sb.AppendLine(@"<!DOCTYPE html>
+                                <html lang=""en"">
+                                <head>
+                                    <meta charset=""UTF-8"">
+                                    <meta http-equiv=""X-UA-Compatible"" content=""IE=edge"">
+                                    <meta name=""viewport"" content=""width=device-width, initial-scale=1.0"">
+                                    <title> Document </title>
+                                    <link rel=""stylesheet"" href=""https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"" integrity=""sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"" crossorigin=""anonymous"">
+                                </head>
+                                <body style=""max-width: 80%"">");
             sb.AppendLine(@$"<h4>Kiitos rekisteröitymisestäsi Koodiseen, {nimi}!</h4>");
             sb.AppendLine("</br>");
-            sb.AppendLine("Tervetuloa oppimaan koodaamisen saloja Koodisen kurssien avulla! :)");
-            sb.AppendLine("</br>");
-            sb.AppendLine("");
-            sb.AppendLine("Ystävällsin terveisin,");
-            sb.AppendLine("</br>");
-            sb.AppendLine("");
-            sb.AppendLine("Koodisen tiimi");
-            return null;
+            sb.AppendLine("<p>Tervetuloa oppimaan koodaamisen saloja Koodisen kurssien avulla! :)</p>");
+            sb.AppendLine("</br></br>");
+            sb.AppendLine("<p>Ystävällisin terveisin,</p>");
+            sb.AppendLine("</br></br>");
+            sb.AppendLine(@"<p>Koodisen tiimi</p>
+                        </body>
+                        </html>");
+            return sb.ToString();
         }
     }
 }
