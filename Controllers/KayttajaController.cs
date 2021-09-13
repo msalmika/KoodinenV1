@@ -208,13 +208,14 @@ namespace KoodinenV1.Controllers
             var kaikkioppit= db.Oppituntis.Where(x => x.KurssiId == kurssiId).ToList();
             var keskenoppit = db.OppituntiSuoritus.Where(o => o.Oppitunti.KurssiId != kurssiId).ToList();
             var kaikkiteht = db.Tehtavas.ToList();
+            //var keskenteht = db.Tehtavas.Where(t=>t.TehtavaSuoritus.Where(s=>s.K)
 
 
             ViewBag.kurssinimi = kurssinimi.ToString();  /*"C# perusteet";*/ // myöhemmin 
             ViewBag.kaikkioppit = kaikkioppit;
             ViewBag.keskenoppit = keskenoppit;
             ViewBag.kaikkiteht = kaikkiteht;
-            ViewBag.keskenteht = keskenteht;
+            //ViewBag.keskenteht = keskenteht;
            
             //ViewBag.nimi = käyttäjä.Nimi;
             //ViewBag.id = käyttäjä.KayttajaId;
