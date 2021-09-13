@@ -229,7 +229,7 @@ namespace KoodinenV1.Controllers
         [HttpPost]
         public IActionResult Palaute(string teksti)
         {
-            _context.Add(new Palaute() { Teksti = teksti });
+            _context.Palautes.Add(new Palaute() { Teksti = teksti, Pvm = DateTime.Today });
             _context.SaveChanges();
             return View();
         }

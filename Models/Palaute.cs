@@ -10,5 +10,6 @@ namespace KoodinenV1.Models
         public int PalauteId { get; set; }
         public string Teksti { get; set; }
         public string Lahettaja { get; set; }
+        public DateTime Pvm { get; set; }
     }
 }
