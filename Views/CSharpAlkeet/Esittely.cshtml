@@ -9,5 +9,12 @@
 <h2>Tervetuloa kurssille!</h2>
 
 <p>
-    Tällä kurssilla paneudumme C# kielen perusteisiin. 
+    Tällä kurssilla paneudumme C# kielen perusteisiin.
+    Mikäli haluat kurssista rekisteröidyn suorituksen, aloita kurssi alla olevasta nappulasta.
+    Kurssille rekisteröityminen vaatii sivustolle kirjautumisen.
 </p>
+    <button class="btn btn-outline-primary" style="margin-left:20px">@Html.ActionLink("Aloita kurssi", "AloitaKurssi")</button>
+    @if(ViewBag.Viesti != null)
+            {
+<a style="color:red">@ViewBag.Viesti</a>
+            }

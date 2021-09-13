@@ -9,6 +9,7 @@ namespace KoodinenV1.Models
     {
         public Tehtava()
         {
+            TehtavaEpaonnistunuts = new HashSet<TehtavaEpaonnistunut>();
             TehtavaSuoritus = new HashSet<TehtavaSuoritu>();
             Vihjes = new HashSet<Vihje>();
         }
@@ -20,6 +21,7 @@ namespace KoodinenV1.Models
         public int? OppituntiId { get; set; }
 
         public virtual Oppitunti Oppitunti { get; set; }
+        public virtual ICollection<TehtavaEpaonnistunut> TehtavaEpaonnistunuts { get; set; }
         public virtual ICollection<TehtavaSuoritu> TehtavaSuoritus { get; set; }
         public virtual ICollection<Vihje> Vihjes { get; set; }
     }

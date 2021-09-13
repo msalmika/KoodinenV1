@@ -12,7 +12,7 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow mb-3 border-dark"  style="background-color:rgb(4, 115, 100)">
             <span class="navbar-brand"><img src="~/Images/KoodinenLogoInvert1.png" style="max-block-size: 60px"></span>
-            <div class="container"  style="background-color:rgb(0, 98, 99)">
+            <div class="container" >
                 <a class="navbar-brand" asp-area="" asp-controller="Etusivu" asp-action="Index"></a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -30,6 +30,14 @@
                             <a class="nav-link text-white" asp-area="" asp-controller="Rekisteröityminen" asp-action="Rekisteröityminen">Rekisteröidy</a>
                         </li>
                     </ul>
+                    <div class="nav-right">
+                        <ul class="navbar-nav flex-grow-1">
+
+                            <li class="nav-right">
+                                <a class="nav-link text-white" asp-area="" asp-controller="Etusivu" asp-action="Kirjautuminen">Kirjaudu sisään</a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </nav>

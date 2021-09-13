@@ -43,3 +43,15 @@
         Tehtävä 4. Lisää Laskuri -luokalle metodi "Jako", joka saa parametrinaan kaksi integer tyypin muuttujaa, ja palauttaa näiden jakolaskun tuloksen.
     </p>
 </div>
+
+<button class="btn btn-outline-primary" style="margin-left:20px">@Html.ActionLink("Rekisteröi oppitunti", "RekisteröiOppitunti", null, new {opId = 3})</button>
+@if (ViewBag.OpViesti != null)
+{
+    <a style="color:red">@ViewBag.Viesti</a>
+}
+
+<button class="btn btn-outline-primary" style="margin-left:20px">@Html.ActionLink("Rekisteröi kurssi", "RekisteröiSuoritus")</button>
+@if (ViewBag.Viesti != null)
+{
+    <a style="color:red">@ViewBag.Viesti</a>
+}

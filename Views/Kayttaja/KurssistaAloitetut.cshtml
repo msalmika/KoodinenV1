@@ -1,0 +1,50 @@
+﻿@model KoodinenV1.Models.Kayttaja
+@{
+    ViewData["Title"] = "KurssistaSuoritetut";
+    var kurssinimi = ViewBag.kurssinimi;
+    var oppitunnit = ViewBag.oppitunnit;
+    var tehtävät = ViewBag.tehtävät;
+    var nimi = ViewBag.nimi;
+    //var id = ViewBag.id;
+}
+@*<div style='float:right;'>Hello @Html.ActionLink(firstName, "Profiili", "Kayttaja", new { id = id })</div>
+    <br />
+    <div style='float:right;'>@Html.ActionLink("Kirjaudu ulos", "", "")</div>*@
+<style>
+    # oppitunti {
+        font-weight: bold;
+        display: inline;
+    }
+</style>
+<h3>Kurssista @kurssinimi aloitetut:</h3>
+
+<h6 style="color:blue;">Oppitunnit</h6>
+<ul>
+    @foreach (var item in oppitunnit)
+    {
+        <ul id="oppitunti">
+            <li>
+                <strong>@item.Nimi:</strong> @item.Kuvaus
+            </li>
+        </ul>
+
+    }
+
+</ul>
+<h6 style="color:blue;">Tehtävät</h6>
+<ul>
+    @foreach (var item in tehtävät)
+    {
+        <ul id="oppitunti">
+            <li>
+                <strong>@item.Nimi:</strong> @item.Kuvaus
+            </li>
+        </ul>
+    }
+</ul>
+<br />
+<br />
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.KayttajaId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

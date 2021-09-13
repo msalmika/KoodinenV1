@@ -35,7 +35,7 @@ namespace KoodinenV1
             services.AddDistributedMemoryCache();
             services.AddSession(options =>
             {
-                options.IdleTimeout = TimeSpan.FromSeconds(30);
+                options.IdleTimeout = TimeSpan.FromMinutes(20);
                 options.Cookie.HttpOnly = true;
                 options.Cookie.IsEssential = true;
             });
@@ -85,6 +85,9 @@ namespace KoodinenV1
                 endpoints.MapControllerRoute(
                  name: "kurssistasuoritetut",
                  pattern: "{controller=Kayttaja}/{action=KurssistaSuoritetut}/{id?}");
+                endpoints.MapControllerRoute(
+                name: "kurssistaAloitetut",
+                pattern: "{controller=Kayttaja}/{action=KurssistaAloitetut}/{id?}");
             });
         }
     }

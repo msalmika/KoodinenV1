@@ -3,7 +3,7 @@
 @{
     ViewData["Title"] = "Profiili";
     var suoritetut = ViewBag.suoritetut;
-    var kesken = ViewBag.kesken;
+    var aloitettu = ViewBag.aloitettu;
 
 }
 <head>
@@ -11,16 +11,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
-
+<style>
+    #otsikot {
+        font-weight: bold;
+        color: blue;
+    }
+</style>
 <h3>Profiili</h3>
 
 <div>
     <h4>Opiskelija</h4>
     <hr />
-    @if(ViewBag.Viesti != null)
-            {
-                <h6 style="color: red">@ViewBag.Viesti</h6>
-            }
+    @if (ViewBag.Viesti != null)
+    {
+        <h6 style="color: red">@ViewBag.Viesti</h6>
+    }
     <dl class="row">
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Nimi)
@@ -36,6 +41,7 @@
         </dd>
     </dl>
 </div>
+
 <table>
     <tr>
         <td>
@@ -52,33 +58,26 @@
 </table>
 <br />
 <br />
-@*<h6 font="bold">Kurssisuoritukset</h6>
-    <br />
-    <ul>
-        @foreach (var item in kurssisuoritukset)
-        {
+<h6 class="otsikot">Suoritetut kurssit</h6>
+<br />
+@foreach (var item in suoritetut)
+{
+    <li>
+        <strong>Suoritettu: </strong> @Html.ActionLink($"{@item.Nimi} / {@item.SuoritusPVM.ToShortDateString()}", "Esittely", @*"CSharpAlkeet"*@ $"{@item.Nimi}");
+    </li>
 
-            <li>
-                @item.Kurssi.Nimi
-            </li>
-
-
-            <li>
-                @item.KurssiId
-            </li>
-
-
-            <li>
-                @item.KurssiSuoritusId
-            </li>
-
-            <li>
-                @item.SuoritusPvm
-            </li>
-
-        }
+}
+<br />
+<br />
+<h6 class="otsikot">Aloitetut kurssit:</h6>
+<br />
+@foreach (var item in aloitettu)
+{
+    <li>
+        <strong>Aloitettu: </strong> @Html.ActionLink($"{@item.Nimi}", "Esittely", "CSharpAlkeet");
+    </li>
+}
 
 
-    </ul>*@
 
 
