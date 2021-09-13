@@ -16,7 +16,7 @@ namespace KoodinenV1.Controllers
 {
     public class CSharpAlkeetController : Controller
     {
-        
+
 
         private readonly KoodinenDBContext _context;
 
@@ -24,7 +24,7 @@ namespace KoodinenV1.Controllers
         {
             _context = context;
         }
-     
+
         public IActionResult Esittely(string viesti = null)
         {
             int? id = HttpContext.Session.GetInt32("id");
@@ -38,16 +38,21 @@ namespace KoodinenV1.Controllers
             {
                 return RedirectToAction("Esittely", new { viesti = "Kurssille rekisteröityminen vaatii sivulle kirjautumisen!" });
             }
-            _context.KurssiSuoritus.Add(new KurssiSuoritu() { KayttajaId = id, Kesken = true, KurssiId = 4, SuoritusPvm = DateTime.Today });
-            _context.SaveChanges();
-            return RedirectToAction("Oppitunti1");
+            if (_context.KurssiSuoritus.Where(k => k.KayttajaId == id && k.KurssiId == 4 && k.Kesken == false) == null && 
+                _context.KurssiSuoritus.Where(k => k.KayttajaId == id && k.KurssiId == 4 && k.Kesken == true) == null)
+            {
+                _context.KurssiSuoritus.Add(new KurssiSuoritu() { KayttajaId = id, Kesken = true, KurssiId = 4, SuoritusPvm = DateTime.Today });
+                _context.SaveChanges();
+                return RedirectToAction("Oppitunti1");
+            }
+                return RedirectToAction("Esittely", new { viesti = "Olet jo ilmoittautunut tai suorittanut kurssin" });
         }
         public IActionResult Oppitunti1()
         {
 
             return View();
         }
-        
+
         [HttpPost]
         public IActionResult Oppitunti1(string Tekstialue)
         {
@@ -159,7 +164,7 @@ namespace KoodinenV1.Controllers
 
             var oppituntiSuoritukset = _context.OppituntiSuoritus.Where(i => i.KayttajaId == id/* && i.Kesken != false*/).ToList().Select(o => o.OppituntiId).ToList();
             bool oppitunnitSuoritettu = true;
-            foreach(var o in oppituntiIDt)
+            foreach (var o in oppituntiIDt)
             {
                 if (!oppituntiSuoritukset.Contains(o))
                 {
@@ -170,11 +175,15 @@ namespace KoodinenV1.Controllers
             {
                 return RedirectToAction($"Oppitunti{sivuNro}", new { viesti = "Kurssin rekisteröiminen vaatii kirjautumisen ja kaikkien kurssin oppituntien suorittamisen" });
             }
-            
-            _context.KurssiSuoritus.Add(new KurssiSuoritu() { KayttajaId = id, Kesken = false, KurssiId = 4, SuoritusPvm = DateTime.Today });
-            _context.KurssiSuoritus.Remove(_context.KurssiSuoritus.Where(k => k.KayttajaId == id && k.KurssiId == 4 && k.Kesken == true).FirstOrDefault());
-            _context.SaveChanges();
-            return RedirectToAction($"Oppitunti{sivuNro}", new {viesti = "Onneksi olkoon! Kurssi suoritettu onnistuneesti!" });
+
+            if (_context.KurssiSuoritus.Where(k => k.KayttajaId == id && k.KurssiId == 4 && k.Kesken == false) == null)
+            {
+                _context.KurssiSuoritus.Add(new KurssiSuoritu() { KayttajaId = id, Kesken = false, KurssiId = 4, SuoritusPvm = DateTime.Today });
+                _context.KurssiSuoritus.Remove(_context.KurssiSuoritus.Where(k => k.KayttajaId == id && k.KurssiId == 4 && k.Kesken == true).FirstOrDefault());
+                _context.SaveChanges();
+                return RedirectToAction($"Oppitunti{sivuNro}", new { viesti = "Onneksi olkoon! Kurssi suoritettu onnistuneesti!" });
+            }
+            return RedirectToAction($"Oppitunti{sivuNro}", new { viesti = "Sinulle on jo merkattu kurssisuoritus kyseiseltä kurssilta" });
         }
 
         public IActionResult RekisteröiOppitunti(int opId, int sivuNro)
@@ -200,13 +209,13 @@ namespace KoodinenV1.Controllers
             }
             if (id == null || oppituntiSuoritettu == false)
             {
-                return RedirectToAction($"Oppitunti{sivuNro}" , new { OpViesti = "Oppitunnin rekisteröiminen vaatii kirjautumisen ja kaikkien oppitunnin tehtävien suorittamisen" });
+                return RedirectToAction($"Oppitunti{sivuNro}", new { OpViesti = "Oppitunnin rekisteröiminen vaatii kirjautumisen ja kaikkien oppitunnin tehtävien suorittamisen" });
             }
 
-            _context.OppituntiSuoritus.Add(new OppituntiSuoritu() {KayttajaId = id, OppituntiId = opId, SuoritusPvm = DateTime.Today, /*Kesken = false*/ });
+            _context.OppituntiSuoritus.Add(new OppituntiSuoritu() { KayttajaId = id, OppituntiId = opId, SuoritusPvm = DateTime.Today, /*Kesken = false*/ });
             _context.SaveChanges();
             return RedirectToAction($"Oppitunti{sivuNro}", new { OpViesti = "Onneksi olkoon! Oppitunti suoritettu onnistuneesti!" });
         }
     }
-    
+
 }
