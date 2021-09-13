@@ -85,13 +85,13 @@ namespace KoodinenV1.Models
                 entity.HasOne(d => d.Kayttaja)
                     .WithMany(p => p.Kurssis)
                     .HasForeignKey(d => d.KayttajaId)
-                    .HasConstraintName("FK__Kurssi__kayttaja__267ABA7A");
+                    .HasConstraintName("FK__Kurssi__kayttaja__5EBF139D");
             });
 
             modelBuilder.Entity<KurssiSuoritu>(entity =>
             {
                 entity.HasKey(e => e.KurssiSuoritusId)
-                    .HasName("PK__KurssiSu__2B6AE3F76B85AB21");
+                    .HasName("PK__KurssiSu__2B6AE3F78E7E4830");
 
                 entity.Property(e => e.KurssiSuoritusId).HasColumnName("kurssiSuoritus_id");
 
@@ -106,18 +106,18 @@ namespace KoodinenV1.Models
                 entity.HasOne(d => d.Kayttaja)
                     .WithMany(p => p.KurssiSuoritus)
                     .HasForeignKey(d => d.KayttajaId)
-                    .HasConstraintName("FK__KurssiSuo__kaytt__29572725");
+                    .HasConstraintName("FK__KurssiSuo__kaytt__619B8048");
 
                 entity.HasOne(d => d.Kurssi)
                     .WithMany(p => p.KurssiSuoritus)
                     .HasForeignKey(d => d.KurssiId)
-                    .HasConstraintName("FK__KurssiSuo__kurss__2A4B4B5E");
+                    .HasConstraintName("FK__KurssiSuo__kurss__628FA481");
             });
 
             modelBuilder.Entity<Ohjeistu>(entity =>
             {
                 entity.HasKey(e => e.OhjeistusId)
-                    .HasName("PK__Ohjeistu__6E092E37EA83699B");
+                    .HasName("PK__Ohjeistu__6E092E37C7E604C0");
 
                 entity.Property(e => e.OhjeistusId).HasColumnName("Ohjeistus_id");
 
@@ -128,7 +128,7 @@ namespace KoodinenV1.Models
                 entity.HasOne(d => d.Oppitunti)
                     .WithMany(p => p.Ohjeistus)
                     .HasForeignKey(d => d.OppituntiId)
-                    .HasConstraintName("FK__Ohjeistus__Oppit__403A8C7D");
+                    .HasConstraintName("FK__Ohjeistus__Oppit__787EE5A0");
             });
 
             modelBuilder.Entity<Oppitunti>(entity =>
@@ -150,17 +150,19 @@ namespace KoodinenV1.Models
                 entity.HasOne(d => d.Kurssi)
                     .WithMany(p => p.Oppituntis)
                     .HasForeignKey(d => d.KurssiId)
-                    .HasConstraintName("FK__Oppitunti__kurss__2D27B809");
+                    .HasConstraintName("FK__Oppitunti__kurss__656C112C");
             });
 
             modelBuilder.Entity<OppituntiSuoritu>(entity =>
             {
                 entity.HasKey(e => e.OppituntiSuoritusId)
-                    .HasName("PK__Oppitunt__813DD82BEC02A03D");
+                    .HasName("PK__Oppitunt__813DD82B71A5DAAC");
 
                 entity.Property(e => e.OppituntiSuoritusId).HasColumnName("oppituntiSuoritus_id");
 
                 entity.Property(e => e.KayttajaId).HasColumnName("kayttaja_id");
+
+                entity.Property(e => e.Kesken).HasColumnName("kesken");
 
                 entity.Property(e => e.OppituntiId).HasColumnName("oppitunti_id");
 
@@ -171,7 +173,7 @@ namespace KoodinenV1.Models
                 entity.HasOne(d => d.Kayttaja)
                     .WithMany(p => p.OppituntiSuoritus)
                     .HasForeignKey(d => d.KayttajaId)
-                    .HasConstraintName("FK__Oppitunti__kaytt__300424B4");
+                    .HasConstraintName("FK__Oppitunti__kaytt__68487DD7");
 
                 entity.HasOne(d => d.Oppitunti)
                     .WithMany(p => p.OppituntiSuoritus)
@@ -192,6 +194,15 @@ namespace KoodinenV1.Models
                     .HasColumnName("PVM");
 
                 entity.Property(e => e.Teksti).HasMaxLength(2000);
+            });
+
+            modelBuilder.Entity<SahkopostiListum>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.Property(e => e.Email)
+                    .HasMaxLength(255)
+                    .HasColumnName("email");
             });
 
             modelBuilder.Entity<Tehtava>(entity =>
@@ -217,13 +228,32 @@ namespace KoodinenV1.Models
                 entity.HasOne(d => d.Oppitunti)
                     .WithMany(p => p.Tehtavas)
                     .HasForeignKey(d => d.OppituntiId)
-                    .HasConstraintName("FK__Tehtava__oppitun__33D4B598");
+                    .HasConstraintName("FK__Tehtava__oppitun__6C190EBB");
+            });
+
+            modelBuilder.Entity<TehtavaEpaonnistunut>(entity =>
+            {
+                entity.HasKey(e => e.EpaonnistunutId)
+                    .HasName("PK__TehtavaE__DF833DBA3D9BE282");
+
+                entity.ToTable("TehtavaEpaonnistunut");
+
+                entity.Property(e => e.EpaonnistunutId).HasColumnName("Epaonnistunut_id");
+
+                entity.Property(e => e.TehtavaId).HasColumnName("Tehtava_id");
+
+                entity.Property(e => e.TehtavanNimi).HasMaxLength(50);
+
+                entity.HasOne(d => d.Tehtava)
+                    .WithMany(p => p.TehtavaEpaonnistunuts)
+                    .HasForeignKey(d => d.TehtavaId)
+                    .HasConstraintName("FK__TehtavaEp__Tehta__02FC7413");
             });
 
             modelBuilder.Entity<TehtavaSuoritu>(entity =>
             {
                 entity.HasKey(e => e.TehtavaSuoritusId)
-                    .HasName("PK__TehtavaS__127955F9A1A708CC");
+                    .HasName("PK__TehtavaS__127955F92E159BB6");
 
                 entity.Property(e => e.TehtavaSuoritusId).HasColumnName("TehtavaSuoritus_id");
 
@@ -238,12 +268,12 @@ namespace KoodinenV1.Models
                 entity.HasOne(d => d.Kayttaja)
                     .WithMany(p => p.TehtavaSuoritus)
                     .HasForeignKey(d => d.KayttajaId)
-                    .HasConstraintName("FK__TehtavaSu__kaytt__36B12243");
+                    .HasConstraintName("FK__TehtavaSu__kaytt__6EF57B66");
 
                 entity.HasOne(d => d.Tehtava)
                     .WithMany(p => p.TehtavaSuoritus)
                     .HasForeignKey(d => d.TehtavaId)
-                    .HasConstraintName("FK__TehtavaSu__tehta__37A5467C");
+                    .HasConstraintName("FK__TehtavaSu__tehta__6FE99F9F");
             });
 
             modelBuilder.Entity<Vihje>(entity =>
@@ -263,7 +293,7 @@ namespace KoodinenV1.Models
                 entity.HasOne(d => d.Tehtava)
                     .WithMany(p => p.Vihjes)
                     .HasForeignKey(d => d.TehtavaId)
-                    .HasConstraintName("FK__Vihje__Tehtava_i__3D5E1FD2");
+                    .HasConstraintName("FK__Vihje__Tehtava_i__75A278F5");
             });
 
             OnModelCreatingPartial(modelBuilder);
