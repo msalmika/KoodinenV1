@@ -66,7 +66,7 @@ namespace KoodinenV1.Controllers
                         am.LisääKäyttäjä(Email, salasana, Nimi);
                         Email em = new Email(_configuration, _context);
                         em.LähetäEmail(Email, Nimi, salasana);
-                        return RedirectToAction("Kirjautuminen", "Etusivu");
+                        return RedirectToAction("Viesti", "Rekisteröityminen");
                     }
                     catch (Exception e)
                     {
@@ -116,6 +116,11 @@ namespace KoodinenV1.Controllers
                 ModelState.AddModelError("Nimi", "Täytä kaikki kentät");
                 return View();
             }
+        }
+        
+        public IActionResult Viesti()
+        {
+            return View();
         }
         //public IActionResult Testaus()
         //{
