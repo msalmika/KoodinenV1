@@ -25,10 +25,22 @@ namespace KoodinenV1.Controllers
             _context = context;
         }
      
-        public IActionResult Esittely()
+        public IActionResult Esittely(string viesti = null)
         {
-            int? id = HttpContext.Session.GetInt32("Id");
+            int? id = HttpContext.Session.GetInt32("id");
+            ViewBag.Viesti = viesti;
             return View();
+        }
+        public IActionResult AloitaKurssi()
+        {
+            int? id = HttpContext.Session.GetInt32("id");
+            if (id == null)
+            {
+                return RedirectToAction("Esittely", new { viesti = "Kurssille rekisteröityminen vaatii sivulle kirjautumisen!" });
+            }
+            _context.KurssiSuoritus.Add(new KurssiSuoritu() { KayttajaId = id, Kesken = true, KurssiId = 4, SuoritusPvm = DateTime.Today });
+            _context.SaveChanges();
+            return RedirectToAction("Oppitunti1");
         }
         public IActionResult Oppitunti1()
         {
@@ -40,6 +52,10 @@ namespace KoodinenV1.Controllers
         public IActionResult Oppitunti1(string Tekstialue)
         {
             string email = HttpContext.Session.GetString("email");
+            if (Tekstialue == null)
+            {
+                return View();
+            }
 
             if (Tekstialue.StartsWith("Console.WriteLine(\"") && Tekstialue.EndsWith("\");"))
             {
@@ -57,6 +73,65 @@ namespace KoodinenV1.Controllers
                 Tekstialue = "Virhe";
             }
             ViewBag.Tekstialue = Tekstialue;
+            return View();
+        }
+        public IActionResult Oppitunti1_Teht2()
+        {
+
+            return View();
+        }
+        [HttpPost]
+        public IActionResult Oppitunti1_Teht2(/*[FromForm] int tehtava_id,*/ string Tekstialue)
+        {
+            string email = HttpContext.Session.GetString("email");
+
+            if (Tekstialue == null)
+            {
+                Tekstialue = "Tyhjä tekstikenttä.";
+            }
+            else if (Tekstialue.Split("\n").Length < 3 || Tekstialue.Split("\n")[0].Length < 20 || !Tekstialue.Split("\n")[0].Contains("\""))
+            {
+                Tekstialue = "Virheellinen syntaksi tai virheellinen määrä pyydettyjä koodirivejä.";
+            }
+            else
+            {
+                var syöterivit = Tekstialue.Split("\n");
+                var rivimäärä = syöterivit.Count();
+                var syöterivi = syöterivit[0];
+                var lukurivi = syöterivit[1].Remove(syöterivit[1].Length - 1);
+                //var syötepituus = syöterivi.Length;
+                var syöte = syöterivi.Split("\"")[1];
+                var lukusyntaksipituus = lukurivi.Length;
+                var lukusyntaksiOK = "var syöte = Console.ReadLine();".Length;
+                //var vikasyöte = syöterivit[2];
+                var odotettu = "Console.WriteLine(\"Tähän konsoliprinttiin on istutettu muuttuja nimeltään:\" + syöte +\".\");";
+                var suoritettu = $"Tähän konsoliprinttiin on istutettu muuttuja nimeltään: {syöte}.";
+                if (rivimäärä == 3)
+                {
+                    if (lukusyntaksipituus == lukusyntaksiOK && syöterivit[2] == odotettu)
+                    {
+                        Tekstialue = suoritettu;
+
+                    }
+                    else
+                    {
+                        Tekstialue = "Virheellinen Console.WriteLine() -tai Console.ReadLine() -syntaksi. Yritä uudelleen!";
+                    }
+                    //if (email != null)
+                    //{
+                    //    Suoritus suoritus = new Suoritus() { email = email, tehtavaid = tehtava_id};
+                    //    TehtävänLähetys.Tarkista(suoritus);
+                    //}
+                }
+                else
+                {
+                    Tekstialue = "Virheellinen määrä pyydettyjä koodirivejä.";
+                }
+            }
+
+            ViewBag.Tekstialue = Tekstialue;
+
+
             return View();
         }
         public IActionResult Oppitunti2()

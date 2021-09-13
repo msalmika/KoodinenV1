@@ -23,8 +23,10 @@ namespace KoodinenV1.Models
         public virtual DbSet<Ohjeistu> Ohjeistus { get; set; }
         public virtual DbSet<Oppitunti> Oppituntis { get; set; }
         public virtual DbSet<OppituntiSuoritu> OppituntiSuoritus { get; set; }
+        public virtual DbSet<Palaute> Palautes { get; set; }
         public virtual DbSet<SahkopostiListum> SahkopostiLista { get; set; }
         public virtual DbSet<Tehtava> Tehtavas { get; set; }
+        public virtual DbSet<TehtavaEpaonnistunut> TehtavaEpaonnistunuts { get; set; }
         public virtual DbSet<TehtavaSuoritu> TehtavaSuoritus { get; set; }
         public virtual DbSet<Vihje> Vihjes { get; set; }
 
@@ -33,7 +35,7 @@ namespace KoodinenV1.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer();
+                optionsBuilder.UseSqlServer("server=tcp:server-koodinen.database.windows.net;database=db-Koodinen;Persist Security Info=False;User ID=adminuser;Password=EjJmN0809!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;");
             }
         }
 
@@ -160,6 +162,8 @@ namespace KoodinenV1.Models
 
                 entity.Property(e => e.KayttajaId).HasColumnName("kayttaja_id");
 
+                entity.Property(e => e.Kesken).HasColumnName("kesken");
+
                 entity.Property(e => e.OppituntiId).HasColumnName("oppitunti_id");
 
                 entity.Property(e => e.SuoritusPvm)
@@ -175,6 +179,17 @@ namespace KoodinenV1.Models
                     .WithMany(p => p.OppituntiSuoritus)
                     .HasForeignKey(d => d.OppituntiId)
                     .HasConstraintName("FK__Oppitunti__oppit__693CA210");
+            });
+
+            modelBuilder.Entity<Palaute>(entity =>
+            {
+                entity.ToTable("Palaute");
+
+                entity.Property(e => e.PalauteId).HasColumnName("Palaute_id");
+
+                entity.Property(e => e.Lahettaja).HasMaxLength(50);
+
+                entity.Property(e => e.Teksti).HasMaxLength(2000);
             });
 
             modelBuilder.Entity<SahkopostiListum>(entity =>
@@ -210,6 +225,25 @@ namespace KoodinenV1.Models
                     .WithMany(p => p.Tehtavas)
                     .HasForeignKey(d => d.OppituntiId)
                     .HasConstraintName("FK__Tehtava__oppitun__6C190EBB");
+            });
+
+            modelBuilder.Entity<TehtavaEpaonnistunut>(entity =>
+            {
+                entity.HasKey(e => e.EpaonnistunutId)
+                    .HasName("PK__TehtavaE__DF833DBA3D9BE282");
+
+                entity.ToTable("TehtavaEpaonnistunut");
+
+                entity.Property(e => e.EpaonnistunutId).HasColumnName("Epaonnistunut_id");
+
+                entity.Property(e => e.TehtavaId).HasColumnName("Tehtava_id");
+
+                entity.Property(e => e.TehtavanNimi).HasMaxLength(50);
+
+                entity.HasOne(d => d.Tehtava)
+                    .WithMany(p => p.TehtavaEpaonnistunuts)
+                    .HasForeignKey(d => d.TehtavaId)
+                    .HasConstraintName("FK__TehtavaEp__Tehta__02FC7413");
             });
 
             modelBuilder.Entity<TehtavaSuoritu>(entity =>

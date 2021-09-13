@@ -19,7 +19,7 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1" >
+                    <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
                             <a class="nav-link" style="color:rgb(4, 115, 100)" asp-area="" asp-controller="Etusivu" asp-action="Index">Etusivu</a>
                         </li>
@@ -28,6 +28,9 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" style="color:rgb(4, 115, 100)" asp-area="" asp-controller="Rekisteröityminen" asp-action="Rekisteröityminen">Rekisteröidy</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" style="color:rgb(4, 115, 100)" asp-area="" asp-controller="Profiili" asp-action="Kayttaja">Rekisteröidy</a>
                         </li>
                     </ul>
                 </div>
@@ -38,6 +41,7 @@
         <main role="main" class="pb-3">
             <div id="mySidenav" class="sidenav">
                 <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                <a>@Html.ActionLink("Esittely", "Esittely", "CSharpAlkeet")</a>
                 <a>@Html.ActionLink("Oppitunti 1", "Oppitunti1", "CSharpAlkeet")</a>
                 <a>@Html.ActionLink("Oppitunti 2", "Oppitunti2", "CSharpAlkeet")</a>
                 <a>@Html.ActionLink("Oppitunti 3", "Oppitunti3", "CSharpAlkeet")</a>
