@@ -25,10 +25,22 @@ namespace KoodinenV1.Controllers
             _context = context;
         }
      
-        public IActionResult Esittely()
+        public IActionResult Esittely(string viesti = null)
         {
-            int? id = HttpContext.Session.GetInt32("Id");
+            int? id = HttpContext.Session.GetInt32("id");
+            ViewBag.Viesti = viesti;
             return View();
+        }
+        public IActionResult AloitaKurssi()
+        {
+            int? id = HttpContext.Session.GetInt32("id");
+            if (id == null)
+            {
+                return RedirectToAction("Esittely", new { viesti = "Kurssille rekisteröityminen vaatii sivulle kirjautumisen!" });
+            }
+            _context.KurssiSuoritus.Add(new KurssiSuoritu() { KayttajaId = id, Kesken = true, KurssiId = 4, SuoritusPvm = DateTime.Today });
+            _context.SaveChanges();
+            return RedirectToAction("Oppitunti1");
         }
         public IActionResult Oppitunti1()
         {
@@ -40,6 +52,10 @@ namespace KoodinenV1.Controllers
         public IActionResult Oppitunti1(string Tekstialue)
         {
             string email = HttpContext.Session.GetString("email");
+            if (Tekstialue == null)
+            {
+                return View();
+            }
 
             if (Tekstialue.StartsWith("Console.WriteLine(\"") && Tekstialue.EndsWith("\");"))
             {
