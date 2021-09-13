@@ -26,19 +26,37 @@
                         <li class="nav-item">
                             <a class="nav-link" style="color:rgb(4, 115, 100)" asp-area="" asp-controller="Etusivu" asp-action="Kurssit">Kurssit</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" style="color:rgb(4, 115, 100)"asp-area="" asp-controller="Rekisteröityminen" asp-action="Rekisteröityminen">Rekisteröidy</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" style="color:rgb(4, 115, 100)" asp-area="" asp-controller="Profiili" asp-action="Kayttaja">Omat tiedot</a>
-                        </li>
+                        @using Microsoft.AspNetCore.Http;
+                        @{var id = Context.Session.GetInt32("id"); }
+                        @if (id != null)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" style="color:rgb(4, 115, 100)" asp-area="" asp-controller="Kayttaja" asp-action="Profiili">Omat tiedot</a>
+                            </li>
+                        }
+                        @if (id == null)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" style="color:rgb(4, 115, 100)" asp-area="" asp-controller="Rekisteröityminen" asp-action="Rekisteröityminen">Rekisteröidy</a>
+                            </li>
+                        }
+
+
                     </ul>
                     <div class="nav-right">
                         <ul class="navbar-nav flex-grow-1">
-
-                            <li class="nav-right">
-                                <a class="nav-link" style="color: rgb(4, 115, 100" asp-area="" asp-controller="Etusivu" asp-action="Kirjautuminen">Kirjaudu sisään</a>
-                            </li>
+                            @if (id != null)
+                            {
+                                <li class="nav-right">
+                                    <a class="nav-link" style="color:rgb(4, 115, 100)" asp-area="" asp-controller="Etusivu" asp-action="KirjautuminenUlos">Kirjaudu ulos</a>
+                                </li>
+                            }
+                            @if (id == null)
+                            {
+                                <li class="nav-right">
+                                    <a class="nav-link" style="color:rgb(4, 115, 100)" asp-area="" asp-controller="Etusivu" asp-action="Kirjautuminen">Kirjaudu sisään</a>
+                                </li>
+                            }
                         </ul>
                     </div>
                 </div>
@@ -57,7 +75,6 @@
             </div>
 
             <!-- Use any element to open the sidenav -->
-
             <!-- Add all page content inside this div if you want the side nav to push page content to the right (not used if you only want the sidenav to sit on top of the page -->
             <div id="main">
                 <script>

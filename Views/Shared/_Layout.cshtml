@@ -28,14 +28,24 @@
                         <li class="nav-item">
                             <a class="nav-link text-white" asp-area="" asp-controller="Etusivu" asp-action="Kurssit">Kurssit</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white" asp-area="" asp-controller="Rekisteröityminen" asp-action="Rekisteröityminen">Rekisteröidy</a>
-                        </li>
+                        @using Microsoft.AspNetCore.Http;
+                        @{var id = Context.Session.GetInt32("id"); }
+                        @if (id != null)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" style="color:rgb(4, 115, 100)" asp-area="" asp-controller="Kayttaja" asp-action="Profiili">Omat tiedot</a>
+                            </li>
+                        }
+                        @if (id == null)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" style="color:rgb(4, 115, 100)" asp-area="" asp-controller="Rekisteröityminen" asp-action="Rekisteröityminen">Rekisteröidy</a>
+                            </li>
+                        }
+                       
                     </ul>
                     <div class="nav-right">
                         <ul class="navbar-nav flex-grow-1">
-                            @using Microsoft.AspNetCore.Http;
-                            @{var id = Context.Session.GetInt32("id"); }
                             @if (id != null) {<li class="nav-right">
                                 <a class="nav-link text-white" asp-area="" asp-controller="Etusivu" asp-action="KirjautuminenUlos">Kirjaudu ulos</a>
                             </li>
