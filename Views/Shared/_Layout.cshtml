@@ -1,18 +1,20 @@
-﻿<!DOCTYPE html>
+﻿
+<!DOCTYPE html>
 <html lang="en">
-<head >
+<head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - KoodinenV1</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
+
 <body>
 
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow mb-3 border-dark"  style="background-color:rgb(4, 115, 100)">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow mb-3 border-dark" style="background-color:rgb(4, 115, 100)">
             <span class="navbar-brand"><img src="~/Images/KoodinenLogoInvert1.png" style="max-block-size: 60px"></span>
-            <div class="container" >
+            <div class="container">
                 <a class="navbar-brand" asp-area="" asp-controller="Etusivu" asp-action="Index"></a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -32,10 +34,19 @@
                     </ul>
                     <div class="nav-right">
                         <ul class="navbar-nav flex-grow-1">
-
-                            <li class="nav-right">
+                            @using Microsoft.AspNetCore.Http;
+                            @{var id = Context.Session.GetInt32("id"); }
+                            @if (id != null) {<li class="nav-right">
+                                <a class="nav-link text-white" asp-area="" asp-controller="Etusivu" asp-action="KirjautuminenUlos">Kirjaudu ulos</a>
+                            </li>
+                            }
+                            @if(id == null)
+                            {
+                                 <li class="nav-right">
                                 <a class="nav-link text-white" asp-area="" asp-controller="Etusivu" asp-action="Kirjautuminen">Kirjaudu sisään</a>
                             </li>
+                             }
+
                         </ul>
                     </div>
                 </div>

@@ -103,5 +103,11 @@ namespace KoodinenV1.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+        public IActionResult KirjautuminenUlos(ISession sessio)
+        {
+            sessio.Remove("id");
+            sessio.Remove("email");
+            return RedirectToAction("Index", "Etusivu");
+        }
     }
 }
