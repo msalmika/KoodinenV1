@@ -189,6 +189,10 @@
 
 //                entity.Property(e => e.Lahettaja).HasMaxLength(50);
 
+//                entity.Property(e => e.Pvm)
+//                    .HasColumnType("date")
+//                    .HasColumnName("PVM");
+
 //                entity.Property(e => e.Teksti).HasMaxLength(2000);
 //            });
 
