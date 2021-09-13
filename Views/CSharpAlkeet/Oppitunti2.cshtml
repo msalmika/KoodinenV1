@@ -48,3 +48,8 @@
 </div>
 <h5><a style="color:rgb(4, 115, 100)">Bonus!</a></h5><a href="https://fi.wikipedia.org/wiki/Ada_Lovelace">Lisätietoa Ada Lovelacesta</a>
 
+<button class="btn btn-outline-primary" style="margin-left:20px">@Html.ActionLink("Rekisteröi oppitunti", "RekisteröiOppitunti", null, new { opId = 10})</button>
+@if (ViewBag.OpViesti != null)
+{
+    <a style="color:red">@ViewBag.Viesti</a>
+}
