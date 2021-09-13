@@ -144,7 +144,12 @@ namespace KoodinenV1.Controllers
             ViewBag.OpViesti = OpViesti;
             return View();
         }
-        public IActionResult Oppitunti3(string viesti = null, string OpViesti = null)
+        public IActionResult Oppitunti3(string OpViesti = null)
+        {
+            ViewBag.OpViesti = OpViesti;
+            return View();
+        }
+        public IActionResult Oppitunti4(string viesti = null, string OpViesti = null)
         {
             ViewBag.Viesti = viesti;
             ViewBag.OpViesti = OpViesti;

@@ -9,8 +9,7 @@ using System.Threading.Tasks;
 namespace KoodinenV1.Controllers
 {
     public class AdminController : Controller
-    {
-        private readonly KoodinenDBContext _context;
+    {KoodinenDBContext _context;
 
         public AdminController(KoodinenDBContext context)
         {

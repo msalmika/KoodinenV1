@@ -1,0 +1,57 @@
+﻿
+@{
+    Layout = "_CSharpAlkeetLayout";
+    ViewData["Title"] = "Oppitunti4";
+}
+
+<h1>Oppitunti 4</h1>
+<hr />
+<p>
+    Tällä oppitunnilla pääset tekemään propertyjä, kosntruktoreita ja opettelemaaan looppien käyttöä <br />
+</p>
+<p>
+    Nämä tehtävät vaativat <a href="https://visualstudio.microsoft.com/">Visual Studion</a> lataamisen ja
+    käyttöön ottamisen. Huomioitavaa tehtävien tekemisestä: tehtävän tekeminen vaatii koodin kääntämisen eli "Build" operaation. Koska tehtävätiedosto
+    sisältää myös tehtävien tarkistuksen, käännä aina koko solution.
+</p>
+
+<p>
+    Lataa kurssin tehtävät <a href="https://funcstorkoodinen.blob.core.windows.net/oppitunti-container/Oppitunti4.zip">tästä</a>.
+</p>
+<p>
+    Pura Oppitunti4.zip-tiedosto ja avaa Oppitunti4 -hakemisto. Avaa Oppitunti4.sln Visual Studiolla ja sieltä klikkaa auki Program.cs.
+</p>
+
+<div class="card" style="padding: 20px; margin: 20px">
+    <p>
+        Tehtävä 1. 
+        Tee "Loopit"-niminen luokka, siihen "Laskuri"-niminen property
+        Tee luokalle konstruktori ja sitten metodi nimeltä "Laskenta".
+        Lue tarkempi tehtävän anto program.cs:stä.
+        Tehtävä tuottaa laskevan numerosarjan.
+    </p>
+</div>
+
+<div class="card" style="padding: 20px; margin: 20px">
+    <p>
+        Under construction...
+    </p>
+</div>
+
+<button class="btn btn-outline-primary" style="margin-left:20px">@Html.ActionLink("Rekisteröi oppitunti", "RekisteröiOppitunti", null, new { opId = 12, sivuNro = 4 })</button>
+
+
+<button class="btn btn-outline-primary" style="margin-left:20px">@Html.ActionLink("Rekisteröi kurssi", "RekisteröiKurssi", null, new { opId = 12, sivuNro = 4 })</button>
+
+<p>
+    @if (ViewBag.OpViesti != null)
+    {
+        <a style="color:red">@ViewBag.OpViesti</a>
+    }
+</p>
+<p>
+    @if (ViewBag.Viesti != null)
+    {
+        <a style="color:red">@ViewBag.Viesti</a>
+    }
+</p>

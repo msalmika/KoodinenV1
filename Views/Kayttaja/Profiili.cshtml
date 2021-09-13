@@ -60,23 +60,38 @@
 <br />
 <h6 class="otsikot">Suoritetut kurssit</h6>
 <br />
-@foreach (var item in suoritetut)
+@if (suoritetut.Count==0)
 {
-    <li>
-        <strong>Suoritettu: </strong> @Html.ActionLink($"{@item.Nimi} / {@item.SuoritusPVM.ToShortDateString()}", "Esittely", @*"CSharpAlkeet"*@ $"{@item.Nimi}");
-    </li>
-
+    <li>Ei suoritettuja kursseja.</li>
 }
+else
+{
+   foreach (var item in suoritetut)
+    {
+        <li>
+            <strong>Suoritettu: </strong> @Html.ActionLink($"{@item.Nimi} / {@item.SuoritusPVM.ToShortDateString()}", "Esittely", $"{@item.Nimi}");
+        </li>
+    }
+}
+
 <br />
 <br />
 <h6 class="otsikot">Aloitetut kurssit:</h6>
 <br />
-@foreach (var item in aloitettu)
+@if (aloitettu == null)
 {
-    <li>
-        <strong>Aloitettu: </strong> @Html.ActionLink($"{@item.Nimi}", "Esittely", "CSharpAlkeet");
-    </li>
+    <li>Ei suoritettuja kursseja.</li>
 }
+else
+{
+    @foreach (var item in aloitettu)
+    {
+        <li>
+            @Html.ActionLink($"{@item.Nimi}", "KurssistaAloitetut", "Kayttaja");
+        </li>
+    }
+}
+
 
 
 

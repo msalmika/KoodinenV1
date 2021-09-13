@@ -1,26 +1,22 @@
 ﻿@model KoodinenV1.Models.Kayttaja
 @{
     ViewData["Title"] = "KurssistaSuoritetut";
-    var kurssinimi = ViewBag.kurssinimi;
-    var oppitunnit = ViewBag.oppitunnit;
-    var tehtävät = ViewBag.tehtävät;
-    var nimi = ViewBag.nimi;
-    //var id = ViewBag.id;
+    
 }
 @*<div style='float:right;'>Hello @Html.ActionLink(firstName, "Profiili", "Kayttaja", new { id = id })</div>
     <br />
     <div style='float:right;'>@Html.ActionLink("Kirjaudu ulos", "", "")</div>*@
-<style>
+@*<style>
     # oppitunti {
         font-weight: bold;
         display: inline;
-    }
+    }*@
 </style>
-<h3>Kurssista @kurssinimi aloitetut:</h3>
+<h3>Kurssista @ViewBag.kurssinimi aloitetut:</h3>
 
 <h6 style="color:blue;">Oppitunnit</h6>
 <ul>
-    @foreach (var item in oppitunnit)
+    @foreach (var item in ViewBag.kaikkioppit)
     {
         <ul id="oppitunti">
             <li>
@@ -33,7 +29,7 @@
 </ul>
 <h6 style="color:blue;">Tehtävät</h6>
 <ul>
-    @foreach (var item in tehtävät)
+    @foreach (var item in ViewBag.kaikkiteht)
     {
         <ul id="oppitunti">
             <li>
