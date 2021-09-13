@@ -1,12 +1,14 @@
-﻿<!DOCTYPE html>
+﻿
+<!DOCTYPE html>
 <html lang="en">
-<head >
+<head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - KoodinenV1</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
+
 <body>
 
     <header>
@@ -26,16 +28,33 @@
                         <li class="nav-item">
                             <a class="nav-link" style="color:rgb(4, 115, 100)" asp-area="" asp-controller="Etusivu" asp-action="Kurssit">Kurssit</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" style="color:rgb(4, 115, 100)" asp-area="" asp-controller="Rekisteröityminen" asp-action="Rekisteröityminen">Rekisteröidy</a>
-                        </li>
+                        @using Microsoft.AspNetCore.Http;
+                        @{var id = Context.Session.GetInt32("id"); }
+                        @if (id != null)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" style="color:rgb(4, 115, 100)" asp-area="" asp-controller="Kayttaja" asp-action="Profiili">Omat tiedot</a>
+                            </li>
+                        }
+                        @if (id == null)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" style="color:rgb(4, 115, 100)" asp-area="" asp-controller="Rekisteröityminen" asp-action="Rekisteröityminen">Rekisteröidy</a>
+                            </li>
+                        }
                     </ul>
                     <div class="nav-right">
                         <ul class="navbar-nav flex-grow-1">
-
-                            <li class="nav-right">
-                                <a class="nav-link" style="color:rgb(4, 115, 100)" asp-area="" asp-controller="Etusivu" asp-action="Kirjautuminen">Kirjaudu sisään</a>
+                            @if (id != null) {<li class="nav-right">
+                                <a class="nav-link" style="color:rgb(4, 115, 100)"asp-area="" asp-controller="Etusivu" asp-action="KirjautuminenUlos">Kirjaudu ulos</a>
                             </li>
+                            }
+                            @if(id == null)
+                            {
+                                 <li class="nav-right">
+                                <a class="nav-link"style="color:rgb(4, 115, 100)" asp-area="" asp-controller="Etusivu" asp-action="Kirjautuminen">Kirjaudu sisään</a>
+                            </li>
+                             }
                         </ul>
                     </div>
                 </div>

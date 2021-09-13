@@ -58,7 +58,7 @@ namespace KoodinenV1.Controllers
                             am.LisääAdminSessioon(this.HttpContext.Session, id);
                             return RedirectToAction("AdminPääsivu", "Admin");
                         }
-                        return RedirectToAction("Profiili", "Kayttaja");
+                        return RedirectToAction("Index", "Etusivu");
                     }
                 }
                 else
@@ -102,6 +102,12 @@ namespace KoodinenV1.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+        public IActionResult KirjautuminenUlos()
+        {
+            HttpContext.Session.Remove("id");
+            HttpContext.Session.Remove("email");
+            return RedirectToAction("Index", "Etusivu");
         }
     }
 }
