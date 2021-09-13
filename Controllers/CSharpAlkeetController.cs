@@ -134,12 +134,14 @@ namespace KoodinenV1.Controllers
 
             return View();
         }
-        public IActionResult Oppitunti2(string viesti = null)
+        public IActionResult Oppitunti2(string OpViesti = null)
         {
             return View();
         }
-        public IActionResult Oppitunti3(string viesti = null)
+        public IActionResult Oppitunti3(string viesti = null, string OpViesti = null)
         {
+            ViewBag.Viesti = viesti;
+            ViewBag.OpViesti = OpViesti;
             return View();
         }
         public IActionResult RekisteröiKurssi()
@@ -188,12 +190,12 @@ namespace KoodinenV1.Controllers
             }
             if (id == null || oppituntiSuoritettu == false)
             {
-                return RedirectToAction($"Oppitunti{opId}" , new { viesti = "Oppitunnin rekisteröiminen vaatii kirjautumisen ja kaikkien kurssin tehtävien suorittamisen" });
+                return RedirectToAction($"Oppitunti{opId}" , new { OpViesti = "Oppitunnin rekisteröiminen vaatii kirjautumisen ja kaikkien kurssin tehtävien suorittamisen" });
             }
 
             _context.OppituntiSuoritus.Add(new OppituntiSuoritu() {KayttajaId = id, OppituntiId = opId, SuoritusPvm = DateTime.Today, /*Kesken = false*/ });
             _context.SaveChanges();
-            return RedirectToAction($"Oppitunti{opId}", new { viesti = "Onneksi olkoon! Kurssi suoritettu onnistuneesti!" });
+            return RedirectToAction($"Oppitunti{opId}", new { OpViesti = "Onneksi olkoon! Kurssi suoritettu onnistuneesti!" });
         }
     }
     
