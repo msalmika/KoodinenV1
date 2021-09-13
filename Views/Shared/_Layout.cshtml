@@ -12,6 +12,9 @@
 <body>
 
     <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <span class="navbar-brand"><img src="~/Images/KoodinenLogo.png" style="max-block-size: 60px"></span>
+            <div class="container" >
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow mb-3 border-dark" style="background-color:rgb(4, 115, 100)">
             <span class="navbar-brand"><img src="~/Images/KoodinenLogoInvert1.png" style="max-block-size: 60px"></span>
             <div class="container">
@@ -23,10 +26,13 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-white" asp-area="" asp-controller="Etusivu" asp-action="Index">Etusivu</a>
+                            <a class="nav-link" style="color:rgb(4, 115, 100)" asp-area="" asp-controller="Etusivu" asp-action="Index">Etusivu</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white" asp-area="" asp-controller="Etusivu" asp-action="Kurssit">Kurssit</a>
+                            <a class="nav-link" style="color:rgb(4, 115, 100)" asp-area="" asp-controller="Etusivu" asp-action="Kurssit">Kurssit</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" style="color:rgb(4, 115, 100)" asp-area="" asp-controller="Rekisteröityminen" asp-action="Rekisteröityminen">Rekisteröidy</a>
                         </li>
                         @using Microsoft.AspNetCore.Http;
                         @{var id = Context.Session.GetInt32("id"); }
@@ -46,6 +52,9 @@
                     </ul>
                     <div class="nav-right">
                         <ul class="navbar-nav flex-grow-1">
+
+                            <li class="nav-right">
+                                <a class="nav-link" style="color:rgb(4, 115, 100)" asp-area="" asp-controller="Etusivu" asp-action="Kirjautuminen">Kirjaudu sisään</a>
                             @if (id != null) {<li class="nav-right">
                                 <a class="nav-link text-white" asp-area="" asp-controller="Etusivu" asp-action="KirjautuminenUlos">Kirjaudu ulos</a>
                             </li>
