@@ -68,6 +68,8 @@ namespace KoodinenV1.Controllers
                             try
                             {
                                 am.LisääKäyttäjä(Email, Salasana, Nimi);
+                                Email em = new Email(_configuration, _context);
+                                em.LähetäEmail(Email, Nimi);
                                 return RedirectToAction("Kirjautuminen", "Etusivu");
                             }
                             catch (Exception e)
