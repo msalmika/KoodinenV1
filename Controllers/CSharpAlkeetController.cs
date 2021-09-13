@@ -134,15 +134,69 @@ namespace KoodinenV1.Controllers
 
             return View();
         }
-        public IActionResult Oppitunti2()
+        public IActionResult Oppitunti2(string OpViesti = null)
         {
             return View();
         }
-        public IActionResult Oppitunti3()
+        public IActionResult Oppitunti3(string viesti = null, string OpViesti = null)
         {
+            ViewBag.Viesti = viesti;
+            ViewBag.OpViesti = OpViesti;
             return View();
         }
-        
+        public IActionResult RekisteröiKurssi()
+        {
+            int? id = HttpContext.Session.GetInt32("id");
+            var db = _context;
+            Kurssi kurssi = db.Kurssis.Where(k => k.KurssiId == 4).First();
+            db.Entry(kurssi).Collection(o => o.Oppituntis).Load();
+            var oppituntiIDt = kurssi.Oppituntis.Select(o => o.OppituntiId).ToList();
+
+            var oppituntiSuoritukset = _context.OppituntiSuoritus.Where(i => i.KayttajaId == id/* && i.Kesken != false*/).ToList().Select(o => o.OppituntiId).ToList();
+            bool oppitunnitSuoritettu = true;
+            foreach(var o in oppituntiIDt)
+            {
+                if (!oppituntiSuoritukset.Contains(o))
+                {
+                    oppitunnitSuoritettu = false;
+                }
+            }
+            if (id == null || oppitunnitSuoritettu == false)
+            {
+                return RedirectToAction("Oppitunti3", new { viesti = "Kurssin rekisteröiminen vaatii kirjautumisen ja kaikkien kurssin oppituntien suorittamisen" });
+            }
+            
+            _context.KurssiSuoritus.Add(new KurssiSuoritu() { KayttajaId = id, Kesken = false, KurssiId = 4, SuoritusPvm = DateTime.Today });
+            _context.SaveChanges();
+            return RedirectToAction("Oppitunti3", new {viesti = "Onneksi olkoon! Kurssi suoritettu onnistuneesti!" });
+        }
+
+        public IActionResult RekisteröiOppitunti(int opId)
+        {
+            int? id = HttpContext.Session.GetInt32("id");
+            var db = _context;
+            Oppitunti oppitunti = db.Oppituntis.Where(o => o.OppituntiId == opId).First();
+            db.Entry(oppitunti).Collection(o => o.Tehtavas).Load();
+            var tehtavaIDt = oppitunti.Tehtavas.Select(t => t.TehtavaId).ToList();
+
+            var tehtavaSuoritukset = _context.TehtavaSuoritus.Where(i => i.KayttajaId == id).ToList().Select(t => t.TehtavaId).ToList();
+            bool oppituntiSuoritettu = true;
+            foreach (var t in tehtavaIDt)
+            {
+                if (!tehtavaSuoritukset.Contains(t))
+                {
+                    oppituntiSuoritettu = false;
+                }
+            }
+            if (id == null || oppituntiSuoritettu == false)
+            {
+                return RedirectToAction($"Oppitunti{opId}" , new { OpViesti = "Oppitunnin rekisteröiminen vaatii kirjautumisen ja kaikkien kurssin tehtävien suorittamisen" });
+            }
+
+            _context.OppituntiSuoritus.Add(new OppituntiSuoritu() {KayttajaId = id, OppituntiId = opId, SuoritusPvm = DateTime.Today, /*Kesken = false*/ });
+            _context.SaveChanges();
+            return RedirectToAction($"Oppitunti{opId}", new { OpViesti = "Onneksi olkoon! Kurssi suoritettu onnistuneesti!" });
+        }
     }
     
 }

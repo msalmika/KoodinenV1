@@ -37,12 +37,12 @@ namespace KoodinenV1.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Rekisteröityminen(string Nimi, string Email, string Salasana, string tarkistaSalasana)
+        public IActionResult Rekisteröityminen(string Nimi, string Email/*, string Salasana, string tarkistaSalasana*/)
         {
             Apumetodit am = new Apumetodit(_context);
             KoodinenDBContext db = _context;
             //Tarkistetaan että jokaisessa kentässä on tekstiä, email on uniikki, salasanat täsmäävät ja salasana on tietyn mallinen
-            if (!string.IsNullOrWhiteSpace(Nimi) && !string.IsNullOrWhiteSpace(Email) && !string.IsNullOrWhiteSpace(Salasana) && !string.IsNullOrWhiteSpace(tarkistaSalasana))
+            if (!string.IsNullOrWhiteSpace(Nimi) && !string.IsNullOrWhiteSpace(Email))
             {
                 if (am.TarkistaEmail(Email) == true)
                 {
@@ -60,34 +60,50 @@ namespace KoodinenV1.Controllers
                             return View();
                         }
                     }
-                    if (Salasana.Length >= 6 && Salasana.Any(c => char.IsUpper(c)) && Salasana.Any(d => char.IsLower(d)) && Salasana.Any(e => char.IsDigit(e)))
+                    try
                     {
-
-                        if (Salasana == tarkistaSalasana)
-                        {
-                            try
-                            {
-                                am.LisääKäyttäjä(Email, Salasana, Nimi);
-                                return RedirectToAction("Kirjautuminen", "Etusivu");
-                            }
-                            catch (Exception e)
-                            {
-                                Trace.WriteLine(e);
-                                return View();
-                            }
-                        }
-                        else
-                        {
-                            ModelState.AddModelError("Salasana", "Salasanat eivät täsmää!");
-                            return View();
-                        }
+                        var salasana = am.LuoSalasana();
+                        am.LisääKäyttäjä(Email, salasana, Nimi);
+                        Email em = new Email(_configuration, _context);
+                        em.LähetäEmail(Email, Nimi, salasana);
+                        return RedirectToAction("Viesti", "Rekisteröityminen");
                     }
-                    else
+                    catch (Exception e)
                     {
-                        ModelState.AddModelError("Salasana", "Salasanan täytyy olla vähintään 6 merkkiä pitkä ja sen täytyy sisältää\n" +
-                            "vähintään yksi pieni kirjain, yksi iso kirjain ja yksi numero");
+                        Trace.WriteLine(e);
                         return View();
                     }
+
+                    //if (Salasana.Length >= 6 && Salasana.Any(c => char.IsUpper(c)) && Salasana.Any(d => char.IsLower(d)) && Salasana.Any(e => char.IsDigit(e)))
+                    //{
+
+                    //    if (Salasana == tarkistaSalasana)
+                    //    {
+                    //try
+                    //{
+                    //    am.LisääKäyttäjä(Email, Salasana, Nimi);
+                    //    Email em = new Email(_configuration, _context);
+                    //    em.LähetäEmail(Email, Nimi);
+                    //    return RedirectToAction("Kirjautuminen", "Etusivu");
+                    //}
+                    //catch (Exception e)
+                    //{
+                    //    Trace.WriteLine(e);
+                    //    return View();
+                    //}
+                    //    }
+                    //    else
+                    //    {
+                    //        ModelState.AddModelError("Salasana", "Salasanat eivät täsmää!");
+                    //        return View();
+                    //    }
+                    //}
+                    //else
+                    //{
+                    //    ModelState.AddModelError("Salasana", "Salasanan täytyy olla vähintään 6 merkkiä pitkä ja sen täytyy sisältää\n" +
+                    //        "vähintään yksi pieni kirjain, yksi iso kirjain ja yksi numero");
+                    //    return View();
+                    //}
                 }
                 else
                 {
@@ -100,6 +116,11 @@ namespace KoodinenV1.Controllers
                 ModelState.AddModelError("Nimi", "Täytä kaikki kentät");
                 return View();
             }
+        }
+        
+        public IActionResult Viesti()
+        {
+            return View();
         }
         //public IActionResult Testaus()
         //{
