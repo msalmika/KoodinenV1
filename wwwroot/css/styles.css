@@ -4010,6 +4010,11 @@ textarea.form-control-lg {
   flex-grow: 1;
   text-align: center;
 }
+.nav-right {
+    width: 100%;
+    text-align: right;
+    float: right;
+}
 
 .nav-fill .nav-item .nav-link,
 .nav-justified .nav-item .nav-link {
