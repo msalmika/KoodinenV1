@@ -181,6 +181,76 @@ namespace KoodinenV1.Controllers
             ViewBag.Viesti = "Jokin meni pieleen, yritä uudelleen. Jos ongelma toistuu, ota yhteyttä ylläpitoon.";
             return View();
         }
+        public IActionResult KurssistaAloitetut(int id,/*[FromForm]*/int kurssiId)
+        {
+            id = HttpContext.Session.GetInt32("id") ?? 0;
+            kurssiId = 2; // otetaan myöhemmin postista
 
+            KoodinenDBContext db = _context;
+
+            var käyt = db.Kayttajas.Where(k => k.KayttajaId == id).FirstOrDefault();
+            db.Entry(käyt).Collection(ku => ku.Kurssis).Load(); // kurssit
+            db.Entry(käyt).Collection(ks => ks.KurssiSuoritus).Load(); // kurssisuoritukset
+            db.Entry(käyt).Collection(t => t.TehtavaSuoritus).Load(); // tehtäväsuoritukset
+            foreach (var kurssi in käyt.Kurssis)
+            {
+                db.Entry(kurssi).Collection(x => x.Oppituntis).Load();
+                foreach (var oppitunti in kurssi.Oppituntis)
+                {
+                    db.Entry(oppitunti).Collection(x => x.Tehtavas).Load();
+                }
+            }
+
+            var oppitunnit = db.Oppituntis.Where(x => x.KurssiId == kurssiId).ToList();
+            //var oppitunnit = db.Oppituntis.Where(x => x.OppituntiSuoritus.op.ToList(); // kesken, etsi keskeneröiset
+            var keskenoppit = db.OppituntiSuoritus.Where(o => o.Oppitunti.KurssiId != kurssiId).ToList();
+            var tehtävät = db.Tehtavas.ToList();
+
+
+            ViewBag.kurssinimi = "C# perusteet";
+            ViewBag.oppitunnit = oppitunnit;
+            ViewBag.tehtävät = tehtävät;
+            //ViewBag.nimi = käyttäjä.Nimi;
+            //ViewBag.id = käyttäjä.KayttajaId;
+
+            return View(käyt);
+        }
+        //public IActionResult KurssistaSuoritetut(int id,/*[FromForm]*/int kurssiId)
+        //{
+        //    id = HttpContext.Session.GetInt32("id") ?? 0;
+        //    if (id == 0)
+        //    {
+        //        return RedirectToAction("Kirjautuminen", "Etusivu");
+        //    }
+        //    kurssiId = 2; // otetaan myöhemmin postista
+
+        //    KoodinenDBContext db = _context;
+
+        //    var käyt = db.Kayttajas.Where(k => k.KayttajaId == id).FirstOrDefault();
+        //    db.Entry(käyt).Collection(ku => ku.Kurssis).Load();
+
+        //    foreach (var kurssi in käyt.Kurssis)
+        //    {
+        //        db.Entry(kurssi).Collection(x => x.Oppituntis).Load();
+        //        foreach (var oppitunti in kurssi.Oppituntis)
+        //        {
+        //            db.Entry(oppitunti).Collection(x => x.Tehtavas).Load();
+        //        }
+        //    }
+
+        //    var oppitunnit = db.Oppituntis.Where(x => x.KurssiId == kurssiId).ToList();
+
+        //    var tehtävät = db.Tehtavas.ToList();
+
+
+        //    ViewBag.kurssinimi = "C# alkeet";
+        //    ViewBag.oppitunnit = oppitunnit;
+        //    ViewBag.tehtävät = tehtävät;
+        //    //ViewBag.nimi = käyttäjä.Nimi;
+        //    //ViewBag.id = käyttäjä.KayttajaId;
+
+        //    return View(käyt);
+
+        //}
     }
 }

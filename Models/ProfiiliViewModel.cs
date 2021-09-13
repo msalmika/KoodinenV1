@@ -9,8 +9,8 @@ namespace KoodinenV1.Models
     {
         public string Nimi { get; set; }
         public DateTime? SuoritusPVM { get; set; }
-        //public int KurssiId { get; set; }
+        public int KurssiId { get; set; }
         //public string Kuvaus { get; set; }
-       
+
     }
 }
