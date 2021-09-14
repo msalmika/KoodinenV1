@@ -49,20 +49,35 @@
 
 <div class="card">
     <form method="post">
-        <div class="form-group" action="Oppitunti1Tehtävä3" padding: 20px">
+        @if (ViewBag.ReadLine != null && ViewBag.Valmis == false)
+        {
+
+            <div class="form-group" action="Oppitunti1Tehtävä3" style="padding: 20px">
+                <label for="Tekstialue">Kirjoita pyydetyt komennot tähän: </label>
+                <textarea class="form-control" id="Tekstialue" name="Tekstialue" rows="3" style="margin-left:0px">@ViewBag.Tekstialue</textarea>
+            </div>
+            <div class="form-group" action="Oppitunti1Tehtävä3" style="padding: 20px">
+                <label for="ReadLine">@ViewBag.ReadLine</label>
+                <textarea class="form-control" id="ReadLine" name="ReadLine" rows="3" style="margin-left:0px"></textarea>
+            </div>
+        }
+        else {
+        <div class="form-group" action="Oppitunti1Tehtävä3" style="padding: 20px">
             <label for="Tekstialue">Kirjoita pyydetyt komennot tähän: </label>
             <textarea class="form-control" id="Tekstialue" name="Tekstialue" rows="3" style="margin-left:0px"></textarea>
         </div>
+        }
         <input type="submit" value="Tarkista" class="btn btn-outline-primary" style="margin-left:20px" />
+
     </form>
     <br />
 
 
-    @if (ViewBag.Tekstialue != null)
+    @if (ViewBag.Tekstialue != null && ViewBag.Valmis != false)
     {
         <div>Console tulostus</div>
         <textarea id="Palautus" name="Palautus" rows="3" style="background-color:black; color:white; text-align:left">
-        @ViewBag.Tekstialue
+@ViewBag.Tekstialue
         </textarea>
     }
 

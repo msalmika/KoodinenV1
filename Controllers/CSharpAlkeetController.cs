@@ -141,7 +141,7 @@ namespace KoodinenV1.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Oppitunti1_Teht3(/*[FromForm] int tehtava_id,*/ string Tekstialue)
+        public IActionResult Oppitunti1_Teht3(/*[FromForm] int tehtava_id,*/ string Tekstialue, string ReadLine = null)
         {
             string email = HttpContext.Session.GetString("email");
 
@@ -153,6 +153,8 @@ namespace KoodinenV1.Controllers
             {
                 Tekstialue = "Virheellinen syntaksi tai virheellinen määrä pyydettyjä koodirivejä.";
             }
+            
+                
             else
             {
                 var syöterivit = Tekstialue.Split("\n");
@@ -161,11 +163,20 @@ namespace KoodinenV1.Controllers
                 var lukurivi = syöterivit[1].Remove(syöterivit[1].Length - 1);
                 //var syötepituus = syöterivi.Length;
                 var syöte = syöterivi.Split("\"")[1];
+
+                if (ReadLine == null)
+                {
+                    ViewBag.Tekstialue = Tekstialue;
+                    ViewBag.ReadLine = syöte;
+                    ViewBag.Valmis = false;
+                    return View();
+                }
+
                 var lukusyntaksipituus = lukurivi.Length;
                 var lukusyntaksiOK = "var syöte = Console.ReadLine();".Length;
                 //var vikasyöte = syöterivit[2];
                 var odotettu = "Console.WriteLine(\"Tähän konsoliprinttiin on istutettu muuttuja nimeltään:\" + syöte +\".\");";
-                var suoritettu = $"Tähän konsoliprinttiin on istutettu muuttuja nimeltään: {syöte}.";
+                var suoritettu = $"Tähän konsoliprinttiin on istutettu muuttuja nimeltään: {ReadLine}.";
                 if (rivimäärä == 3)
                 {
                     if (lukusyntaksipituus == lukusyntaksiOK && syöterivit[2] == odotettu)
@@ -190,7 +201,7 @@ namespace KoodinenV1.Controllers
             }
 
             ViewBag.Tekstialue = Tekstialue;
-
+            ViewBag.Valmis = true;
 
             return View();
         }
