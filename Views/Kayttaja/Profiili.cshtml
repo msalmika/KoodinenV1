@@ -69,7 +69,7 @@ else
    foreach (var item in suoritetut)
     {
         <li>
-            <strong>Suoritettu: </strong> @Html.ActionLink($"{@item.Nimi} / {@item.SuoritusPVM.ToShortDateString()}", "Esittely", $"{@item.Nimi}");
+            <strong>Suoritettu: </strong> @Html.ActionLink($"{@item.Nimi} / {@item.SuoritusPVM.ToShortDateString()}", "Esittely", $"{@item.Nimi}")
         </li>
     }
 }
@@ -87,7 +87,7 @@ else
     @foreach (var item in aloitettu)
     {
         <li>
-            @Html.ActionLink($"{@item.Nimi}", "KurssistaAloitetut", "Kayttaja");
+            @Html.ActionLink($"{@item.Nimi}","Esittely","CSharpAlkeet") @*"KurssistaAloitetut", "Kayttaja")*@
         </li>
     }
 }
