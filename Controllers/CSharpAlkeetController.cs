@@ -48,14 +48,38 @@ namespace KoodinenV1.Controllers
             }
             return RedirectToAction("Esittely", new { viesti = "Olet jo ilmoittautunut tai suorittanut kurssin" });
         }
-        public IActionResult Oppitunti1_Teht1()
+        public IActionResult Oppitunti1_Teht1(string vihje1 = null, string vihje2 = null, string vihje3 = null)
         {
+                ViewBag.vihje1 = vihje1;
+                ViewBag.vihje2 = vihje2;
+                ViewBag.vihje3 = vihje3;
+                return View();
             int? id = HttpContext.Session.GetInt32("id");
             var suoritettu = _context.TehtavaSuoritus.Where(x => x.KayttajaId == id && x.TehtavaId == 10).FirstOrDefault();
             ViewBag.Suoritettu = suoritettu;
             return View();
         }
-
+        public IActionResult HaeVihje1()
+        {
+                var vihje1 = (from p in _context.Vihjes
+                              where p.TehtavaId == 10
+                              select p.Vihje1).FirstOrDefault();
+                return RedirectToAction("Oppitunti1_Teht1", new { vihje1 });
+        }
+        public IActionResult HaeVihje2()
+        {
+            var vihje2 = (from p in _context.Vihjes
+                          where p.TehtavaId == 10
+                          select p.Vihje2).FirstOrDefault();
+            return RedirectToAction("Oppitunti1_Teht1", new { vihje2 });
+        }
+        public IActionResult HaeVihje3()
+        {
+            var vihje3 = (from p in _context.Vihjes
+                          where p.TehtavaId == 10
+                          select p.Vihje3).FirstOrDefault();
+            return RedirectToAction("Oppitunti1_Teht1", new { vihje3 });
+        }
         [HttpPost]
         public IActionResult Oppitunti1_Teht1(string Tekstialue)
         {
@@ -224,11 +248,16 @@ namespace KoodinenV1.Controllers
         }
         public IActionResult Oppitunti3(string OpViesti = null)
         {
+            string leipäteksti = _context.Ohjeistus.Where(o => o.OppituntiId == 11).Select(x => x.TekstiKentta).First();
+            var tehtävät = _context.Tehtavas.Where(t => t.OppituntiId == 11).Select(x => x.Kuvaus).ToList();
+            ViewBag.Tehtävät = tehtävät;
+            ViewBag.Ohjeistus = leipäteksti;
             ViewBag.OpViesti = OpViesti;
             return View();
         }
         public IActionResult Oppitunti4(string viesti = null, string OpViesti = null)
         {
+            
             ViewBag.Viesti = viesti;
             ViewBag.OpViesti = OpViesti;
             return View();
