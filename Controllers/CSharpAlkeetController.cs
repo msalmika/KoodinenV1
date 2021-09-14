@@ -53,7 +53,6 @@ namespace KoodinenV1.Controllers
                 ViewBag.vihje1 = vihje1;
                 ViewBag.vihje2 = vihje2;
                 ViewBag.vihje3 = vihje3;
-                return View();
             int? id = HttpContext.Session.GetInt32("id");
             var suoritettu = _context.TehtavaSuoritus.Where(x => x.KayttajaId == id && x.TehtavaId == 10).FirstOrDefault();
             ViewBag.Suoritettu = suoritettu;
