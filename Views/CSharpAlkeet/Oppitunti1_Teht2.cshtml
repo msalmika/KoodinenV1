@@ -1,47 +1,22 @@
 ﻿
-@{  
+@{
     Layout = "_CSharpAlkeetLayout";
     ViewData["Title"] = "Oppitunti1";
-    var syöte = @ViewBag.syöte;
 }
 
-<h1>Oppitunti 1</h1>
-<hr />
-@*<h4>Johdanto (siirretään nämä tekstit adminin muokattavaan databaseen)</h4>*@
+<p style="float:right">Oppitunti 1</p>
+<p>Tekstiä<br/>Tekstiä<br/>Tekstiä</p>
+<h3>Tehtävä 2: Muuttujat</h3>
 <p>
-   Edellisella oppitunnilla tutustuimme ohjelmoinnin yleisimpään syntaksiharjoitukseen "Hello World", 
-   jossa komennon tuottamista harjoitellaan konsolisyötteenä. 
-   Tässä tehtävässä harjoittelemme konsolille printatun syötteen tallentamista takaisin koodisyntaksiin dataa sisältäväksi tekijäksi. 
-   Tällaista väliaikaista, dataa sisältävää kooditekijää kutsutaan nimellä muuttuja. 
-   
+    Tällä oppitunnilla tallennamme numeroita int -nimiseen muuttujaan, laskemme muuttujat yhteen ja tulostamme tuloksen konsoliin
+    Numeroita on kannattavaa tallentaa muuttujiin, varsinkin jos samoja muuttujia käytetään useammin.
+
+    Tallenna ensimmäinen muuttuja komennolla <b>int x = 1;</b> ja seuraava muuttuja samalla komennolla,
+    mutta vaihda x:n tilalle <b>y</b> ja 1:n tilalle valitsemasi <b>numero</b>.
+    Seuraavaksi tulostetaan muuttujien summa konsoliin seuraavalla komennolla <b>Console.WriteLine(x + y);</b>.
+    ja muista, että jokainen komento toimii vain, jos jokainen merkki on täsmälleen samanlailla, 
+    eli isot kirjaimet ja symbolit ovat kaikki juuri niinkuin ohjeessa.
 </p>
-
-<p>
-    Ohjelmointisovellusten C#-Konsoli-luokka sisältää WriteLine(); -komennon lisäksi myös Console.ReadLine(); -komennon.
-    Console.ReadLine(); on kirjoitettava koodisyntaksiin WriteLine -syötekomennon jälkeen, jotta konsolilta luettava rivi sisältäisi printattua dataa.
-    Mikäli luettua dataa halutaan jatkokäyttää koodissa, se on sidottava väliaikaiseksi datamuuttujaksi. Muuttujalle määritetään datatyyppi ja nimi,
-    joille osoitetaan arvoksi = -operaattorilla Console.ReadLine(); -komennolla luettu printti. Mikäli sidottavan datan tyyppi ei vielä ole tiedossa,
-    on turvallisinta antaa ohjelmointisovelluksen määrittää datatyyppi käännöksen aikana. Anonyymiä datatyyppiä määritetään C#-syntaksissa kirjaimilla var.
-</p>
-<b> Esimerkki konsolille printatusta syötteestä, sekä printin edelleen sitomisesta muuttujaksi: </b> <br /><br />
-<p> Console.WriteLine("kultainen noutaja");  -> konsoliprintti:  kultainen noutaja</p>
-<p> var koirarotu = Console.ReadLine( );     -> määritetty nyt koodiin muuttujaksi: var koirarotu = "kultainen noutaja";</p>
-<p>
-    Muuttujaan sidottua arvoa voidaan käyttää osana tulevan koodisyntaksin komentoja tai määritteitä. Luotu muuttuja voidaan esimerkiksi istuttaa uuteen konsolisyötteeseen
-    osaksi syötteen lausetta käyttäen + -operaattoria muuttujan ja syötelauseen " "-määriterajojen yhdistämiseksi. Muuttujan tyyppimääritettä var ei tarvitse enää kirjoittaa
-    uudelleen muuttujaa käytettäessä.
-</p>
- <b>Esimerkki edellä muodostetun muuttujan istuttamisesta konsolisyötteeseen:</b><br /><br />
-<p> Console.WriteLine("Minun koirani on rodultaan " + koirarotu + ", joka tarvitsee paljon liikuntaa ja pitää uimisesta.");</p>
-<p> Edelläoleva komento printtaa lauseen: Minun koirani on rodultaan kultainen noutaja, joka tarvitsee paljon liikuntaa ja pitää uimisesta.</p> <br />
-<h3>Tehtävä 2: Console ReadLine();</h3>
-<p>Tarkista vasta kirjoitettuasi kuvaillut kolme koodiriviä:</p>
-<p>Kirjoita <b>Console.WriteLine("</b>valinnainensyöteteksti<b>");</b> -komento haluamallasi syötteellä. Syötteen on oltava "" -merkkien ympäröimä.</p>
-<p>Tallenna konsoliprintti <b>var syöte</b> -nimiseen muuttujaan käyttäen <b>=</b> -operaattoria sekä <b>Console.ReadLine();</b> -komentosyntaksia.</p>
-<p>Istuta tallentamasi muuttuja uuteen WriteLine -syötekomentoon esimerkin mukaisesti: <b>Console.WriteLine("Tähän konsoliprinttiin on istutettu muuttuja nimeltään:" + syöte +".");</b></p>
-
-
-
 <div class="card">
     <form method="post">
         <div class="form-group" action="Oppitunti1Tehtävä2" padding: 20px">
@@ -51,21 +26,35 @@
         <input type="submit" value="Tarkista" class="btn btn-outline-primary" style="margin-left:20px" />
     </form>
     <br />
-   
-
-   @if (ViewBag.Tekstialue != null)
-    {
-        <div>Console tulostus</div>
-        <textarea id="Palautus" name="Palautus" rows="3" style="background-color:black; color:white; text-align:left">
-        @ViewBag.Tekstialue
-        </textarea>
-    }
-
 </div>
 
-
-
-
-
-
-
+    @if (ViewBag.Tekstialue != "Virhe" && ViewBag.Tekstialue != null && ViewBag.Tekstialue != "Virhe3" && ViewBag.Tekstialue != "Virhe2")
+    {
+    <div>Console tulostus</div>
+    <textarea id="Palautus" name="Palautus" rows="3" style="background-color:black; color:white; text-align:left">
+@ViewBag.Tekstialue
+        </textarea>
+    <h4 style="color: forestgreen;padding:20px">Tehtävä oikein!<input type="button" value="Seuraava tehtävä" class="btn btn-outline-success" onclick="location.href='@Url.Action("Oppitunti1_Teht3")'" style="float: right" /></h4>
+    <p>
+        Klikkaamalla oikealta pääset seuraavaan tehtävään!<br />
+        Voit myös kokeilla vaihtaa numeroita muuttujien sisällä ja kokeilla kuinka summa tulostuu konsoleen.
+    </p>
+    }
+    @if (ViewBag.Tekstialue == "Virhe")
+    {
+    <div style="color:red">
+        Jotakin meni pieleen ensimmäisellä rivillä! Lue tehtävän anto huolellisesti ja yritä uudelleen.
+    </div>
+    }
+    @if (ViewBag.Tekstialue == "Virhe2")
+    {
+    <div style="color:red">
+        Jotakin meni pieleen toisella rivillä! Lue tehtävän anto huolellisesti ja yritä uudelleen.
+    </div>
+    }
+    @if (ViewBag.Tekstialue == "Virhe3")
+    {
+    <div style="color:red">
+        Jotakin meni pieleen kolmannella rivillä! Lue tehtävän anto huolellisesti ja yritä uudelleen.
+    </div>
+    }
