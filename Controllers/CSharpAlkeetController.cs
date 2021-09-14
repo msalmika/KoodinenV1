@@ -223,14 +223,14 @@ namespace KoodinenV1.Controllers
         }
         public IActionResult Palaute()
         {
-            ViewBag.Viesti = "Kiitos palautteestasi!";
             return View();
         }
         [HttpPost]
-        public IActionResult Palaute(string teksti)
+        public IActionResult Palaute(string Teksti)
         {
-            _context.Palautes.Add(new Palaute() { Teksti = teksti, Pvm = DateTime.Today });
+            _context.Palautes.Add(new Palaute() { Teksti = Teksti, Pvm = DateTime.Today });
             _context.SaveChanges();
+            ViewBag.Viesti = "Kiitos palautteestasi!";
             return View();
         }
     }
