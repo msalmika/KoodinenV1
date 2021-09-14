@@ -224,11 +224,16 @@ namespace KoodinenV1.Controllers
         }
         public IActionResult Oppitunti3(string OpViesti = null)
         {
+            string leipäteksti = _context.Ohjeistus.Where(o => o.OppituntiId == 11).Select(x => x.TekstiKentta).First();
+            var tehtävät = _context.Tehtavas.Where(t => t.OppituntiId == 11).Select(x => x.Kuvaus).ToList();
+            ViewBag.Tehtävät = tehtävät;
+            ViewBag.Ohjeistus = leipäteksti;
             ViewBag.OpViesti = OpViesti;
             return View();
         }
         public IActionResult Oppitunti4(string viesti = null, string OpViesti = null)
         {
+            
             ViewBag.Viesti = viesti;
             ViewBag.OpViesti = OpViesti;
             return View();
