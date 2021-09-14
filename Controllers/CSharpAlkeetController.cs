@@ -79,6 +79,10 @@ namespace KoodinenV1.Controllers
                 Tekstialue = "Virhe";
             }
             ViewBag.Tekstialue = Tekstialue;
+            int? id = HttpContext.Session.GetInt32("id");
+            var suoritettu = _context.TehtavaSuoritus.Where(x => x.KayttajaId == id && x.TehtavaId == 10).FirstOrDefault();
+            ViewBag.Suoritettu = suoritettu;
+
             return View();
         }
         public IActionResult Oppitunti1_Teht2()
@@ -126,6 +130,9 @@ namespace KoodinenV1.Controllers
             else Tekstialue = "Virhe";
 
             ViewBag.Tekstialue = Tekstialue;
+            int? id = HttpContext.Session.GetInt32("id");
+            var suoritettu = _context.TehtavaSuoritus.Where(x => x.KayttajaId == id && x.TehtavaId == 24).FirstOrDefault();
+            ViewBag.Suoritettu = suoritettu;
             return View();
         }
         public IActionResult Oppitunti1_Teht3()
