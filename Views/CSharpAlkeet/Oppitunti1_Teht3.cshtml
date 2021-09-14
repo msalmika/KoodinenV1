@@ -1,0 +1,76 @@
+﻿
+@{
+    Layout = "_CSharpAlkeetLayout";
+    ViewData["Title"] = "Oppitunti1";
+    var syöte = @ViewBag.syöte;
+}
+
+<p style="float:right">Oppitunti 1</p>
+<hr />
+@*<h4>Johdanto (siirretään nämä tekstit adminin muokattavaan databaseen)</h4>*@
+<p>
+    Edellisella oppitunnilla tutustuimme ohjelmoinnin yleisimpään syntaksiharjoitukseen "Hello World",
+    jossa komennon tuottamista harjoitellaan konsolisyötteenä.
+    Tässä tehtävässä harjoittelemme konsolille printatun syötteen tallentamista takaisin koodisyntaksiin dataa sisältäväksi tekijäksi.
+    Tällaista väliaikaista, dataa sisältävää kooditekijää kutsutaan nimellä muuttuja.
+
+</p>
+
+<p>
+    Ohjelmointisovellusten C#-Konsoli-luokka sisältää WriteLine(); -komennon lisäksi myös Console.ReadLine(); -komennon.
+    Console.ReadLine(); on kirjoitettava koodisyntaksiin WriteLine -syötekomennon jälkeen, jotta konsolilta luettava rivi sisältäisi printattua dataa.
+    Mikäli luettua dataa halutaan jatkokäyttää koodissa, se on sidottava väliaikaiseksi datamuuttujaksi. Muuttujalle määritetään datatyyppi ja nimi,
+    joille osoitetaan arvoksi = -operaattorilla Console.ReadLine(); -komennolla luettu printti. Mikäli sidottavan datan tyyppi ei vielä ole tiedossa,
+    on turvallisinta antaa ohjelmointisovelluksen määrittää datatyyppi käännöksen aikana. Anonyymiä datatyyppiä määritetään C#-syntaksissa kirjaimilla var.
+</p>
+<b> Esimerkki konsolille printatusta syötteestä, sekä printin edelleen sitomisesta muuttujaksi: </b>
+<br />
+<br />
+<p> Console.WriteLine("kultainen noutaja");  -> konsoliprintti:  kultainen noutaja</p>
+<p> var koirarotu = Console.ReadLine( );     -> määritetty nyt koodiin muuttujaksi: var koirarotu = "kultainen noutaja";</p>
+<p>
+    Muuttujaan sidottua arvoa voidaan käyttää osana tulevan koodisyntaksin komentoja tai määritteitä. Luotu muuttuja voidaan esimerkiksi istuttaa uuteen konsolisyötteeseen
+    osaksi syötteen lausetta käyttäen + -operaattoria muuttujan ja syötelauseen " "-määriterajojen yhdistämiseksi. Muuttujan tyyppimääritettä var ei tarvitse enää kirjoittaa
+    uudelleen muuttujaa käytettäessä.
+</p>
+<b>Esimerkki edellä muodostetun muuttujan istuttamisesta konsolisyötteeseen:</b>
+<br />
+<br />
+<p> Console.WriteLine("Minun koirani on rodultaan " + koirarotu + ", joka tarvitsee paljon liikuntaa ja pitää uimisesta.");</p>
+<p> Edelläoleva komento printtaa lauseen: Minun koirani on rodultaan kultainen noutaja, joka tarvitsee paljon liikuntaa ja pitää uimisesta.</p>
+<br />
+<h3>Tehtävä 3: Console ReadLine();</h3>
+<p>Tarkista vasta kirjoitettuasi kuvaillut kolme koodiriviä:</p>
+<p>Kirjoita <b>Console.WriteLine("</b>valinnainensyöteteksti<b>");</b> -komento haluamallasi syötteellä. Syötteen on oltava "" -merkkien ympäröimä.</p>
+<p>Tallenna konsoliprintti <b>var syöte</b> -nimiseen muuttujaan käyttäen <b>=</b> -operaattoria sekä <b>Console.ReadLine();</b> -komentosyntaksia.</p>
+<p>Istuta tallentamasi muuttuja uuteen WriteLine -syötekomentoon esimerkin mukaisesti: <b>Console.WriteLine("Tähän konsoliprinttiin on istutettu muuttuja nimeltään:" + syöte +".");</b></p>
+
+
+
+<div class="card">
+    <form method="post">
+        <div class="form-group" action="Oppitunti1Tehtävä3" padding: 20px">
+            <label for="Tekstialue">Kirjoita pyydetyt komennot tähän: </label>
+            <textarea class="form-control" id="Tekstialue" name="Tekstialue" rows="3" style="margin-left:0px"></textarea>
+        </div>
+        <input type="submit" value="Tarkista" class="btn btn-outline-primary" style="margin-left:20px" />
+    </form>
+    <br />
+
+
+    @if (ViewBag.Tekstialue != null)
+    {
+        <div>Console tulostus</div>
+        <textarea id="Palautus" name="Palautus" rows="3" style="background-color:black; color:white; text-align:left">
+        @ViewBag.Tekstialue
+        </textarea>
+    }
+
+</div>
+
+
+
+
+
+
+

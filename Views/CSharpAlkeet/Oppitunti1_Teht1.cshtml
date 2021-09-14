@@ -1,0 +1,84 @@
+﻿@model KoodinenV1.Models.TehtavaSuoritu
+@{
+    Layout = "_CSharpAlkeetLayout";
+    ViewData["Title"] = "Oppitunti1";
+}
+
+<h1>Oppitunti 1</h1>
+<hr />
+<h4>Johdanto (siirretään nämä tekstit adminin muokattavaan databaseen)</h4>
+<p>
+    Ohjelmointi on ohjelmistojen suunnittelua ja toteutusta. Toteutettava toiminnallisuus määräytyy ohjelmiston tilaajien, sekä käyttäjien toiveiden ja
+    vaatimusten perusteella. Ohjelmia toteutetaan (eli kirjoitetaan tai "koodataan") tyypillisesti ihmisten kirjoitettavaksi ja luettavaksi tarkoitetulla
+    ohjelmointikielellä.
+</p>
+<p>
+    Ohjelmointikieliä on satoja ja tällä kurssilla keskitytään näistä kielistä yhteen. Kurssin kielenä on C#.
+</p>
+@if (ViewBag.Suoritettu == null)
+{
+    <h3>Tehtävä 1: Hello World!</h3>
+}
+@if (ViewBag.Suoritettu != null)
+{
+    <h3 style="color: rgb(4, 115, 100)">Tehtävä 1: Hello World! <partial><strong style="color:mediumseagreen;font-size:20px">&#10003;</strong></partial></h3>
+}
+<p>
+    "Hello World!"" on eräs ohjelmointiin liittyvistä clichéistä ja usein ensimmäisiä asioita joita uudelle
+    ohjelmoijalle/koodarille opetetaan. Näin teemme myös me. Tekstin "Hei maailma!" tulostukseen käytetään komentoa <b>Console.WriteLine("Hei maailma!");</b>.
+    Komento toimii vain, jos jokainen merkki on täsmälleen samanlailla, eli isot kirjaimet ja symbolit ovat kaikki juuri niinkuin ohjeessa.
+</p>
+
+
+
+<div class="card">
+    <form method="post">
+        <div class="form-group" action="Oppitunti1Tehtävä1" padding: 20px">
+            <label for="Tekstialue">Kirjoita pyydetty komento tähän: </label>
+            <textarea class="form-control" id="Tekstialue" name="Tekstialue" rows="3" style="margin-left:0px"></textarea>
+        </div>
+        <input type="submit" value="Tarkista" class="btn btn-outline-primary" style="margin-left:20px" />
+    </form>
+    <br />
+
+    @if (ViewBag.Tekstialue != "Virhe" && ViewBag.Tekstialue != null)
+    {
+        <div>Console tulostus</div>
+        <textarea id="Palautus" name="Palautus" rows="3" style="background-color:black; color:white; text-align:left">
+@ViewBag.Tekstialue
+        </textarea>
+    }
+
+    @if (ViewBag.Tekstialue != "Virhe" && ViewBag.Tekstialue != null)
+    {
+        <h4 style="color: forestgreen;padding:20px">Tehtävä oikein!<input type="button" value="Seuraava tehtävä" class="btn btn-outline-success" onclick="location.href='@Url.Action("Oppitunti1_Teht2")'" style="float: right" /></h4>
+        <p>
+            Alla on vielä yhteenveto ja klikkaamalla oikealta pääset seuraavaan tehtävään!
+            Voit myös kokeilla vaihtaa "Hei maailma":n tilalle, mitä vain tekstiä
+            ja kokeilla kuinka se tulostuu Consoleen.
+        </p>
+        <h4><b>Yhteenveto</b></h4>
+        <br />
+        <div>
+            <p>
+                Konsolikomennot (Console."komento") ovat aloittelevalle koodarille helpoin tapa tutustua ohjelmointikielen (eli syntaksin) kirjoittamiseen,
+                sillä koodiin kirjoitetut komennot visualisoituvat konsoli-ikkunaan.
+                Konsolille suunnatut komennot toteutetaan ohjelmointisovelluksissa Konsoli-metodiluokan välittämänä,
+                joka visualisoi komennon tuloksen Windows Command Prompt -komentoikkunaan ("cmd").
+                Komentoikkunaan tuotettua tulosta kutsutaan printiksi.
+            </p>
+            <p>
+                Tässä oppitunnissa kirjoitimme C#-syntaksin mukaisen WriteLine -konsolikomennon: Console.WriteLine(SYÖTE),
+                joka printtasi annetun syötteen mukaisen tekstin tuloskenttään.
+                Seuraavassa oppitunnissa tutustumme konsoliprintin tallentamiseen C#-muuttujaksi ohjelmointisovelluksen koodiin.
+            </p>
+        </div>
+    }
+    @if (ViewBag.Tekstialue == "Virhe")
+    {
+        <div style="color:red">
+            Jotakin meni pieleen! Lue tehtävän anto huolellisesti ja yritä uudelleen.
+        </div>
+    }
+</div>
+

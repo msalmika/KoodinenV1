@@ -176,7 +176,7 @@ namespace KoodinenV1.Controllers
             if (am.VaihdaSalasana(model.Id, model.UusiSalasana))
             {
                 string viesti = "Salasana vaihdettu onnistuneesti!";
-                return RedirectToAction("Profiili", null, new { viesti = viesti }, null);
+                return RedirectToAction("Profiili", null, new { viesti }, null);
             }
             ViewBag.Viesti = "Jokin meni pieleen, yritä uudelleen. Jos ongelma toistuu, ota yhteyttä ylläpitoon.";
             return View();

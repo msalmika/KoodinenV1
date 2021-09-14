@@ -28,6 +28,7 @@ namespace KoodinenV1.Controllers
         public IActionResult Esittely(string viesti = null)
         {
             int? id = HttpContext.Session.GetInt32("id");
+            ViewBag.id = id;
             ViewBag.Viesti = viesti;
             return View();
         }
@@ -36,25 +37,25 @@ namespace KoodinenV1.Controllers
             int? id = HttpContext.Session.GetInt32("id");
             if (id == null)
             {
-                return RedirectToAction("Esittely", new { viesti = "Kurssille rekisteröityminen vaatii sivulle kirjautumisen!" });
+                return RedirectToAction("Esittely", new { viesti = "Kurssille rekisteröityminen vaatii sivulle kirjautumisen, " });
             }
             if (_context.KurssiSuoritus.Where(k => k.KayttajaId == id && k.KurssiId == 4 && k.Kesken == false) == null && 
                 _context.KurssiSuoritus.Where(k => k.KayttajaId == id && k.KurssiId == 4 && k.Kesken == true) == null)
             {
                 _context.KurssiSuoritus.Add(new KurssiSuoritu() { KayttajaId = id, Kesken = true, KurssiId = 4, SuoritusPvm = DateTime.Today });
                 _context.SaveChanges();
-                return RedirectToAction("Oppitunti1");
+                return RedirectToAction("Oppitunti1_Teht1");
             }
-                return RedirectToAction("Esittely", new { viesti = "Olet jo ilmoittautunut tai suorittanut kurssin" });
+            return RedirectToAction("Esittely", new { viesti = "Olet jo ilmoittautunut tai suorittanut kurssin" });
         }
-        public IActionResult Oppitunti1()
+        public IActionResult Oppitunti1_Teht1()
         {
 
             return View();
         }
 
         [HttpPost]
-        public IActionResult Oppitunti1(string Tekstialue)
+        public IActionResult Oppitunti1_Teht1(string Tekstialue)
         {
             string email = HttpContext.Session.GetString("email");
             if (Tekstialue == null)
@@ -78,6 +79,10 @@ namespace KoodinenV1.Controllers
                 Tekstialue = "Virhe";
             }
             ViewBag.Tekstialue = Tekstialue;
+            int? id = HttpContext.Session.GetInt32("id");
+            var suoritettu = _context.TehtavaSuoritus.Where(x => x.KayttajaId == id && x.TehtavaId == 10).FirstOrDefault();
+            ViewBag.Suoritettu = suoritettu;
+
             return View();
         }
         public IActionResult Oppitunti1_Teht2()
@@ -86,7 +91,57 @@ namespace KoodinenV1.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Oppitunti1_Teht2(/*[FromForm] int tehtava_id,*/ string Tekstialue)
+        public IActionResult Oppitunti1_Teht2(string Tekstialue)
+        {
+            string email = HttpContext.Session.GetString("email");
+            if (Tekstialue == null)
+            {
+                return View();
+            }
+            string rivi1 = Tekstialue.Split("\n")[0];
+            string rivi2 = Tekstialue.Split("\n")[1];
+            string rivi3 = Tekstialue.Split("\n")[2];
+            int x = 0;
+            int y = 0;
+            if (rivi1.StartsWith("int x = ") && rivi1.EndsWith(";\r"))
+            {
+                rivi1 = rivi1.Replace("int x = ", "");
+                rivi1 = rivi1.Replace(";\r", "");
+                Int32.TryParse(rivi1, out x);
+                if (rivi2.StartsWith("int y = ") && rivi2.EndsWith(";\r"))
+                {
+                    rivi2 = rivi2.Replace("int y = ", "");
+                    rivi2 = rivi2.Replace(";\r", "");
+                    Int32.TryParse(rivi2, out y);
+                    if (rivi3.Contains("Console.WriteLine(x + y);"))
+                    {
+                        Tekstialue = Convert.ToString(x + y);
+                        
+                            if (email != null)
+                            {
+                                Suoritus suoritus = new Suoritus() { email = email, tehtavaid = 24 };
+                                TehtävänLähetys.Tarkista(suoritus);
+                            }
+                    }
+                    else Tekstialue = "Virhe3";
+                }
+                else Tekstialue = "Virhe2";
+            }
+            else Tekstialue = "Virhe";
+
+            ViewBag.Tekstialue = Tekstialue;
+            int? id = HttpContext.Session.GetInt32("id");
+            var suoritettu = _context.TehtavaSuoritus.Where(x => x.KayttajaId == id && x.TehtavaId == 24).FirstOrDefault();
+            ViewBag.Suoritettu = suoritettu;
+            return View();
+        }
+        public IActionResult Oppitunti1_Teht3()
+        {
+
+            return View();
+        }
+        [HttpPost]
+        public IActionResult Oppitunti1_Teht3(/*[FromForm] int tehtava_id,*/ string Tekstialue)
         {
             string email = HttpContext.Session.GetString("email");
 
@@ -122,11 +177,11 @@ namespace KoodinenV1.Controllers
                     {
                         Tekstialue = "Virheellinen Console.WriteLine() -tai Console.ReadLine() -syntaksi. Yritä uudelleen!";
                     }
-                    //if (email != null)
-                    //{
-                    //    Suoritus suoritus = new Suoritus() { email = email, tehtavaid = tehtava_id};
-                    //    TehtävänLähetys.Tarkista(suoritus);
-                    //}
+                    if (email != null)
+                    {
+                        Suoritus suoritus = new Suoritus() { email = email, tehtavaid = 25 };
+                        TehtävänLähetys.Tarkista(suoritus);
+                    }
                 }
                 else
                 {
@@ -220,6 +275,18 @@ namespace KoodinenV1.Controllers
             _context.OppituntiSuoritus.Add(new OppituntiSuoritu() { KayttajaId = id, OppituntiId = opId, SuoritusPvm = DateTime.Today, /*Kesken = false*/ });
             _context.SaveChanges();
             return RedirectToAction($"Oppitunti{sivuNro}", new { OpViesti = "Onneksi olkoon! Oppitunti suoritettu onnistuneesti!" });
+        }
+        public IActionResult Palaute()
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult Palaute(string Teksti)
+        {
+            _context.Palautes.Add(new Palaute() { Teksti = Teksti, Pvm = DateTime.Today });
+            _context.SaveChanges();
+            ViewBag.Viesti = "Kiitos palautteestasi!";
+            return View();
         }
     }
 
