@@ -50,7 +50,9 @@ namespace KoodinenV1.Controllers
         }
         public IActionResult Oppitunti1_Teht1()
         {
-
+            int? id = HttpContext.Session.GetInt32("id");
+            var suoritettu = _context.TehtavaSuoritus.Where(x => x.KayttajaId == id && x.TehtavaId == 10).FirstOrDefault();
+            ViewBag.Suoritettu = suoritettu;
             return View();
         }
 
@@ -79,6 +81,7 @@ namespace KoodinenV1.Controllers
                 Tekstialue = "Virhe";
             }
             ViewBag.Tekstialue = Tekstialue;
+
             int? id = HttpContext.Session.GetInt32("id");
             var suoritettu = _context.TehtavaSuoritus.Where(x => x.KayttajaId == id && x.TehtavaId == 10).FirstOrDefault();
             ViewBag.Suoritettu = suoritettu;
@@ -87,7 +90,9 @@ namespace KoodinenV1.Controllers
         }
         public IActionResult Oppitunti1_Teht2()
         {
-
+            int? id = HttpContext.Session.GetInt32("id");
+            var suoritettu = _context.TehtavaSuoritus.Where(x => x.KayttajaId == id && x.TehtavaId == 24).FirstOrDefault();
+            ViewBag.Suoritettu = suoritettu;
             return View();
         }
         [HttpPost]
@@ -130,6 +135,7 @@ namespace KoodinenV1.Controllers
             else Tekstialue = "Virhe";
 
             ViewBag.Tekstialue = Tekstialue;
+
             int? id = HttpContext.Session.GetInt32("id");
             var suoritettu = _context.TehtavaSuoritus.Where(x => x.KayttajaId == id && x.TehtavaId == 24).FirstOrDefault();
             ViewBag.Suoritettu = suoritettu;
@@ -137,7 +143,9 @@ namespace KoodinenV1.Controllers
         }
         public IActionResult Oppitunti1_Teht3()
         {
-
+            int? id = HttpContext.Session.GetInt32("id");
+            var suoritettu = _context.TehtavaSuoritus.Where(x => x.KayttajaId == id && x.TehtavaId == 25).FirstOrDefault();
+            ViewBag.Suoritettu = suoritettu;
             return View();
         }
         [HttpPost]
@@ -191,7 +199,9 @@ namespace KoodinenV1.Controllers
 
             ViewBag.Tekstialue = Tekstialue;
 
-
+            int? id = HttpContext.Session.GetInt32("id");
+            var tehtäväSuoritettu = _context.TehtavaSuoritus.Where(x => x.KayttajaId == id && x.TehtavaId == 25).FirstOrDefault();
+            ViewBag.Suoritettu = tehtäväSuoritettu;
             return View();
         }
         public IActionResult Oppitunti2(string OpViesti = null)
