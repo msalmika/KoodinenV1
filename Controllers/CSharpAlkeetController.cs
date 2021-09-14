@@ -48,12 +48,34 @@ namespace KoodinenV1.Controllers
             }
             return RedirectToAction("Esittely", new { viesti = "Olet jo ilmoittautunut tai suorittanut kurssin" });
         }
-        public IActionResult Oppitunti1_Teht1()
+        public IActionResult Oppitunti1_Teht1(string vihje1 = null, string vihje2 = null, string vihje3 = null)
         {
-
-            return View();
+                ViewBag.vihje1 = vihje1;
+                ViewBag.vihje2 = vihje2;
+                ViewBag.vihje3 = vihje3;
+                return View();
         }
-
+        public IActionResult HaeVihje1()
+        {
+                var vihje1 = (from p in _context.Vihjes
+                              where p.TehtavaId == 10
+                              select p.Vihje1).FirstOrDefault();
+                return RedirectToAction("Oppitunti1_Teht1", new { vihje1 });
+        }
+        public IActionResult HaeVihje2()
+        {
+            var vihje2 = (from p in _context.Vihjes
+                          where p.TehtavaId == 10
+                          select p.Vihje2).FirstOrDefault();
+            return RedirectToAction("Oppitunti1_Teht1", new { vihje2 });
+        }
+        public IActionResult HaeVihje3()
+        {
+            var vihje3 = (from p in _context.Vihjes
+                          where p.TehtavaId == 10
+                          select p.Vihje3).FirstOrDefault();
+            return RedirectToAction("Oppitunti1_Teht1", new { vihje3 });
+        }
         [HttpPost]
         public IActionResult Oppitunti1_Teht1(string Tekstialue)
         {
