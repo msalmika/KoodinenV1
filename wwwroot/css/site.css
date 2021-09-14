@@ -21,7 +21,7 @@ for details on configuring this project to bundle and minify static web assets. 
     z-index: 1; /* Stay on top */
     top: 100px; /* Stay at the top */
     left: 0px;
-    background-color: forestgreen; /* Black*/
+    background-color: rgb(4, 115, 100); /* Black*/
     overflow-x: hidden; /* Disable horizontal scroll */
     padding-top: 60px; /* Place content 60px from the top */
     transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
