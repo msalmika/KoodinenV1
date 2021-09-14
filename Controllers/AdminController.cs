@@ -28,7 +28,9 @@ namespace KoodinenV1.Controllers
         }
         public IActionResult Oppitunti3()
         {
-            //var oppitunti = _context.Ohjeistus.Where
+
+            //AdminViewModel AVM = new AdminViewModel() { Ohje = _context.Ohjeistus.Where(o => o.OppituntiId == 11).First(), Tehtävät = _context.Tehtavas.Where(t => t.OppituntiId == 11).ToList() };
+
             return View();
         }
     }
