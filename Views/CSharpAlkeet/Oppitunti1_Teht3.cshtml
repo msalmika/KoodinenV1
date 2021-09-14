@@ -8,14 +8,7 @@
 <p style="float:right">Oppitunti 1</p>
 <hr />
 @*<h4>Johdanto (siirretään nämä tekstit adminin muokattavaan databaseen)</h4>*@
-@if (ViewBag.Suoritettu == null)
-{
-    <h3>Tehtävä 3: Console.ReadLine()</h3>
-}
-@if (ViewBag.Suoritettu != null)
-{
-    <h3 style="color: rgb(4, 115, 100)">Tehtävä 3: Console.ReadLine()<partial><strong style="color:mediumseagreen;font-size:20px">&#10003;</strong></partial></h3>
-}
+
 <p>
     Edellisella oppitunnilla tutustuimme ohjelmoinnin yleisimpään syntaksiharjoitukseen "Hello World",
     jossa komennon tuottamista harjoitellaan konsolisyötteenä.
@@ -47,7 +40,14 @@
 <p> Console.WriteLine("Minun koirani on rodultaan " + koirarotu + ", joka tarvitsee paljon liikuntaa ja pitää uimisesta.");</p>
 <p> Edelläoleva komento printtaa lauseen: Minun koirani on rodultaan kultainen noutaja, joka tarvitsee paljon liikuntaa ja pitää uimisesta.</p>
 <br />
-<h3>Tehtävä 3: Console ReadLine();</h3>
+@if (ViewBag.Suoritettu == null)
+{
+    <h3>Tehtävä 3: Console.ReadLine();</h3>
+}
+@if (ViewBag.Suoritettu != null)
+{
+    <h3 style="color: rgb(4, 115, 100)">Tehtävä 3: Console.ReadLine(); <partial><strong style="color:mediumseagreen;font-size:20px">&#10003;</strong></partial></h3>
+}
 <p>Tarkista vasta kirjoitettuasi kuvaillut kolme koodiriviä:</p>
 <p>Kirjoita <b>Console.WriteLine("</b>valinnainensyöteteksti<b>");</b> -komento haluamallasi syötteellä. Syötteen on oltava "" -merkkien ympäröimä.</p>
 <p>Tallenna konsoliprintti <b>var syöte</b> -nimiseen muuttujaan käyttäen <b>=</b> -operaattoria sekä <b>Console.ReadLine();</b> -komentosyntaksia.</p>
