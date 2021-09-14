@@ -20,7 +20,7 @@ namespace KoodinenV1.Controllers
 
 
         private readonly IConfiguration _configuration;
-        //
+        
 
         public KayttajaController(ILogger<RekisteröityminenController> logger, KoodinenDBContext context, IConfiguration configuration)
         {
@@ -181,10 +181,9 @@ namespace KoodinenV1.Controllers
             ViewBag.Viesti = "Jokin meni pieleen, yritä uudelleen. Jos ongelma toistuu, ota yhteyttä ylläpitoon.";
             return View();
         }
-        public IActionResult KurssistaAloitetut(int id,/*[FromForm]*/int kurssiId)
+        public IActionResult KurssistaAloitetut(int id,int kurssiId)
         {
             id = HttpContext.Session.GetInt32("id") ?? 0;
-           /* kurssiId = 4;*/ // otetaan myöhemmin postista
 
             KoodinenDBContext db = _context;
 
@@ -204,82 +203,69 @@ namespace KoodinenV1.Controllers
             //var kurssinimi = (from x in db.Kurssis
             //                  where x.KurssiId == kurssiId
             //                  select x.Nimi).FirstOrDefault();
-            
-            var tehdytoppit= db.OppituntiSuoritus.Where(x => x.Kesken == false).ToList();
-            var keskenoppit = db.OppituntiSuoritus.Where(o => o.Kesken == true).ToList();
+
             var kaikkiteht = db.Tehtavas.ToList();
+            var kaikkiopt = db.Oppituntis.ToList();
 
-            var tehdytteht = new List<Tehtava>();
-            var keskenteht = new List<Tehtava>();
-
-            for (int i = 0; i < kaikkiteht.Count; i++)
+            var optsuoritus= db.OppituntiSuoritus.Where(x => x.Kesken == false).ToList();
+            var tehdytoppit = new List<Oppitunti>();
+            for (int i = 0; i < kaikkiopt.Count; i++)
             {
-                foreach(var item in tehdytoppit)
+                foreach (var item in optsuoritus)
                 {
-                    if(item.OppituntiId == kaikkiteht[i].OppituntiId)
+                    if (item.OppituntiId == kaikkiopt[i].OppituntiId)
                     {
-                        tehdytteht.Add(kaikkiteht[i]);
+                        tehdytoppit.Add(kaikkiopt[i]);
                     }
                 }
             }
+            var optsuoritusteht = new List<Tehtava>();
+            for (int i = 0; i < kaikkiteht.Count; i++)
+            {
+                foreach (var item in tehdytoppit)
+                {
+                    if (item.OppituntiId == kaikkiteht[i].OppituntiId)
+                    {
+                        optsuoritusteht.Add(kaikkiteht[i]);
+                    }
+                }
+            }
+
+            var optEIsuoritettu = db.OppituntiSuoritus.Where(o => o.Kesken == true).ToList();
+            var keskenoppit = new List<Oppitunti>();
+            for (int i = 0; i < kaikkiopt.Count; i++)
+            {
+                foreach (var item in optEIsuoritettu)
+                {
+                    if (item.OppituntiId == kaikkiopt[i].OppituntiId)
+                    {
+                        keskenoppit.Add(kaikkiopt[i]);
+                    }
+                }
+            }
+            var optsuorkeskenteht = new List<Tehtava>();
             for (int i = 0; i < kaikkiteht.Count; i++)
             {
                 foreach (var item in keskenoppit)
                 {
                     if (item.OppituntiId == kaikkiteht[i].OppituntiId)
                     {
-                        keskenteht.Add(kaikkiteht[i]);
+                        optsuorkeskenteht.Add(kaikkiteht[i]);
                     }
                 }
             }
 
-            //ViewBag.kurssinimi = kurssinimi.ToString();
-            ViewBag.tehdytoppit = tehdytoppit;
+            //ViewBag.kurssinimi = kurssinimi;
+            ViewBag.tehdytoppit = tehdytoppit; // ok
+            ViewBag.tehdytteht = optsuoritusteht;
             ViewBag.keskenoppit = keskenoppit;
-            ViewBag.tehdytteht = tehdytteht;
-            ViewBag.keskenteht = keskenteht;
+            ViewBag.keskenteht = optsuorkeskenteht;
 
             //ViewBag.nimi = käyttäjä.Nimi;
             //ViewBag.id = käyttäjä.KayttajaId;
 
             return View(käyt);
         }
-        //public IActionResult KurssistaSuoritetut(int id,/*[FromForm]*/int kurssiId)
-        //{
-        //    id = HttpContext.Session.GetInt32("id") ?? 0;
-        //    if (id == 0)
-        //    {
-        //        return RedirectToAction("Kirjautuminen", "Etusivu");
-        //    }
-        //    kurssiId = 2; // otetaan myöhemmin postista
-
-        //    KoodinenDBContext db = _context;
-
-        //    var käyt = db.Kayttajas.Where(k => k.KayttajaId == id).FirstOrDefault();
-        //    db.Entry(käyt).Collection(ku => ku.Kurssis).Load();
-
-        //    foreach (var kurssi in käyt.Kurssis)
-        //    {
-        //        db.Entry(kurssi).Collection(x => x.Oppituntis).Load();
-        //        foreach (var oppitunti in kurssi.Oppituntis)
-        //        {
-        //            db.Entry(oppitunti).Collection(x => x.Tehtavas).Load();
-        //        }
-        //    }
-
-        //    var oppitunnit = db.Oppituntis.Where(x => x.KurssiId == kurssiId).ToList();
-
-        //    var tehtävät = db.Tehtavas.ToList();
-
-
-        //    ViewBag.kurssinimi = "C# alkeet";
-        //    ViewBag.oppitunnit = oppitunnit;
-        //    ViewBag.tehtävät = tehtävät;
-        //    //ViewBag.nimi = käyttäjä.Nimi;
-        //    //ViewBag.id = käyttäjä.KayttajaId;
-
-        //    return View(käyt);
-
-        //}
+     
     }
 }

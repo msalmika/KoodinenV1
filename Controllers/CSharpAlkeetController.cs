@@ -54,6 +54,10 @@ namespace KoodinenV1.Controllers
                 ViewBag.vihje2 = vihje2;
                 ViewBag.vihje3 = vihje3;
                 return View();
+            int? id = HttpContext.Session.GetInt32("id");
+            var suoritettu = _context.TehtavaSuoritus.Where(x => x.KayttajaId == id && x.TehtavaId == 10).FirstOrDefault();
+            ViewBag.Suoritettu = suoritettu;
+            return View();
         }
         public IActionResult HaeVihje1()
         {
@@ -101,11 +105,18 @@ namespace KoodinenV1.Controllers
                 Tekstialue = "Virhe";
             }
             ViewBag.Tekstialue = Tekstialue;
+
+            int? id = HttpContext.Session.GetInt32("id");
+            var suoritettu = _context.TehtavaSuoritus.Where(x => x.KayttajaId == id && x.TehtavaId == 10).FirstOrDefault();
+            ViewBag.Suoritettu = suoritettu;
+
             return View();
         }
         public IActionResult Oppitunti1_Teht2()
         {
-
+            int? id = HttpContext.Session.GetInt32("id");
+            var suoritettu = _context.TehtavaSuoritus.Where(x => x.KayttajaId == id && x.TehtavaId == 24).FirstOrDefault();
+            ViewBag.Suoritettu = suoritettu;
             return View();
         }
         [HttpPost]
@@ -148,15 +159,21 @@ namespace KoodinenV1.Controllers
             else Tekstialue = "Virhe";
 
             ViewBag.Tekstialue = Tekstialue;
+
+            int? id = HttpContext.Session.GetInt32("id");
+            var suoritettu = _context.TehtavaSuoritus.Where(x => x.KayttajaId == id && x.TehtavaId == 24).FirstOrDefault();
+            ViewBag.Suoritettu = suoritettu;
             return View();
         }
         public IActionResult Oppitunti1_Teht3()
         {
-
+            int? id = HttpContext.Session.GetInt32("id");
+            var suoritettu = _context.TehtavaSuoritus.Where(x => x.KayttajaId == id && x.TehtavaId == 25).FirstOrDefault();
+            ViewBag.Suoritettu = suoritettu;
             return View();
         }
         [HttpPost]
-        public IActionResult Oppitunti1_Teht3(/*[FromForm] int tehtava_id,*/ string Tekstialue)
+        public IActionResult Oppitunti1_Teht3(/*[FromForm] int tehtava_id,*/ string Tekstialue, string ReadLine = null)
         {
             string email = HttpContext.Session.GetString("email");
 
@@ -168,6 +185,8 @@ namespace KoodinenV1.Controllers
             {
                 Tekstialue = "Virheellinen syntaksi tai virheellinen määrä pyydettyjä koodirivejä.";
             }
+            
+                
             else
             {
                 var syöterivit = Tekstialue.Split("\n");
@@ -176,11 +195,20 @@ namespace KoodinenV1.Controllers
                 var lukurivi = syöterivit[1].Remove(syöterivit[1].Length - 1);
                 //var syötepituus = syöterivi.Length;
                 var syöte = syöterivi.Split("\"")[1];
+
+                if (ReadLine == null)
+                {
+                    ViewBag.Tekstialue = Tekstialue;
+                    ViewBag.ReadLine = syöte;
+                    ViewBag.Valmis = false;
+                    return View();
+                }
+
                 var lukusyntaksipituus = lukurivi.Length;
                 var lukusyntaksiOK = "var syöte = Console.ReadLine();".Length;
                 //var vikasyöte = syöterivit[2];
                 var odotettu = "Console.WriteLine(\"Tähän konsoliprinttiin on istutettu muuttuja nimeltään:\" + syöte +\".\");";
-                var suoritettu = $"Tähän konsoliprinttiin on istutettu muuttuja nimeltään: {syöte}.";
+                var suoritettu = $"Tähän konsoliprinttiin on istutettu muuttuja nimeltään: {ReadLine}.";
                 if (rivimäärä == 3)
                 {
                     if (lukusyntaksipituus == lukusyntaksiOK && syöterivit[2] == odotettu)
@@ -206,6 +234,10 @@ namespace KoodinenV1.Controllers
 
             ViewBag.Tekstialue = Tekstialue;
 
+            int? id = HttpContext.Session.GetInt32("id");
+            var tehtäväSuoritettu = _context.TehtavaSuoritus.Where(x => x.KayttajaId == id && x.TehtavaId == 25).FirstOrDefault();
+            ViewBag.Suoritettu = tehtäväSuoritettu;
+            ViewBag.Valmis = true;
 
             return View();
         }
@@ -216,11 +248,16 @@ namespace KoodinenV1.Controllers
         }
         public IActionResult Oppitunti3(string OpViesti = null)
         {
+            string leipäteksti = _context.Ohjeistus.Where(o => o.OppituntiId == 11).Select(x => x.TekstiKentta).First();
+            var tehtävät = _context.Tehtavas.Where(t => t.OppituntiId == 11).Select(x => x.Kuvaus).ToList();
+            ViewBag.Tehtävät = tehtävät;
+            ViewBag.Ohjeistus = leipäteksti;
             ViewBag.OpViesti = OpViesti;
             return View();
         }
         public IActionResult Oppitunti4(string viesti = null, string OpViesti = null)
         {
+            
             ViewBag.Viesti = viesti;
             ViewBag.OpViesti = OpViesti;
             return View();
@@ -290,6 +327,18 @@ namespace KoodinenV1.Controllers
             _context.OppituntiSuoritus.Add(new OppituntiSuoritu() { KayttajaId = id, OppituntiId = opId, SuoritusPvm = DateTime.Today, /*Kesken = false*/ });
             _context.SaveChanges();
             return RedirectToAction($"Oppitunti{sivuNro}", new { OpViesti = "Onneksi olkoon! Oppitunti suoritettu onnistuneesti!" });
+        }
+        public IActionResult Palaute()
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult Palaute(string Teksti)
+        {
+            _context.Palautes.Add(new Palaute() { Teksti = Teksti, Pvm = DateTime.Today });
+            _context.SaveChanges();
+            ViewBag.Viesti = "Kiitos palautteestasi!";
+            return View();
         }
     }
 

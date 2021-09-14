@@ -1,0 +1,23 @@
+﻿
+@{
+    Layout = "_CSharpAlkeetLayout";
+    ViewData["Title"] = "Palaute";
+}
+
+<h1>Palautelaatikko</h1>
+<p>
+    Täältä voit lähettää terveisiä Koodisen väelle. Palautteen avulla voimme kehittää toimintaamme. Arvostamme palautettasi!
+</p>
+<form method="post", action="Palaute">
+    <div class="form-group" action="Oppitunti1Tehtävä1" padding: 20px">
+        <label for="Tekstialue">Kirjoita palaute tähän: </label>
+        <textarea class="form-control" id="Teksti" name="Teksti" rows="3" style="margin-left:0px"></textarea>
+    </div>
+    <input type="submit" value="Lähetä" class="btn btn-outline-primary" style="margin-left:20px" />
+</form>
+<br />
+@if(ViewBag.Viesti != null)
+{ 
+<h5 style="color:rgb(4, 115, 100)" >@ViewBag.Viesti</h5>
+}
+

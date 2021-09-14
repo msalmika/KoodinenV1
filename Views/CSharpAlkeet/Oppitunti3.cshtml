@@ -6,43 +6,23 @@
 
 <h1>Oppitunti 3</h1>
 <hr />
+
 <p>
-    Tässä tehtävässä keskitymme luokkiin ja metodeihin. Nämä tehtävät vaativat <a href="https://visualstudio.microsoft.com/">visual studion</a> ja
-    käyttöön ottamista. Huomioitavaa tehtävien tekemisestä: tehtävän tekeminen vaatii koodin kääntämisen eli "Build" operaation. Koska tehtävätiedosto
-    sisältää myös tehtävien tarkistuksen, käännä aina koko solution.
-
-
+    @ViewBag.Ohjeistus
 </p>
-
 <p>
     Lataa kurssin tehtävät <a href="https://funcstorkoodinen.blob.core.windows.net/oppitunti-container/Koodinen_Oppitunti3.zip">tästä</a>
+    Lataa Visual Studio <a href="https://visualstudio.microsoft.com/">tästä</a>
 </p>
 
-<div class="card" style="padding: 20px; margin: 20px">
-    <p>
-        Tehtävä 1. Tee Oppitunti2 projektiin uusi luokka nimeltään "Laskuri". Lisää Laskuri -luokalle metodi "Yhteen", joka saa parametrinaan
-        kaksi integer tyypin muuttujaa, ja palauttaa näiden yhteenlaskun tuloksen.
-    </p>
-</div>
-
-<div class="card" style="padding: 20px; margin: 20px">
-    <p>
-        Tehtävä 2. Lisää Laskuri -luokalle metodi "Vähennys", joka saa parametrinaan kaksi integer tyypin muuttujaa, ja palauttaa näiden
-        vähennyslaskun tuloksen.
-    </p>
-</div>
-
-<div class="card" style="padding: 20px; margin: 20px">
-    <p>
-        Tehtävä 3. Lisää Laskuri -luokalle metodi "Tulo", joka saa parametrinaan kaksi integer tyypin muuttujaa, ja palauttaa näiden kertolaskun tuloksen.
-    </p>
-</div>
-
-<div class="card" style="padding: 20px; margin: 20px">
-    <p>
-        Tehtävä 4. Lisää Laskuri -luokalle metodi "Jako", joka saa parametrinaan kaksi integer tyypin muuttujaa, ja palauttaa näiden jakolaskun tuloksen.
-    </p>
-</div>
+@for (var i = 0; i < ViewBag.Tehtävät.Count; i++)
+{
+    <div class="card" style="padding: 20px; margin: 20px">
+        <p>
+            Tehtävä @(i+1). @ViewBag.Tehtävät[i]
+        </p>
+    </div>
+}
 
 <button class="btn btn-outline-primary" style="margin-left:20px">@Html.ActionLink("Rekisteröi oppitunti", "RekisteröiOppitunti", null, new { opId = 11, sivuNro = 3 })</button>
 <p>
