@@ -5,8 +5,16 @@
 }
 
 <p style="float:right">Oppitunti 1</p>
-<p>Tekstiä<br/>Tekstiä<br/>Tekstiä</p>
-<h3>Tehtävä 2: Muuttujat</h3>
+<p>Tekstiä<br />Tekstiä<br />Tekstiä</p>
+@if (ViewBag.Suoritettu == null)
+{
+    <h3>Tehtävä 2: Muuttujat</h3>
+}
+@if (ViewBag.Suoritettu != null)
+{
+    <h3 style="color: rgb(4, 115, 100)">Tehtävä 2: Muuttujat <partial><strong style="color:mediumseagreen;font-size:20px">&#10003;</strong></partial></h3>
+}
+
 <p>
     Tällä oppitunnilla tallennamme numeroita int -nimiseen muuttujaan, laskemme muuttujat yhteen ja tulostamme tuloksen konsoliin
     Numeroita on kannattavaa tallentaa muuttujiin, varsinkin jos samoja muuttujia käytetään useammin.
@@ -14,12 +22,12 @@
     Tallenna ensimmäinen muuttuja komennolla <b>int x = 1;</b> ja seuraava muuttuja samalla komennolla,
     mutta vaihda x:n tilalle <b>y</b> ja 1:n tilalle valitsemasi <b>numero</b>.
     Seuraavaksi tulostetaan muuttujien summa konsoliin seuraavalla komennolla <b>Console.WriteLine(x + y);</b>.
-    ja muista, että jokainen komento toimii vain, jos jokainen merkki on täsmälleen samanlailla, 
+    ja muista, että jokainen komento toimii vain, jos jokainen merkki on täsmälleen samanlailla,
     eli isot kirjaimet ja symbolit ovat kaikki juuri niinkuin ohjeessa.
 </p>
 <div class="card">
     <form method="post">
-        <div class="form-group" action="Oppitunti1Tehtävä2" padding: 20px">
+        <div class="form-group" action="Oppitunti1Tehtävä2" style="padding: 20px">
             <label for="Tekstialue">Kirjoita pyydetyt komennot tähän: </label>
             <textarea class="form-control" id="Tekstialue" name="Tekstialue" rows="3" style="margin-left:0px"></textarea>
         </div>
@@ -28,8 +36,8 @@
     <br />
 </div>
 
-    @if (ViewBag.Tekstialue != "Virhe" && ViewBag.Tekstialue != null && ViewBag.Tekstialue != "Virhe3" && ViewBag.Tekstialue != "Virhe2")
-    {
+@if (ViewBag.Tekstialue != "Virhe" && ViewBag.Tekstialue != null && ViewBag.Tekstialue != "Virhe3" && ViewBag.Tekstialue != "Virhe2")
+{
     <div>Console tulostus</div>
     <textarea id="Palautus" name="Palautus" rows="3" style="background-color:black; color:white; text-align:left">
 @ViewBag.Tekstialue
@@ -39,22 +47,22 @@
         Klikkaamalla oikealta pääset seuraavaan tehtävään!<br />
         Voit myös kokeilla vaihtaa numeroita muuttujien sisällä ja kokeilla kuinka summa tulostuu konsoleen.
     </p>
-    }
-    @if (ViewBag.Tekstialue == "Virhe")
-    {
+}
+@if (ViewBag.Tekstialue == "Virhe")
+{
     <div style="color:red">
         Jotakin meni pieleen ensimmäisellä rivillä! Lue tehtävän anto huolellisesti ja yritä uudelleen.
     </div>
-    }
-    @if (ViewBag.Tekstialue == "Virhe2")
-    {
+}
+@if (ViewBag.Tekstialue == "Virhe2")
+{
     <div style="color:red">
         Jotakin meni pieleen toisella rivillä! Lue tehtävän anto huolellisesti ja yritä uudelleen.
     </div>
-    }
-    @if (ViewBag.Tekstialue == "Virhe3")
-    {
+}
+@if (ViewBag.Tekstialue == "Virhe3")
+{
     <div style="color:red">
         Jotakin meni pieleen kolmannella rivillä! Lue tehtävän anto huolellisesti ja yritä uudelleen.
     </div>
-    }
+}

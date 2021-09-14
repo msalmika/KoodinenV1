@@ -26,6 +26,11 @@ namespace KoodinenV1.Controllers
 
             return View();
         }
+        public IActionResult Oppitunti3()
+        {
+            //var oppitunti = _context.Ohjeistus.Where
+            return View();
+        }
     }
 
 

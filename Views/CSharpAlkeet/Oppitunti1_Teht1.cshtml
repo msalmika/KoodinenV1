@@ -33,13 +33,30 @@
 
 <div class="card">
     <form method="post">
-        <div class="form-group" action="Oppitunti1Tehtävä1" padding: 20px">
+        <div class="form-group" action="Oppitunti1Tehtävä1" style="padding: 20px">
             <label for="Tekstialue">Kirjoita pyydetty komento tähän: </label>
             <textarea class="form-control" id="Tekstialue" name="Tekstialue" rows="3" style="margin-left:0px"></textarea>
         </div>
         <input type="submit" value="Tarkista" class="btn btn-outline-primary" style="margin-left:20px" />
+
+        <button class="btn btn-outline-primary" style="margin-left:20px">@Html.ActionLink("Vihje 1", "HaeVihje1")</button>
+        <button class="btn btn-outline-primary" style="margin-left:20px">@Html.ActionLink("Vihje 2", "HaeVihje2")</button>
+        <button class="btn btn-outline-primary" style="margin-left:20px">@Html.ActionLink("Vihje 3", "HaeVihje3")</button>
+        @if (ViewBag.vihje1 != null)
+        {
+            <textarea class="form-control" id="Vihje1" name="Vihje1" rows="2" style="margin-left:0px">@ViewBag.vihje1</textarea>
+        }
+        @if (ViewBag.vihje2 != null)
+        {
+            <textarea class="form-control" id="Vihje2" name="Vihje2" rows="2" style="margin-left:0px">@ViewBag.vihje2</textarea>
+        }
+        @if (ViewBag.vihje3 != null)
+        {
+            <textarea class="form-control" id="Vihje3" name="Vihje3" rows="2" style="margin-left:0px">@ViewBag.vihje3</textarea>
+        }
     </form>
     <br />
+
 
     @if (ViewBag.Tekstialue != "Virhe" && ViewBag.Tekstialue != null)
     {
