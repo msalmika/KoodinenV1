@@ -65,12 +65,15 @@
         <main role="main" class="pb-3">
             <div id="mySidenav" class="sidenav">
                 <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-                <a onmouseover="openNav()">@Html.ActionLink("Esittely", "Esittely", "CSharpAlkeet")</a>
-                <a onmouseover="openNav()">@Html.ActionLink("Oppitunti 1", "Oppitunti1_Teht1", "CSharpAlkeet")</a>
-                <a onmouseover="openNav()">@Html.ActionLink("Oppitunti 2", "Oppitunti2", "CSharpAlkeet")</a>
-                <a onmouseover="openNav()">@Html.ActionLink("Oppitunti 3", "Oppitunti3", "CSharpAlkeet")</a>
-                <a onmouseover="openNav()">@Html.ActionLink("Oppitunti 4", "Oppitunti4", "CSharpAlkeet")</a>
-                <a onmouseover="openNav()">@Html.ActionLink("Lähetä palautetta", "Palaute", "CSharpAlkeet")</a>
+                <a id ="linkText" onmouseover="openNav()">@Html.ActionLink("Esittely", "Esittely", "CSharpAlkeet")</a>
+                <a id ="linkText" onmouseover="openNav()">@Html.ActionLink("Oppitunti 1", "Oppitunti1_Teht1", "CSharpAlkeet")</a>
+                <b id ="linkText" onmouseover="openNav()">@Html.ActionLink("Tehtävä 1", "Oppitunti1_Teht1", "CSharpAlkeet")</b>
+                <b id ="linkText" onmouseover="openNav()">@Html.ActionLink("Tehtävä 2", "Oppitunti1_Teht2", "CSharpAlkeet")</b>
+                <a id ="linkText" onmouseover="openNav()">@Html.ActionLink("Oppitunti 2", "Oppitunti2", "CSharpAlkeet")</a>
+                <a id ="linkText" onmouseover="openNav()">@Html.ActionLink("Oppitunti 3", "Oppitunti3", "CSharpAlkeet")</a>
+                <a id ="linkText" onmouseover="openNav()">@Html.ActionLink("Oppitunti 4", "Oppitunti4", "CSharpAlkeet")</a>
+                <a id ="linkText" onmouseover="openNav()">@Html.ActionLink("UKK", "UKK", "CSharpAlkeet")</a>
+                <a id ="linkText" onmouseover="openNav()">@Html.ActionLink("Lähetä palautetta", "Palaute", "CSharpAlkeet")</a>
             </div>
 
             <!-- Use any element to open the sidenav -->
@@ -80,13 +83,17 @@
                     /* Set the width of the side navigation to 250px and the left margin of the page content to 250px */
                     function openNav() {
                         document.getElementById("mySidenav").style.width = "250px";
-                        document.getElementById("main").style.marginLeft = "250px";
+                        document.getElementById("mySidenav").style.marginLeft = "0px";
+                        document.getElementById("main").style.left = "0px";
+                        
                     }
 
                     /* Set the width of the side navigation to 0 and the left margin of the page content to 0 */
                     function closeNav() {
-                        document.getElementById("mySidenav").style.width = "30px";
-                        document.getElementById("main").style.marginLeft = "0px";
+                        document.getElementById("mySidenav").style.width = "250px";
+                        document.getElementById("mySidenav").style.marginLeft = "-210px";
+                        document.getElementById("main").style.left = "0px"
+                        
                     }
                 </script>
             </div>
