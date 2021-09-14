@@ -39,7 +39,7 @@ namespace KoodinenV1.Controllers
             {
                 return RedirectToAction("Esittely", new { viesti = "Kurssille rekisteröityminen vaatii sivulle kirjautumisen, " });
             }
-            if (_context.KurssiSuoritus.Where(k => k.KayttajaId == id && k.KurssiId == 4 && k.Kesken == false) == null && 
+            if (_context.KurssiSuoritus.Where(k => k.KayttajaId == id && k.KurssiId == 4 && k.Kesken == false) == null &&
                 _context.KurssiSuoritus.Where(k => k.KayttajaId == id && k.KurssiId == 4 && k.Kesken == true) == null)
             {
                 _context.KurssiSuoritus.Add(new KurssiSuoritu() { KayttajaId = id, Kesken = true, KurssiId = 4, SuoritusPvm = DateTime.Today });
@@ -50,9 +50,9 @@ namespace KoodinenV1.Controllers
         }
         public IActionResult Oppitunti1_Teht1(string vihje1 = null, string vihje2 = null, string vihje3 = null)
         {
-                ViewBag.vihje1 = vihje1;
-                ViewBag.vihje2 = vihje2;
-                ViewBag.vihje3 = vihje3;
+            ViewBag.vihje1 = vihje1;
+            ViewBag.vihje2 = vihje2;
+            ViewBag.vihje3 = vihje3;
             int? id = HttpContext.Session.GetInt32("id");
             var suoritettu = _context.TehtavaSuoritus.Where(x => x.KayttajaId == id && x.TehtavaId == 10).FirstOrDefault();
             ViewBag.Suoritettu = suoritettu;
@@ -60,10 +60,10 @@ namespace KoodinenV1.Controllers
         }
         public IActionResult HaeVihje1()
         {
-                var vihje1 = (from p in _context.Vihjes
-                              where p.TehtavaId == 10
-                              select p.Vihje1).FirstOrDefault();
-                return RedirectToAction("Oppitunti1_Teht1", new { vihje1 });
+            var vihje1 = (from p in _context.Vihjes
+                          where p.TehtavaId == 10
+                          select p.Vihje1).FirstOrDefault();
+            return RedirectToAction("Oppitunti1_Teht1", new { vihje1 });
         }
         public IActionResult HaeVihje2()
         {
@@ -144,12 +144,12 @@ namespace KoodinenV1.Controllers
                     if (rivi3.Contains("Console.WriteLine(x + y);"))
                     {
                         Tekstialue = Convert.ToString(x + y);
-                        
-                            if (email != null)
-                            {
-                                Suoritus suoritus = new Suoritus() { email = email, tehtavaid = 24 };
-                                TehtävänLähetys.Tarkista(suoritus);
-                            }
+
+                        if (email != null)
+                        {
+                            Suoritus suoritus = new Suoritus() { email = email, tehtavaid = 24 };
+                            TehtävänLähetys.Tarkista(suoritus);
+                        }
                     }
                     else Tekstialue = "Virhe3";
                 }
@@ -184,8 +184,8 @@ namespace KoodinenV1.Controllers
             {
                 Tekstialue = "Virheellinen syntaksi tai virheellinen määrä pyydettyjä koodirivejä.";
             }
-            
-                
+
+
             else
             {
                 var syöterivit = Tekstialue.Split("\n");
@@ -247,8 +247,24 @@ namespace KoodinenV1.Controllers
         }
         public IActionResult Oppitunti3(string OpViesti = null)
         {
+            int id = HttpContext.Session.GetInt32("id") ?? 0;
+
             string leipäteksti = _context.Ohjeistus.Where(o => o.OppituntiId == 11).Select(x => x.TekstiKentta).First();
-            var tehtävät = _context.Tehtavas.Where(t => t.OppituntiId == 11).Select(x => x.Kuvaus).ToList();
+            var tehtävät = _context.Tehtavas.Where(t => t.OppituntiId == 11).ToList();
+            List<int> suoritetut = new List<int>();
+            if (id != 0)
+            {
+                foreach (var tehtävä in tehtävät)
+                {
+                    _context.Entry(tehtävä).Collection(t => t.TehtavaSuoritus).Load();
+                    var lkm = tehtävä.TehtavaSuoritus.Where(i => i.KayttajaId == id && i.TehtavaId == tehtävä.TehtavaId).Count();
+                    if (lkm != 0)
+                    { 
+                        suoritetut.Add(tehtävä.TehtavaId); 
+                    }
+                }
+            }
+            ViewBag.Suoritetut = suoritetut;
             ViewBag.Tehtävät = tehtävät;
             ViewBag.Ohjeistus = leipäteksti;
             ViewBag.OpViesti = OpViesti;
@@ -256,7 +272,7 @@ namespace KoodinenV1.Controllers
         }
         public IActionResult Oppitunti4(string viesti = null, string OpViesti = null)
         {
-            
+
             ViewBag.Viesti = viesti;
             ViewBag.OpViesti = OpViesti;
             return View();
