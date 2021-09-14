@@ -207,59 +207,29 @@ namespace KoodinenV1.Controllers
             var kaikkiteht = db.Tehtavas.ToList();
             var kaikkiopt = db.Oppituntis.ToList();
 
-            var optsuoritus= db.OppituntiSuoritus.Where(x => x.Kesken == false).ToList();
-            var tehdytoppit = new List<Oppitunti>();
-            for (int i = 0; i < kaikkiopt.Count; i++)
-            {
-                foreach (var item in optsuoritus)
-                {
-                    if (item.OppituntiId == kaikkiopt[i].OppituntiId)
-                    {
-                        tehdytoppit.Add(kaikkiopt[i]);
-                    }
-                }
-            }
-            var optsuoritusteht = new List<Tehtava>();
-            for (int i = 0; i < kaikkiteht.Count; i++)
-            {
-                foreach (var item in tehdytoppit)
-                {
-                    if (item.OppituntiId == kaikkiteht[i].OppituntiId)
-                    {
-                        optsuoritusteht.Add(kaikkiteht[i]);
-                    }
-                }
-            }
+            var optsuoritus= db.OppituntiSuoritus.Where(x => x.Kesken == false && x.Kesken != null && x.Kesken != true).ToList();
+            var optEIsuoritettu = db.OppituntiSuoritus.Where(o => o.Kesken == true || o.Kesken == null && o.Kesken != false).ToList();
 
-            var optEIsuoritettu = db.OppituntiSuoritus.Where(o => o.Kesken == true).ToList();
-            var keskenoppit = new List<Oppitunti>();
-            for (int i = 0; i < kaikkiopt.Count; i++)
-            {
-                foreach (var item in optEIsuoritettu)
-                {
-                    if (item.OppituntiId == kaikkiopt[i].OppituntiId)
-                    {
-                        keskenoppit.Add(kaikkiopt[i]);
-                    }
-                }
-            }
-            var optsuorkeskenteht = new List<Tehtava>();
-            for (int i = 0; i < kaikkiteht.Count; i++)
-            {
-                foreach (var item in keskenoppit)
-                {
-                    if (item.OppituntiId == kaikkiteht[i].OppituntiId)
-                    {
-                        optsuorkeskenteht.Add(kaikkiteht[i]);
-                    }
-                }
-            }
+
+            var suoritetutOppit = (from k in kaikkiopt
+                                   join os in optsuoritus on k.OppituntiId equals os.OppituntiId
+                                   select new Oppitunti { Nimi = k.Nimi, Kuvaus = k.Kuvaus }).ToList();
+            var suoritTeht = (from t in kaikkiteht
+                             join s in suoritetutOppit on t.OppituntiId equals s.OppituntiId
+                             select new Tehtava { Nimi = t.Nimi, Kuvaus = t.Kuvaus}).ToList();
+
+           var EIsuoritetutOppit = (from k in kaikkiopt
+                                    join os in optEIsuoritettu on k.OppituntiId equals os.OppituntiId
+                                    select new Oppitunti { Nimi = k.Nimi, Kuvaus = k.Kuvaus }).ToList();
+            var EIsuoritTeht = (from t in kaikkiteht
+                              join s in optEIsuoritettu on t.OppituntiId equals s.OppituntiId
+                              select new Tehtava { Nimi = t.Nimi, Kuvaus = t.Kuvaus }).ToList();
 
             //ViewBag.kurssinimi = kurssinimi;
-            ViewBag.tehdytoppit = tehdytoppit; // ok
-            ViewBag.tehdytteht = optsuoritusteht;
-            ViewBag.keskenoppit = keskenoppit;
-            ViewBag.keskenteht = optsuorkeskenteht;
+            ViewBag.tehdytoppit = suoritetutOppit; // ok
+            //ViewBag.tehdytteht = suoritTeht;
+            ViewBag.keskenoppit = EIsuoritetutOppit;
+            //ViewBag.keskenteht = EIsuoritTeht;
 
             //ViewBag.nimi = käyttäjä.Nimi;
             //ViewBag.id = käyttäjä.KayttajaId;
