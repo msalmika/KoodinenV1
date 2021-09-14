@@ -13,8 +13,12 @@
     Mikäli haluat kurssista rekisteröidyn suorituksen, aloita kurssi alla olevasta nappulasta.
     Kurssille rekisteröityminen vaatii sivustolle kirjautumisen.
 </p>
-    <button class="btn btn-outline-primary" style="margin-left:20px">@Html.ActionLink("Aloita kurssi", "AloitaKurssi")</button>
-    @if(ViewBag.Viesti != null)
-            {
-<a style="color:red">@ViewBag.Viesti</a>
-            }
+<button class="btn btn-outline-primary" style="margin-left:20px">@Html.ActionLink("Aloita kurssi", "AloitaKurssi")</button>
+@if (ViewBag.Viesti != null && ViewBag.id != null)
+{
+    <a style="color:red">@ViewBag.Viesti</a>
+}
+@if (ViewBag.Viesti != null && ViewBag.id == null)
+{
+    <a style="color:red">@ViewBag.Viesti</a><a>@Html.ActionLink("Kirjaudu tästä!", "Kirjautuminen", "Etusivu")</a>
+}

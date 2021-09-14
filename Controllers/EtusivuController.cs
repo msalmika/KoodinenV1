@@ -44,6 +44,11 @@ namespace KoodinenV1.Controllers
 
             if (!(string.IsNullOrEmpty(email) || string.IsNullOrEmpty(salasana)))
             {
+                if (am.TarkistaEmail(email) == false)
+                {
+                    ModelState.AddModelError("Salasana", "Väärä sähköpostiosoite tai salasana");
+                    return View();
+                }
                 var kirjautuja = am.HaeKäyttäjä(email);
                 if (kirjautuja != null && kirjautuja.Email == email && kirjautuja.Salasana == am.HashSalasana(salasana))
                 {
