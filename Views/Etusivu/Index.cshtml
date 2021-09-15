@@ -26,7 +26,7 @@
                     @{var id = Context.Session.GetInt32("id"); }
                     @if (id == null)
                     {
-                        <p class="fs-4">Opi koodaamaan kaikille avoimien kurssiemme avulla! @Html.ActionLink("Kirjaudu sisään", "Kirjautuminen", "Etusivu") nähdäksesi kurssisisällöt.</p>
+                        <p class="fs-4">Opi koodaamaan kaikille avoimien kurssiemme avulla! @Html.ActionLink("Kirjaudu sisään tästä", "Kirjautuminen", "Etusivu").</p>
                     }
 
                     <a class="btn btn-outline-primary btn-lg" href="@Url.Action("Kurssit", "Etusivu")">Katso kaikki kurssit!</a>
