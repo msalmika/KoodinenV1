@@ -275,6 +275,18 @@ namespace KoodinenV1.Controllers
         }
         public IActionResult Oppitunti2(string OpViesti = null)
         {
+
+            int? id = HttpContext.Session.GetInt32("id");
+            var suoritettuTeht1 = _context.TehtavaSuoritus.Where(x => x.KayttajaId == id && x.TehtavaId == 11).FirstOrDefault();
+            var suoritettuTeht2 = _context.TehtavaSuoritus.Where(x => x.KayttajaId == id && x.TehtavaId == 12).FirstOrDefault();
+            var suoritettuTeht3 = _context.TehtavaSuoritus.Where(x => x.KayttajaId == id && x.TehtavaId == 13).FirstOrDefault();
+            var suoritettuTeht4 = _context.TehtavaSuoritus.Where(x => x.KayttajaId == id && x.TehtavaId == 14).FirstOrDefault();
+
+            ViewBag.SuoritettuTeht1 = suoritettuTeht1;
+            ViewBag.SuoritettuTeht2 = suoritettuTeht2;
+            ViewBag.SuoritettuTeht3 = suoritettuTeht3;
+            ViewBag.SuoritettuTeht4 = suoritettuTeht4;
+
             ViewBag.OpViesti = OpViesti;
             return View();
         }
