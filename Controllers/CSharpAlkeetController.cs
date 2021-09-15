@@ -39,12 +39,11 @@ namespace KoodinenV1.Controllers
             {
                 return RedirectToAction("Esittely", new { viesti = "Kurssille rekisteröityminen vaatii sivulle kirjautumisen, " });
             }
-            if (_context.KurssiSuoritus.Where(k => k.KayttajaId == id && k.KurssiId == 4 && k.Kesken == false) == null &&
-                _context.KurssiSuoritus.Where(k => k.KayttajaId == id && k.KurssiId == 4 && k.Kesken == true) == null)
+            if (_context.KurssiSuoritus.Where(k => k.KayttajaId == id && k.KurssiId == 4).ToList().Count() == 0)
             {
                 _context.KurssiSuoritus.Add(new KurssiSuoritu() { KayttajaId = id, Kesken = true, KurssiId = 4, SuoritusPvm = DateTime.Today });
                 _context.SaveChanges();
-                return RedirectToAction("Oppitunti1_Teht1");
+                return RedirectToAction("Esittely", new {viesti = "Ilmoittautuminen onnistui, tervetuloa kurssille!" });
             }
             return RedirectToAction("Esittely", new { viesti = "Olet jo ilmoittautunut tai suorittanut kurssin" });
         }
