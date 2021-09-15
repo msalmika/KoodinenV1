@@ -388,6 +388,10 @@ namespace KoodinenV1.Controllers
             ViewBag.Viesti = "Kiitos palautteestasi!";
             return View();
         }
+        public IActionResult UKK()
+        {
+            return View();
+        }
     }
 
 }
