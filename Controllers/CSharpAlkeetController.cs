@@ -86,21 +86,35 @@ namespace KoodinenV1.Controllers
             {
                 return View();
             }
-
-            if (Tekstialue.StartsWith("Console.WriteLine(\"") && Tekstialue.EndsWith("\");"))
+            try
             {
-                Tekstialue = Tekstialue.Replace("Console.WriteLine(\"", "");
-                Tekstialue = Tekstialue.Replace("\");", "");
-
-                if (email != null)
+                if (Tekstialue.Length >= 50)
                 {
-                    Suoritus suoritus = new Suoritus() { email = email, tehtavaid = 10 };
-                    TehtävänLähetys.Tarkista(suoritus);
+                    Tekstialue = "Virhe";
                 }
+
+                if (Tekstialue.StartsWith("Console.WriteLine(\"") && Tekstialue.EndsWith("\");"))
+                {
+
+                    Tekstialue = Tekstialue.Replace("Console.WriteLine(\"", "");
+                    Tekstialue = Tekstialue.Replace("\");", "");
+
+                    if (email != null)
+                    {
+                        Suoritus suoritus = new Suoritus() { email = email, tehtavaid = 10 };
+                        TehtävänLähetys.Tarkista(suoritus);
+                    }
+                }
+                else
+                {
+                    Tekstialue = "Virhe";
+                }
+
             }
-            else
+            catch (Exception)
             {
-                Tekstialue = "Virhe";
+
+                throw;
             }
             ViewBag.Tekstialue = Tekstialue;
 
@@ -120,41 +134,61 @@ namespace KoodinenV1.Controllers
         [HttpPost]
         public IActionResult Oppitunti1_Teht2(string Tekstialue)
         {
+
             string email = HttpContext.Session.GetString("email");
             if (Tekstialue == null)
             {
                 return View();
             }
-            string rivi1 = Tekstialue.Split("\n")[0];
-            string rivi2 = Tekstialue.Split("\n")[1];
-            string rivi3 = Tekstialue.Split("\n")[2];
-            int x = 0;
-            int y = 0;
-            if (rivi1.StartsWith("int x = ") && rivi1.EndsWith(";\r"))
+            try
             {
-                rivi1 = rivi1.Replace("int x = ", "");
-                rivi1 = rivi1.Replace(";\r", "");
-                Int32.TryParse(rivi1, out x);
-                if (rivi2.StartsWith("int y = ") && rivi2.EndsWith(";\r"))
+                if (Tekstialue.Split("\n").Length != 3)
                 {
-                    rivi2 = rivi2.Replace("int y = ", "");
-                    rivi2 = rivi2.Replace(";\r", "");
-                    Int32.TryParse(rivi2, out y);
-                    if (rivi3.Contains("Console.WriteLine(x + y);"))
-                    {
-                        Tekstialue = Convert.ToString(x + y);
-
-                        if (email != null)
-                        {
-                            Suoritus suoritus = new Suoritus() { email = email, tehtavaid = 24 };
-                            TehtävänLähetys.Tarkista(suoritus);
-                        }
-                    }
-                    else Tekstialue = "Virhe3";
+                    Tekstialue = "Virhe4";
                 }
-                else Tekstialue = "Virhe2";
+                else
+                {
+                    string rivi1 = Tekstialue.Split("\n")[0];
+                    string rivi2 = Tekstialue.Split("\n")[1];
+                    string rivi3 = Tekstialue.Split("\n")[2];
+                    if (rivi1 == null || rivi2 == null || rivi3 == null)
+                    {
+                        return View();
+                    }
+                    int x = 0;
+                    int y = 0;
+
+                    if (rivi1.StartsWith("int x = ") && rivi1.EndsWith(";\r"))
+                    {
+                        rivi1 = rivi1.Replace("int x = ", "");
+                        rivi1 = rivi1.Replace(";\r", "");
+                        Int32.TryParse(rivi1, out x);
+                        if (rivi2.StartsWith("int y = ") && rivi2.EndsWith(";\r"))
+                        {
+                            rivi2 = rivi2.Replace("int y = ", "");
+                            rivi2 = rivi2.Replace(";\r", "");
+                            Int32.TryParse(rivi2, out y);
+                            if (rivi3.Contains("Console.WriteLine(x + y);"))
+                            {
+                                Tekstialue = Convert.ToString(x + y);
+
+                                if (email != null)
+                                {
+                                    Suoritus suoritus = new Suoritus() { email = email, tehtavaid = 24 };
+                                    TehtävänLähetys.Tarkista(suoritus);
+                                }
+                            }
+                            else Tekstialue = "Virhe3";
+                        }
+                        else Tekstialue = "Virhe2";
+                    }
+                    else Tekstialue = "Virhe";
+                }
             }
-            else Tekstialue = "Virhe";
+            catch (Exception e)
+            {
+                throw;
+            }
 
             ViewBag.Tekstialue = Tekstialue;
 
@@ -352,6 +386,10 @@ namespace KoodinenV1.Controllers
             _context.Palautes.Add(new Palaute() { Teksti = Teksti, Pvm = DateTime.Today });
             _context.SaveChanges();
             ViewBag.Viesti = "Kiitos palautteestasi!";
+            return View();
+        }
+        public IActionResult UKK()
+        {
             return View();
         }
     }

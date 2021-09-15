@@ -36,7 +36,7 @@
     <br />
 </div>
 
-@if (ViewBag.Tekstialue != "Virhe" && ViewBag.Tekstialue != null && ViewBag.Tekstialue != "Virhe3" && ViewBag.Tekstialue != "Virhe2")
+@if (ViewBag.Tekstialue != "Virhe" && ViewBag.Tekstialue != null && ViewBag.Tekstialue != "Virhe3" && ViewBag.Tekstialue != "Virhe2" && ViewBag.Tekstialue != "Virhe4")
 {
     <div>Console tulostus</div>
     <textarea id="Palautus" name="Palautus" rows="3" style="background-color:black; color:white; text-align:left">
@@ -64,5 +64,11 @@
 {
     <div style="color:red">
         Jotakin meni pieleen kolmannella rivillä! Lue tehtävän anto huolellisesti ja yritä uudelleen.
+    </div>
+}
+@if (ViewBag.Tekstialue == "Virhe4")
+{
+    <div style="color:red">
+        Virheellinen määrä rivejä! Lue tehtävän anto huolellisesti ja yritä uudelleen.
     </div>
 }
