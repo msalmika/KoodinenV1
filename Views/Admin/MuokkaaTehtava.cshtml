@@ -1,0 +1,50 @@
+﻿@model KoodinenV1.Models.Tehtava
+
+@{
+    ViewData["Title"] = "Muokkaa Tehtävää";
+}
+
+<h1>Muokkaa Tehtävää</h1>
+
+<h4>@Model.Nimi</h4>
+<hr />
+@if(ViewBag.Viesti != null)
+            {
+                <h5 style="color:red">@ViewBag.Viesti</h5>
+            }
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="MuokkaaTehtava">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="TehtavaId" />
+            <div class="form-group">
+                <input type="hidden" asp-for="Nimi" class="form-control" value="@Model.Nimi" />
+                <span asp-validation-for="Nimi" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Kuvaus" class="control-label"></label>
+                <textarea class="form-control" id="Kuvaus" name="Kuvaus" rows="3" style="margin-left:0px">@Model.Kuvaus</textarea>
+                <span asp-validation-for="Kuvaus" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="hidden" asp-for="TehtavaUrl" value="@Model.TehtavaUrl" class="form-control" />
+                <span asp-validation-for="TehtavaUrl" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="hidden" asp-for="OppituntiId" value="@Model.OppituntiId" class="form-control" />
+                <span asp-validation-for="OppituntiId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Oppitunti3">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
