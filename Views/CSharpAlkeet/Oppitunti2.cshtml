@@ -23,27 +23,62 @@
 </p>
 
 <div class="card" style="padding: 20px; margin: 20px">
+    @if (ViewBag.SuoritettuTeht1 == null)
+    {
+        <h3>Tehtävä 1.</h3>
+    }
+    @if (ViewBag.SuoritettuTeht1 != null)
+    {
+        <h3 style="color: forestgreen">Tehtävä 1.<partial><strong style="color:mediumseagreen;font-size:20px">&#10003;</strong></partial></h3>
+    }
+
     <p>
-        Tehtävä 1. Avaa "Tervehdys"-luokka ja lisää metodiin "Tervehdys1()" string muuttuja "Hei mualima!". Käytä return-lausetta palauttaaksesi kyseisen stringin.
+        Avaa "Tervehdys"-luokka ja lisää metodiin "Tervehdys1()" string muuttuja "Hei mualima!". Käytä return-lausetta palauttaaksesi kyseisen stringin.
         Ohjelma käynnistyy, kun poistat kommentit "Tehtävä1.Tarkista(email);" -riviltä ja painat "Debug" -> "Start Without Debugging".
     </p>
 </div>
 
 <div class="card" style="padding: 20px; margin: 20px">
+    @if (ViewBag.SuoritettuTeht2 == null)
+    {
+        <h3>Tehtävä 2.</h3>
+    }
+    @if (ViewBag.SuoritettuTeht2 != null)
+    {
+        <h3 style="color: forestgreen">Tehtävä 2.<partial><strong style="color:mediumseagreen;font-size:20px">&#10003;</strong></partial></h3>
+    }
+
     <p>
-        Tehtävä 2. Avaa "Tervehdys" -luokka ja laita metodi "Tervehdys2()" palauttamaan parametrina annetun stringin.
+        Avaa "Tervehdys" -luokka ja laita metodi "Tervehdys2()" palauttamaan parametrina annetun stringin.
     </p>
 </div>
 
 <div class="card" style="padding: 20px; margin: 20px">
+    @if (ViewBag.SuoritettuTeht3 == null)
+    {
+        <h3>Tehtävä 3.</h3>
+    }
+    @if (ViewBag.SuoritettuTeht3 != null)
+    {
+        <h3 style="color: forestgreen">Tehtävä 3.<partial><strong style="color:mediumseagreen;font-size:20px">&#10003;</strong></partial></h3>
+    }
+    
     <p>
-        Tehtävä 3. Tee public static string metodi Tervehdys3(), johon ei anneta parametreja ja joka palauttaa string muuttujan "Hei Ada Lovelace!".
+        Tee public static string metodi Tervehdys3(), johon ei anneta parametreja ja joka palauttaa string muuttujan "Hei Ada Lovelace!".
     </p>
 </div>
 
 <div class="card" style="padding: 20px; margin: 20px">
+    @if (ViewBag.SuoritettuTeht4 == null)
+    {
+        <h3>Tehtävä 4.</h3>
+    }
+    @if (ViewBag.SuoritettuTeht4 != null)
+    {
+        <h3 style="color: forestgreen">Tehtävä 4.<partial><strong style="color:mediumseagreen;font-size:20px">&#10003;</strong></partial></h3>
+    }
     <p>
-        Tehtävä 4. Tee metodi Tervehdys4() ja anna sille parametriksi string muuttuja.
+        Tee metodi Tervehdys4() ja anna sille parametriksi string muuttuja.
     </p>
 </div>
 
