@@ -9,5 +9,6 @@ namespace KoodinenV1.Models
     {
         public List<Tehtava> Tehtävät { get; set; }
         public Ohjeistu Ohje { get; set; }
+        public Kurssi Kurssi { get; set; }
     }
 }
