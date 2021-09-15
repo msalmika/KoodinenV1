@@ -10,7 +10,11 @@
 </p>
 <form method="post", action="Palaute">
     <div class="form-group" action="Oppitunti1Tehtävä1" padding: 20px">
+        <input type="checkbox" name="vastaa" value="joo" /> Haluan että ylläpito on minuun yhteydessä palautteestani
+        <br />
         <label for="Tekstialue">Kirjoita palaute tähän: </label>
+        <br />
+        @Html.ValidationMessage("Error", new { @style = "color:red" })
         <textarea class="form-control" id="Teksti" name="Teksti" rows="3" style="margin-left:0px"></textarea>
     </div>
     <input type="submit" value="Lähetä" class="btn btn-outline-primary" style="margin-left:20px" />

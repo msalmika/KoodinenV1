@@ -190,7 +190,7 @@ namespace KoodinenV1.Controllers
                     else Tekstialue = "Virhe";
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 throw;
             }
@@ -398,15 +398,37 @@ namespace KoodinenV1.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Palaute(string Teksti)
+        public IActionResult Palaute(string Teksti, string vastaa, string lahettaja)
         {
-            if (Teksti.Length >= 2000)
+
+            try
             {
-                ModelState.AddModelError("Teksti", "Teksti on liian pitkä, Tekstissä voi olla maksimissaan 2000 merkkiä.");
-                return View();
+                lahettaja = HttpContext.Session.GetString("email");
+                if (Teksti.Length >= 2000)
+                {
+                    ModelState.AddModelError("Error", "Teksti on liian pitkä, Tekstissä voi olla maksimissaan 2000 merkkiä.");
+                    return View();
+                }
+                if (vastaa == "joo" && lahettaja == null)
+                {
+                    ModelState.AddModelError("Error", "Emme voi vastata palautteeseen, jos et ole kirjautuneena sisään");
+                    return View();
+                }
+                if (vastaa == "joo")
+                {
+                    _context.Palautes.Add(new Palaute() { Lahettaja = lahettaja, Teksti = Teksti, Pvm = DateTime.Today });
+                }
+                else
+                {
+                    _context.Palautes.Add(new Palaute() { Teksti = Teksti, Pvm = DateTime.Today });
+                }
+                _context.SaveChanges();
             }
-            _context.Palautes.Add(new Palaute() { Teksti = Teksti, Pvm = DateTime.Today });
-            _context.SaveChanges();
+            catch (Exception)
+            {
+
+                throw;
+            }
             ViewBag.Viesti = "Kiitos palautteestasi!";
             return View();
         }
