@@ -78,6 +78,11 @@ namespace KoodinenV1.Controllers
                           select p.Vihje3).FirstOrDefault();
             return RedirectToAction("Oppitunti1_Teht1", new { vihje3 });
         }
+        public IActionResult Oppitunti1(string OpViesti = null)
+        {
+            ViewBag.OpViesti = OpViesti;    
+            return RedirectToAction("Oppitunti1_Teht1");
+        }
         [HttpPost]
         public IActionResult Oppitunti1_Teht1(string Tekstialue)
         {
@@ -275,6 +280,18 @@ namespace KoodinenV1.Controllers
         }
         public IActionResult Oppitunti2(string OpViesti = null)
         {
+
+            int? id = HttpContext.Session.GetInt32("id");
+            var suoritettuTeht1 = _context.TehtavaSuoritus.Where(x => x.KayttajaId == id && x.TehtavaId == 11).FirstOrDefault();
+            var suoritettuTeht2 = _context.TehtavaSuoritus.Where(x => x.KayttajaId == id && x.TehtavaId == 12).FirstOrDefault();
+            var suoritettuTeht3 = _context.TehtavaSuoritus.Where(x => x.KayttajaId == id && x.TehtavaId == 13).FirstOrDefault();
+            var suoritettuTeht4 = _context.TehtavaSuoritus.Where(x => x.KayttajaId == id && x.TehtavaId == 14).FirstOrDefault();
+
+            ViewBag.SuoritettuTeht1 = suoritettuTeht1;
+            ViewBag.SuoritettuTeht2 = suoritettuTeht2;
+            ViewBag.SuoritettuTeht3 = suoritettuTeht3;
+            ViewBag.SuoritettuTeht4 = suoritettuTeht4;
+
             ViewBag.OpViesti = OpViesti;
             return View();
         }
@@ -383,6 +400,11 @@ namespace KoodinenV1.Controllers
         [HttpPost]
         public IActionResult Palaute(string Teksti)
         {
+            if (Teksti.Length >= 2000)
+            {
+                ModelState.AddModelError("Teksti", "Teksti on liian pitkä, Tekstissä voi olla maksimissaan 2000 merkkiä.");
+                return View();
+            }
             _context.Palautes.Add(new Palaute() { Teksti = Teksti, Pvm = DateTime.Today });
             _context.SaveChanges();
             ViewBag.Viesti = "Kiitos palautteestasi!";

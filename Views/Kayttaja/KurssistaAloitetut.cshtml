@@ -1,76 +1,26 @@
-﻿@model KoodinenV1.Models.Kayttaja
+﻿@model KoodinenV1.Models.KurssistaAloitettuViewModel
 @{
     ViewData["Title"] = "KurssistaAloitetut";
 
 }
-@*<div style='float:right;'>Hello @Html.ActionLink(firstName, "Profiili", "Kayttaja", new { id = id })</div>
-    <br />
-    <div style='float:right;'>@Html.ActionLink("Kirjaudu ulos", "", "")</div>*@
-@*<style>
-        # oppitunti {
-            font-weight: bold;
-            display: inline;
-        }
-    </style>*@
-<h3>Kurssista @*@ViewBag.kurssinimi*@ aloitetut:</h3>
 
-<br />
-<br />
-<h6 style="color:darkblue;">Suoritetut oppitunnit</h6>
-<ul>
-    @foreach (var item in @ViewBag.tehdytoppit)
+<h2 style="color: rgb(4, 115, 100)">Kurssin @Model.Kurssi.Nimi sisältö:</h2>
+<hr />
+@for (var i = 0; i < Model.Oppitunnit.Count; i++)
+{
     {
-
-        <li id="oppitunti">
-            <strong>@item.Nimi:</strong> @item.Kuvaus
-        </li>
-
-        @foreach (var teht in ViewBag.tehdytteht)
+        var oppitunti = Model.Oppitunnit[i];
+        <h4>@Html.ActionLink(oppitunti.Nimi, $"Oppitunti{i+1}", Model.Kurssi.Nimi)</h4>
+        @foreach (var tehtava in Model.Tehtävät)
         {
-            if (teht.OppituntiId == item.OppituntiId)
+            @if (tehtava.OppituntiId == oppitunti.OppituntiId)
             {
-                <p id="tehtytehtävä">
-                    @teht.Nimi:@teht.Kuvaus <partial><strong style="color:mediumseagreen;font-size:20px">&#10003;</strong></partial>
+                <p>
+                    <b>  @tehtava.Kuvaus</b> @if (Model.Suoritetut.Contains(tehtava.TehtavaId))
+                    {<partial><strong style="color:mediumseagreen;font-size:20px">&#10003;</strong></partial>}
                 </p>
             }
         }
     }
+}
 
-</ul>
-<h6 style="color:darkblue;">Keskeneräiset oppitunnit</h6>
-<ul>
-    @foreach (var item in @ViewBag.keskenoppit)
-    {
-
-        <li id="oppitunti">
-            <strong>@item.Nimi:</strong> @item.Kuvaus
-        </li>
-        @foreach (var teht in ViewBag.keskenOTsuorT)
-        {
-            if (teht.OppituntiId == item.OppituntiId)
-            {
-                <p id="tehtytehtävä">
-                    @teht.Nimi:@teht.Kuvaus <partial><strong style="color:mediumseagreen;font-size:20px">&#10003;</strong></partial>
-                </p>
-            }
-        }
-        @foreach (var x in ViewBag.keskenOTkeskentT)
-        {
-            if (x.OppituntiId == item.OppituntiId)
-            {
-                <p id="suorittamatta">
-                    @x.Nimi:@x.Kuvaus <partial><strong style="color:cornflowerblue;font-size:10px">suorittamatta</strong></partial>
-                </p>
-            }
-        }
-    }
-
-</ul>
-
-
-<br />
-<br />
-@*<div>
-        <a asp-action="Edit" asp-route-id="@Model.KayttajaId">Edit</a> |
-        <a asp-action="Index">Back to List</a>
-    </div>*@
