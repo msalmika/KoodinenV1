@@ -20,7 +20,7 @@ namespace KoodinenV1.Controllers
 
 
         private readonly IConfiguration _configuration;
-        
+
 
         public KayttajaController(ILogger<RekisteröityminenController> logger, KoodinenDBContext context, IConfiguration configuration)
         {
@@ -29,7 +29,7 @@ namespace KoodinenV1.Controllers
             _configuration = configuration;
         }
 
-       
+
         public IActionResult Profiili(string viesti = null)
         {
             int id = HttpContext.Session.GetInt32("id") ?? 0;
@@ -39,23 +39,23 @@ namespace KoodinenV1.Controllers
             }
             Apumetodit am = new Apumetodit(_context);
             var käyttäjä = am.HaeKäyttäjä(id);
-            
+
             if (id == 0)
             {
-                return RedirectToAction("Kirjautuminen","Etusivu");
+                return RedirectToAction("Kirjautuminen", "Etusivu");
             }
 
             var suoritetut = (from x in _context.KurssiSuoritus
-                                join k in _context.Kurssis on x.KurssiId equals k.KurssiId
-                                where x.KayttajaId == id && x.Kesken == false
-                                orderby x.SuoritusPvm
-                                select new ProfiiliViewModel { Nimi = k.Nimi, SuoritusPVM = x.SuoritusPvm }).ToList();
+                              join k in _context.Kurssis on x.KurssiId equals k.KurssiId
+                              where x.KayttajaId == id && x.Kesken == false
+                              orderby x.SuoritusPvm
+                              select new ProfiiliViewModel { Nimi = k.Nimi, SuoritusPVM = x.SuoritusPvm }).ToList();
 
             var aloitettu = (from x in _context.KurssiSuoritus
-                          join k in _context.Kurssis on x.KurssiId equals k.KurssiId
-                          where x.KayttajaId == id && x.Kesken == true
-                          orderby x.SuoritusPvm
-                          select new ProfiiliViewModel{ Nimi = k.Nimi}).ToList();
+                             join k in _context.Kurssis on x.KurssiId equals k.KurssiId
+                             where x.KayttajaId == id && x.Kesken == true
+                             orderby x.SuoritusPvm
+                             select new ProfiiliViewModel { Nimi = k.Nimi }).ToList();
 
 
             if (viesti != null)
@@ -109,6 +109,16 @@ namespace KoodinenV1.Controllers
 
             if (ModelState.IsValid)
             {
+                if (nimi.Length >= 100)
+                {
+                    ModelState.AddModelError("Nimi", "Nimi on liian pitkä!");
+                    return View();
+                }
+                if (email.Length >= 100)
+                {
+                    ModelState.AddModelError("Email", "Sähköpostiosoite on liian pitkä!");
+                    return View();
+                }
                 try
                 {
                     kayttaja.Nimi = nimi;
@@ -168,6 +178,11 @@ namespace KoodinenV1.Controllers
                 ModelState.AddModelError("SalasananVaihto", "Vanha salasana on väärin");
                 return View();
             }
+            if (model.UusiSalasana.Length >= 50)
+            {
+                ModelState.AddModelError("UusiSalasana", "Salasana on liian pitkä!");
+                return View();
+            }
             if (!am.SalasanaHyväksytyssäMuodossa(model.UusiSalasana))
             {
                 ModelState.AddModelError("SalasananVaihto", "Salasanan on oltava vähintään 6 merkkiä pitkä,\nja sen tulee sisältää ainakin yksi pieni ja suuri\nkirjain sekä numero.");
@@ -184,12 +199,12 @@ namespace KoodinenV1.Controllers
         public IActionResult KurssistaAloitetut(int id/*,int kurssiId*/)
         {
             // TARVITAANKO kurssiId:tä, jos käyttäjällä useampi kurssi kesken? Voiko ottaa [BIND]-> from form, että ottaisi jotenkin profiilin hyppylinkistä kurssin tähän näkymää?
-            
+
             id = HttpContext.Session.GetInt32("id") ?? 0;
             Apumetodit am = new Apumetodit(_context);
             var käyt = am.HaeKäyttäjä(id);
 
-            var suoritetutOppitunnit = (from os in _context.OppituntiSuoritus                                   
+            var suoritetutOppitunnit = (from os in _context.OppituntiSuoritus
                                         join o in _context.Oppituntis on os.OppituntiId equals o.OppituntiId
                                         join k in _context.Kurssis on o.KurssiId equals k.KurssiId
                                         join ks in _context.KurssiSuoritus on k.KurssiId equals ks.KurssiId
@@ -197,7 +212,7 @@ namespace KoodinenV1.Controllers
                                         where kä.KayttajaId == id && ks.Kesken == true && ks.Kesken != null && os.Kesken == false && os.Kesken != null
                                         select new Oppitunti { Nimi = o.Nimi, Kuvaus = o.Kuvaus, OppituntiId = o.OppituntiId }).AsNoTracking().Distinct().ToList();
 
-            var suorOtTehtävät = (from ts in _context.TehtavaSuoritus                                           
+            var suorOtTehtävät = (from ts in _context.TehtavaSuoritus
                                   join t in _context.Tehtavas on ts.TehtavaId equals t.TehtavaId
                                   join o in _context.Oppituntis on t.OppituntiId equals o.OppituntiId
                                   join os in _context.OppituntiSuoritus on o.OppituntiId equals os.OppituntiId
@@ -213,7 +228,7 @@ namespace KoodinenV1.Controllers
                                     where kä.KayttajaId == id && ks.Kesken == true && ks.Kesken != null && os.Kesken == true && os.Kesken != null
                                     select new Oppitunti { Nimi = o.Nimi, Kuvaus = o.Kuvaus, OppituntiId = o.OppituntiId }).AsNoTracking().Distinct().ToList();
 
-            var keskenOTsuortehtävät = (from t in _context.Tehtavas 
+            var keskenOTsuortehtävät = (from t in _context.Tehtavas
                                         join o in _context.Oppituntis on t.OppituntiId equals o.OppituntiId
                                         join os in _context.OppituntiSuoritus on o.OppituntiId equals os.OppituntiId
                                         join ks in _context.KurssiSuoritus on os.KayttajaId equals ks.KayttajaId
@@ -266,6 +281,8 @@ namespace KoodinenV1.Controllers
 
             return View(käyt);
         }
-     
+
     }
 }
+
+

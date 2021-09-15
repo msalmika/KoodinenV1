@@ -383,6 +383,11 @@ namespace KoodinenV1.Controllers
         [HttpPost]
         public IActionResult Palaute(string Teksti)
         {
+            if (Teksti.Length >= 2000)
+            {
+                ModelState.AddModelError("Teksti", "Teksti on liian pitkä, Tekstissä voi olla maksimissaan 2000 merkkiä.");
+                return View();
+            }
             _context.Palautes.Add(new Palaute() { Teksti = Teksti, Pvm = DateTime.Today });
             _context.SaveChanges();
             ViewBag.Viesti = "Kiitos palautteestasi!";
