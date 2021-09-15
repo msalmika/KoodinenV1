@@ -20,7 +20,7 @@ namespace KoodinenV1.Controllers
 
 
         private readonly IConfiguration _configuration;
-        
+
 
         public KayttajaController(ILogger<RekisteröityminenController> logger, KoodinenDBContext context, IConfiguration configuration)
         {
@@ -29,7 +29,7 @@ namespace KoodinenV1.Controllers
             _configuration = configuration;
         }
 
-       
+
         public IActionResult Profiili(string viesti = null)
         {
             int id = HttpContext.Session.GetInt32("id") ?? 0;
@@ -39,17 +39,17 @@ namespace KoodinenV1.Controllers
             }
             Apumetodit am = new Apumetodit(_context);
             var käyttäjä = am.HaeKäyttäjä(id);
-            
+
             if (id == 0)
             {
-                return RedirectToAction("Kirjautuminen","Etusivu");
+                return RedirectToAction("Kirjautuminen", "Etusivu");
             }
 
             var suoritetut = (from x in _context.KurssiSuoritus
-                                join k in _context.Kurssis on x.KurssiId equals k.KurssiId
-                                where x.KayttajaId == id && x.Kesken == false
-                                orderby x.SuoritusPvm
-                                select new ProfiiliViewModel { Nimi = k.Nimi, SuoritusPVM = x.SuoritusPvm }).ToList();
+                              join k in _context.Kurssis on x.KurssiId equals k.KurssiId
+                              where x.KayttajaId == id && x.Kesken == false
+                              orderby x.SuoritusPvm
+                              select new ProfiiliViewModel { Nimi = k.Nimi, SuoritusPVM = x.SuoritusPvm }).ToList();
 
             var aloitettu = (from x in _context.KurssiSuoritus
                           join k in _context.Kurssis on x.KurssiId equals k.KurssiId
@@ -109,6 +109,16 @@ namespace KoodinenV1.Controllers
 
             if (ModelState.IsValid)
             {
+                if (nimi.Length >= 100)
+                {
+                    ModelState.AddModelError("Nimi", "Nimi on liian pitkä!");
+                    return View();
+                }
+                if (email.Length >= 100)
+                {
+                    ModelState.AddModelError("Email", "Sähköpostiosoite on liian pitkä!");
+                    return View();
+                }
                 try
                 {
                     kayttaja.Nimi = nimi;
@@ -168,6 +178,11 @@ namespace KoodinenV1.Controllers
                 ModelState.AddModelError("SalasananVaihto", "Vanha salasana on väärin");
                 return View();
             }
+            if (model.UusiSalasana.Length >= 50)
+            {
+                ModelState.AddModelError("UusiSalasana", "Salasana on liian pitkä!");
+                return View();
+            }
             if (!am.SalasanaHyväksytyssäMuodossa(model.UusiSalasana))
             {
                 ModelState.AddModelError("SalasananVaihto", "Salasanan on oltava vähintään 6 merkkiä pitkä,\nja sen tulee sisältää ainakin yksi pieni ja suuri\nkirjain sekä numero.");
@@ -213,3 +228,5 @@ namespace KoodinenV1.Controllers
 
     }
 }
+
+
