@@ -60,13 +60,13 @@
 <br />
 <h6 class="otsikot">Suoritetut kurssit</h6>
 <br />
-@if (suoritetut.Count==0)
+@if (suoritetut.Count == 0)
 {
     <li>Ei suoritettuja kursseja.</li>
 }
 else
 {
-   foreach (var item in suoritetut)
+    foreach (var item in suoritetut)
     {
         <li>
             <strong>Suoritettu: </strong> @Html.ActionLink($"{@item.Nimi} / {@item.SuoritusPVM.ToShortDateString()}", "Esittely", $"{@item.Nimi}")
@@ -86,8 +86,11 @@ else
 {
     @foreach (var item in aloitettu)
     {
+        @*<li>
+            @Html.ActionLink($"{@item.Nimi}", "KurssistaAloitetut", "Kayttaja") 
+        </li>*@
         <li>
-            @Html.ActionLink($"{@item.Nimi}","Esittely","CSharpAlkeet") @*"KurssistaAloitetut", "Kayttaja")*@
+            @Html.ActionLink($"{@item.Nimi}", "Esittely", "CSharpAlkeet")
         </li>
     }
 }
