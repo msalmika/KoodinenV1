@@ -70,6 +70,7 @@ namespace KoodinenV1.Controllers
                     }
                     catch (Exception e)
                     {
+                        ModelState.AddModelError("Email", "Kentässä on liikaa merkkejä");
                         Trace.WriteLine(e);
                         return View();
                     }
