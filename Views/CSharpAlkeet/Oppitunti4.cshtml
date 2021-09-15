@@ -32,6 +32,56 @@
         Tehtävä tuottaa laskevan numerosarjan.
     </p>
 </div>
+<div>
+    <h2>Ehtorakenne</h2>
+    <p>
+        Usein on tarpeen määritellä ohjelmaan osia, jotka suoritetaan vain tietyissä tilanteissa.
+        Esimerkiksi seuraava koodi tarkastaa, onko henkilö täysi-ikäinen:<br /><br />
+
+        <span style="font-family:Courier New, Courier, monospace">
+            int ikä = Convert.ToInt32(Console.ReadLine("Kuinka vanha olet? "));<br /><br />
+
+            if (ikä > 17)<br />
+            {<br />
+            Console.WriteLine("Olet täysi-ikäinen!");<br />
+            Console.WriteLine("Tässä siis sinulle ikiomaksi Doom Eternal.");<br />
+            };<br /><br />
+
+            Console.WriteLine("Seuraava asiakas, kiitos!");<br />
+        </span><br /><br />
+
+        Ohjelman suoritus näyttää tältä, kun ikä on suurempi kuin 17:<br /><br />
+
+        <i>
+            Kuinka vanha olet? <span style="color:red">18</span><br />
+            Olet täysi-ikäinen!<br />
+            Tässä siis sinulle ikiomaksi GTA6.<br />
+            Seuraava asiakas, kiitos!
+        </i><br /><br />
+
+        Jos kuitenkaan ikä ei ole suurempi kuin 17, käy näin:<br /><br />
+
+        <i>
+            Kuinka vanha olet? <span style="color:red">16</span><br />
+            Seuraava asiakas, kiitos!
+        </i><br /><br />
+
+        Esimerkkejä tarkastelemalla huomataan, että syötteenä annettu arvo vaikuttaa nyt siihen, mitkä osat ohjelmasta suoritetaan. Ohjelmassa on käytössä <i>ehtorakenne</i>, jonka sisällä oleva koodi suoritetaan vain, kun annettu ehto on tosi.<br />
+
+        Ehtorakenteessa avainsanaa <span style="font-family:Courier New, Courier, monospace">if</span> seuraa jokin <i>ehto</i>, kuten kahden arvon vertailu. Tämän jälkeen tuleva koodi suoritetaan vain, jos ehto pitää paikkansa
+    </p>
+    <br />
+    <br />
+    <h2>Vertailuoperaattorit</h2>
+
+</div>
+<div class="card" style="padding: 20px; margin: 20px">
+    <p>
+        Tehtävä 4.
+        ITSEISARVO
+        Tee Ehtolause-niminen luokka. Tee luokkaan metodi, joka ottaa parametrinä kokonaisluvun. Mikäli luku on pienempi kuin 0, ohjelma tulostaa luvun kerrottuna luvulla -1. Muulloin ohjelma tulostaa käyttäjän syöttämän luvun.
+    </p>
+</div>
 
 <div class="card" style="padding: 20px; margin: 20px">
     <p>
