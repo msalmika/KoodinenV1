@@ -44,6 +44,16 @@ namespace KoodinenV1.Controllers
             //Tarkistetaan että jokaisessa kentässä on tekstiä, email on uniikki, salasanat täsmäävät ja salasana on tietyn mallinen
             if (!string.IsNullOrWhiteSpace(Nimi) && !string.IsNullOrWhiteSpace(Email))
             {
+                if (Nimi.Length >= 100)
+                {
+                    ModelState.AddModelError("Nimi", "Nimi on liian pitkä!");
+                    return View();
+                }
+                if (Email.Length >= 100)
+                {
+                    ModelState.AddModelError("Email", "Sähköpostiosoite on liian pitkä!");
+                    return View();
+                }
                 if (am.TarkistaEmail(Email) == true)
                 {
                     var emailTarkistus = from a in db.Kayttajas
@@ -70,7 +80,6 @@ namespace KoodinenV1.Controllers
                     }
                     catch (Exception e)
                     {
-                        ModelState.AddModelError("Email", "Kentässä on liikaa merkkejä");
                         Trace.WriteLine(e);
                         return View();
                     }

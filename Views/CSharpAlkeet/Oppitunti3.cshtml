@@ -17,17 +17,21 @@
 
 @for (var i = 0; i < ViewBag.Tehtävät.Count; i++)
 {
-    <div class="card" style="padding: 20px; margin: 20px">
-        <h3>
-            Tehtävä @(i+1). @if (ViewBag.Suoritetut.Contains(ViewBag.Tehtävät[i].TehtavaId))
-                {
-            <partial><strong style="color:mediumseagreen;font-size:20px">&#10003;</strong></partial>
-                }
-        </h3>
-        <p>
-            @ViewBag.Tehtävät[i].Kuvaus
-        </p>
-    </div>
+<div class="card" style="padding: 20px; margin: 20px">
+
+    @if (ViewBag.Suoritetut.Contains(ViewBag.Tehtävät[i].TehtavaId))
+    {
+    <h3 style="color:forestgreen;">Tehtävä @(i+1).<partial><strong style="color:mediumseagreen;font-size:20px"> &#10003;</strong></partial></h3>
+    }
+    else
+    {
+        <h3>Tehtävä @(i+1).</h3>
+    }
+
+    <p>
+        @ViewBag.Tehtävät[i].Kuvaus
+    </p>
+</div>
 }
 
 <button class="btn btn-outline-primary" style="margin-left:20px">@Html.ActionLink("Rekisteröi oppitunti", "RekisteröiOppitunti", null, new { opId = 11, sivuNro = 3 })</button>
