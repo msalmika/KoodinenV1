@@ -78,6 +78,11 @@ namespace KoodinenV1.Controllers
                           select p.Vihje3).FirstOrDefault();
             return RedirectToAction("Oppitunti1_Teht1", new { vihje3 });
         }
+        public IActionResult Oppitunti1(string OpViesti = null)
+        {
+            ViewBag.OpViesti = OpViesti;    
+            return RedirectToAction("Oppitunti1_Teht1");
+        }
         [HttpPost]
         public IActionResult Oppitunti1_Teht1(string Tekstialue)
         {

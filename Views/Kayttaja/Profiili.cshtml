@@ -90,7 +90,7 @@ else
             @Html.ActionLink($"{@item.Nimi}", "KurssistaAloitetut", "Kayttaja") 
         </li>*@
         <li>
-            @Html.ActionLink($"{@item.Nimi}", "Esittely", "CSharpAlkeet")
+            @Html.ActionLink($"{@item.Nimi}", "KurssistaAloitetut", "Kayttaja", new {kurssiId = item.KurssiId })
         </li>
     }
 }
