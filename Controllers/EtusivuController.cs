@@ -114,5 +114,6 @@ namespace KoodinenV1.Controllers
             HttpContext.Session.Remove("email");
             return RedirectToAction("Index", "Etusivu");
         }
+        
     }
 }
