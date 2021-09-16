@@ -13,7 +13,7 @@
     Nämä tehtävät vaativat <a href="https://visualstudio.microsoft.com/">Visual Studion</a> lataamisen ja
     käyttöön ottamisen. Ladattuasi Visual Studion lataa siihen myös .NET desktop development workload.<br />
     <br />
-    <img src="https://funcstorkoodinen.blob.core.windows.net/kuvat-container/dotNetDesktopDevelopment.png" alt=".NNET desktop development workload"/><br />
+    <img src="https://funcstorkoodinen.blob.core.windows.net/kuvat-container/dotNetDesktopDevelopment.png" alt=".NNET desktop development workload" /><br />
     <br />
     Huomioitavaa tehtävien tekemisestä: tehtävän tekeminen vaatii koodin kääntämisen eli "Build" operaation. Koska tehtävätiedosto
     sisältää myös tehtävien tarkistuksen, käännä aina koko solution.
@@ -40,7 +40,22 @@
         Avaa "Tervehdys"-luokka ja lisää metodiin "Tervehdys1()" string muuttuja "Hei mualima!". Käytä return-lausetta palauttaaksesi kyseisen stringin.
         Ohjelma käynnistyy, kun poistat kommentit "Tehtävä1.Tarkista(email);" -riviltä ja painat "Debug" -> "Start Without Debugging".
     </p>
+@if (ViewBag.vihje1 != null)
+{
+    <b class="form-control" id="Vihje1" name="Vihje1" rows="2" style="margin-left:0px; color:salmon">@ViewBag.vihje1</b>
+}
+@if (ViewBag.vihje2 != null)
+{
+    <b class="form-control" id="Vihje2" name="Vihje2" rows="2" style="margin-left: 0px; color: salmon">@ViewBag.vihje2</b>
+}
+@if (ViewBag.vihje3 != null)
+{
+    <b class="form-control" id="Vihje3" name="Vihje3" rows="2" style="margin-left: 0px; color: salmon">@ViewBag.vihje3</b>
+}
 </div>
+<button class="btn btn-outline-primary" style="margin-left:20px">@Html.ActionLink("Vihje 1", "HaeVihje1", null, new { tehtavaId = 11 })</button>
+<button class="btn btn-outline-primary" style="margin-left:20px">@Html.ActionLink("Vihje 2", "HaeVihje2", null, new { tehtavaId = 11 })</button>
+<button class="btn btn-outline-primary" style="margin-left:20px">@Html.ActionLink("Vihje 3", "HaeVihje3", null, new { tehtavaId = 11 })</button>
 
 <div class="card" style="padding: 20px; margin: 20px">
     @if (ViewBag.SuoritettuTeht2 == null)
@@ -66,7 +81,7 @@
     {
         <h3 style="color: forestgreen">Tehtävä 3. <partial><strong style="color:mediumseagreen;font-size:20px">&#10003;</strong></partial></h3>
     }
-    
+
     <p>
         Tee public static string metodi Tervehdys3(), johon ei anneta parametreja ja joka palauttaa string muuttujan "Hei Ada Lovelace!".
     </p>

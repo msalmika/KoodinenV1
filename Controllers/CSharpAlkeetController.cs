@@ -57,25 +57,38 @@ namespace KoodinenV1.Controllers
             ViewBag.Suoritettu = suoritettu;
             return View();
         }
-        public IActionResult HaeVihje1()
+        public IActionResult HaeVihje1(int tehtavaId)
         {
             var vihje1 = (from p in _context.Vihjes
-                          where p.TehtavaId == 10
+                          where p.TehtavaId == tehtavaId
                           select p.Vihje1).FirstOrDefault();
+            if (tehtavaId == 11)
+            {
+                return RedirectToAction("Oppitunti2", new { vihje1 });
+            }
             return RedirectToAction("Oppitunti1_Teht1", new { vihje1 });
+
         }
-        public IActionResult HaeVihje2()
+        public IActionResult HaeVihje2(int tehtavaId)
         {
             var vihje2 = (from p in _context.Vihjes
-                          where p.TehtavaId == 10
+                          where p.TehtavaId == tehtavaId
                           select p.Vihje2).FirstOrDefault();
+            if (tehtavaId == 11)
+            {
+                return RedirectToAction("Oppitunti2", new { vihje2 });
+            }
             return RedirectToAction("Oppitunti1_Teht1", new { vihje2 });
         }
-        public IActionResult HaeVihje3()
+        public IActionResult HaeVihje3(int tehtavaId)
         {
             var vihje3 = (from p in _context.Vihjes
-                          where p.TehtavaId == 10
+                          where p.TehtavaId == tehtavaId
                           select p.Vihje3).FirstOrDefault();
+            if (tehtavaId == 11)
+            {
+                return RedirectToAction("Oppitunti2", new { vihje3 });
+            }
             return RedirectToAction("Oppitunti1_Teht1", new { vihje3 });
         }
         public IActionResult Oppitunti1(string OpViesti = null)
@@ -278,9 +291,11 @@ namespace KoodinenV1.Controllers
 
             return View();
         }
-        public IActionResult Oppitunti2(string OpViesti = null)
+        public IActionResult Oppitunti2(string OpViesti = null, string vihje1 = null, string vihje2 = null, string vihje3 = null)
         {
-
+            ViewBag.vihje1 = vihje1;
+            ViewBag.vihje2 = vihje2;
+            ViewBag.vihje3 = vihje3;
             int? id = HttpContext.Session.GetInt32("id");
             var suoritettuTeht1 = _context.TehtavaSuoritus.Where(x => x.KayttajaId == id && x.TehtavaId == 11).FirstOrDefault();
             var suoritettuTeht2 = _context.TehtavaSuoritus.Where(x => x.KayttajaId == id && x.TehtavaId == 12).FirstOrDefault();
