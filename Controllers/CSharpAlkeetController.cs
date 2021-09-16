@@ -173,7 +173,7 @@ namespace KoodinenV1.Controllers
                             rivi2 = rivi2.Replace("int y = ", "");
                             rivi2 = rivi2.Replace(";\r", "");
                             Int32.TryParse(rivi2, out y);
-                            if (rivi3.Contains("Console.WriteLine(x + y);"))
+                            if (rivi3.Equals("Console.WriteLine(x + y);"))
                             {
                                 Tekstialue = Convert.ToString(x + y);
 
@@ -433,6 +433,10 @@ namespace KoodinenV1.Controllers
             return View();
         }
         public IActionResult UKK()
+        {
+            return View();
+        }
+        public IActionResult LunttiLappu()
         {
             return View();
         }

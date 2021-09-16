@@ -93,6 +93,12 @@ else
         </li>
     }
 }
+@if (Model.OnAdmin == true)
+            {
+    <hr />
+                <h6>@Html.ActionLink("Admin sivuille", "AdminPääsivu", "Admin")</h6>
+                
+            }
 
 
 

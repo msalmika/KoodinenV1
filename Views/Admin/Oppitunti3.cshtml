@@ -13,7 +13,7 @@
     <div class="card" style="padding: 20px; margin: 20px">
         <h3>Tehtävä @(i+1).</h3>
         <p>
-            @Model.Tehtävät[i].Kuvaus @Html.ActionLink("Muokkaa", "MuokkaaTehtava", "Admin", new {id = Model.Tehtävät[i].TehtavaId })
+            @Model.Tehtävät[i].Kuvaus @Html.ActionLink("Muokkaa", "MuokkaaTehtava", "Admin", new {tehtäväId = Model.Tehtävät[i].TehtavaId })
         </p>
     </div>
 }
