@@ -6,14 +6,14 @@
 
 <h1>Palautelaatikko</h1>
 <p>
-    Täältä voit lähettää terveisiä Koodisen väelle. Palautteen avulla voimme kehittää toimintaamme. Arvostamme palautettasi!
+    Täältä voit lähettää terveisiä Koodisen väelle. Palautteen avulla voimme kehittää toimintaamme, mitä arvostamme suuresti!
 </p>
 <form method="post", action="Palaute">
     <div class="form-group" action="Oppitunti1Tehtävä1" padding: 20px">
-        <input type="checkbox" name="vastaa" value="joo" /> Haluan että ylläpito on minuun yhteydessä palautteestani
+        <input type="checkbox" name="vastaa" value="joo" /> Haluan että ylläpito on minuun yhteydessä
         <br />
         <br />
-        <label for="Tekstialue">Kirjoita palaute tähän: </label>
+        <label for="Tekstialue">Kirjoita viestisi tähän: </label>
         <br />
         @Html.ValidationMessage("Error", new { @style = "color:red" })
 
