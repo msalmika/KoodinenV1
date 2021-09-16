@@ -16,7 +16,8 @@
             <b class="form-control" id="Kuvaus" name="Kuvaus" rows="1" style="margin-left:0px;color:darkmagenta;font-size:large">@ViewBag.kuvaus</b>
             <label for="Tekstialue">Kirjoita pyydetty komento tähän: </label>
             <textarea class="form-control" id="Tekstialue" name="Tekstialue" rows="5" style="margin-left:0px"></textarea><br/>
-            <input type="submit" value="Tarkista" class="btn btn-outline-primary" style="margin-left:20px" />@ViewBag.TyönAlla
+            <input type="submit" value="Tarkista" class="btn btn-outline-primary" style="margin-left:20px;color:red" />
+            <p style="color:red">@ViewBag.TyönAlla</p>
         </form>
     }
 </div>
