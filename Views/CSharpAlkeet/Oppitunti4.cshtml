@@ -25,7 +25,14 @@
 
 <div class="card" style="padding: 20px; margin: 20px">
     <p>
-        Tehtävä 1.
+        @if (ViewBag.SuoritettuTeht1 == null)
+        {
+            <h3>Tehtävä 1.</h3>
+        }
+        @if (ViewBag.SuoritettuTeht1 != null)
+        {
+            <h3 style="color: forestgreen">Tehtävä 1. <partial><strong style="color:mediumseagreen;font-size:20px">&#10003;</strong></partial></h3>
+        }
         Tee "Loopit"-niminen luokka, siihen "Laskuri"-niminen property
         Tee luokalle konstruktori ja sitten metodi nimeltä "Laskenta".
         Lue tarkempi tehtävän anto program.cs:stä.
@@ -82,7 +89,15 @@
 </div>
 <div class="card" style="padding: 20px; margin: 20px">
     <p>
-        Tehtävä 2. Tee Oppitunti4 -projektiin "Switch" -niminen luokka ja luokan sisään "Day" -niminen property tyyppiä int tähän tyyliin: public int Day { get; set; } .
+        @if (ViewBag.SuoritettuTeht2 == null)
+        {
+            <h3>Tehtävä 2.</h3>
+        }
+        @if (ViewBag.SuoritettuTeht2 != null)
+        {
+            <h3 style="color: forestgreen">Tehtävä 2. <partial><strong style="color:mediumseagreen;font-size:20px">&#10003;</strong></partial></h3>
+        }
+        Tee Oppitunti4 -projektiin "Switch" -niminen luokka ja luokan sisään "Day" -niminen property tyyppiä int tähän tyyliin: public int Day { get; set; } .
         Tee luokalle julkinen konstruktori johon laitat parametrin int Day ja aseta property konstruktoriin tähän tyyliin:<br />
         Public Switch (int day)
         {
@@ -105,7 +120,12 @@
 
     </p>
 </div>
-
+<div class="card" style="padding: 20px; margin: 20px">
+    <p>
+        <h3>Tehtävä 3. </h3>
+        Under construction...
+    </p>
+</div>
 <div>
     <h2>Ehtorakenne</h2>
     <p>
@@ -129,7 +149,7 @@
         <i>
             Kuinka vanha olet? <span style="color:red">18</span><br />
             Olet täysi-ikäinen!<br />
-            Tässä siis sinulle ikiomaksi GTA6.<br />
+            Tässä siis sinulle ikiomaksi Doom Eternal.<br />
             Seuraava asiakas, kiitos!
         </i><br /><br />
 
@@ -151,17 +171,20 @@
 </div>
 <div class="card" style="padding: 20px; margin: 20px">
     <p>
-        Tehtävä 4.
+        @if (ViewBag.SuoritettuTeht4 == null)
+        {
+            <h3>Tehtävä 4.</h3>
+        }
+        @if (ViewBag.SuoritettuTeht4 != null)
+        {
+            <h3 style="color: forestgreen">Tehtävä 4. <partial><strong style="color:mediumseagreen;font-size:20px">&#10003;</strong></partial></h3>
+        }
         ITSEISARVO
         Tee Ehtolause-niminen luokka. Tee luokkaan metodi, joka ottaa parametrinä kokonaisluvun. Mikäli luku on pienempi kuin 0, ohjelma tulostaa luvun kerrottuna luvulla -1. Muulloin ohjelma tulostaa käyttäjän syöttämän luvun.
     </p>
 </div>
 
-<div class="card" style="padding: 20px; margin: 20px">
-    <p>
-        Under construction...
-    </p>
-</div>
+
 
 <button class="btn btn-outline-primary" style="margin-left:20px">@Html.ActionLink("Rekisteröi oppitunti", "RekisteröiOppitunti", null, new { opId = 12, sivuNro = 4 })</button>
 

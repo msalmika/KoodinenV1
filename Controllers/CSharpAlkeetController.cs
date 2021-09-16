@@ -304,7 +304,14 @@ namespace KoodinenV1.Controllers
         }
         public IActionResult Oppitunti4(string viesti = null, string OpViesti = null)
         {
+            int? id = HttpContext.Session.GetInt32("id");
+            var suoritettuTeht1 = _context.TehtavaSuoritus.Where(x => x.KayttajaId == id && x.TehtavaId == 23).FirstOrDefault();
+            var suoritettuTeht2 = _context.TehtavaSuoritus.Where(x => x.KayttajaId == id && x.TehtavaId == 26).FirstOrDefault();
+            var suoritettuTeht4 = _context.TehtavaSuoritus.Where(x => x.KayttajaId == id && x.TehtavaId == 28).FirstOrDefault();
 
+            ViewBag.SuoritettuTeht1 = suoritettuTeht1;
+            ViewBag.SuoritettuTeht2 = suoritettuTeht2;
+            ViewBag.SuoritettuTeht4 = suoritettuTeht4;
             ViewBag.Viesti = viesti;
             ViewBag.OpViesti = OpViesti;
             return View();
