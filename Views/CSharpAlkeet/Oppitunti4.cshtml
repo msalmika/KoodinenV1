@@ -24,14 +24,88 @@
 </p>
 
 <div class="card" style="padding: 20px; margin: 20px">
-    <p> 
-        Tehtävä 1. 
+    <p>
+        Tehtävä 1.
         Tee "Loopit"-niminen luokka, siihen "Laskuri"-niminen property
         Tee luokalle konstruktori ja sitten metodi nimeltä "Laskenta".
         Lue tarkempi tehtävän anto program.cs:stä.
         Tehtävä tuottaa laskevan numerosarjan.
     </p>
 </div>
+<div>
+    <h2>Switch-case -silmukka: valintaehtoa vastaavat lausekkeet</h2>
+    <p>
+        Switch -valintasilmukalla on mahdollista hakea määritettyjä case-tuloksia, jotka vastaavat niille määritettyä case-ehtomäärityksiä.
+        Kokeiltavaa valintamääritystä verrataan iteroimalla switch-silmukkarakenteen case-ehtomääritteisiin, kunnes löytyy valintamääritystä vastaava ehto.
+        Vastaavuuden löytyessä case-ehtoon liitetty toiminto toteutetaan tai siihen liitetty tuloslauseke palautetaan, ja silmukka päätetään yleensä break -komennolla.
+        Mikäli iterointia ei päätetä millään komennolla case-ehtojen välissä, syntyy ns. loppumaton silmukka (“infinite loop”). <br /><br />
+        Silmukka alkaa switch -komennolla, jonka perään asetetaan sulkeissa valintamääritteeksi asetetun muuttujan nimi. 
+        Case -komennon perään tulee kaksoispisteet ja vertailtava case-ehtomäärite tai arvo, ja seuraavalle riville haluttu toiminto tai vastaavuuslauseke, 
+        jonka löytyvä vastaavuus palauttaa silmukasta. Mikäli vastaavuuslauseke tai palautustoiminto ei itsessään katkaise silmukkaa, 
+        tulee vielä seuraavalle riville kirjoittaa silmukan keskeyttämiskomento break. Usein switch-silmukkaan on myös asetettu default-case, 
+        mikäli mikään silmukan case-ehto ei vastaa tarjottua valintamääritystä.Defult-case iteroituu automaattisesti aina viimeisenä.<br /><br />
+
+        <b>Esimerkki switch-case -silmukasta: Hellerajat</b><br /><br />
+        <span style="font-family:Courier New, Courier, monospace">
+            - case-ehtona käytetään lämpötiloja (integer-tyyppinä)<br />
+            - case-lausekkeet kuvastavat lämpötilaskaalan säämääritystä (string-tyyppinä)
+            ja palautetaan konsoliprintillä Console.WriteLine(“vastaavuuslauseke”);<br />
+            <br />
+            ESIMERKKI:<br /><br />
+            (->Pyydetään käyttäjältä syöte lämpötilalle)<br />
+            Console.Write("Anna lämpötila ilman desimaaleja:"); 
+            <br />
+            (->Käännetään syötetty string-syöte integeriksi 
+            ja tallennettaan syötetty arvo lämpötila-muuttujaan) <br />
+            int lämpötila = Convert.ToInt32(Console.ReadLine()); 
+            <br />
+            (-> käytetään muuttujan arvoa case-vertailuun)
+            <br /><br />
+            switch (lämpötila) <br />
+            {<br />
+            case: < 0 <br />
+            Console.WriteLine(“Pakkasraja”);<br />
+            break;<br />
+            <br />
+            case: < 10<br />
+            Console.WriteLine("Koleaa"):<br />
+            break;<br />
+            .<br />
+            ...jne<br />
+            .<br />
+            default:<br />
+            Console.WriteLine(“Mittaustulokselle ei löydy määritystä skaalassa.”);<br />
+            break; <br />
+            }
+        </span><br />
+    <h2>Switch-case silmukka</h2>
+</div>
+<div class="card" style="padding: 20px; margin: 20px">
+    <p>
+        Tehtävä 2. Tee Oppitunti4 -projektiin "Switch" -niminen luokka ja luokan sisään "Day" -niminen property tyyppiä int tähän tyyliin: public int Day { get; set; } .
+        Tee luokalle julkinen konstruktori johon laitat parametrin int Day ja aseta property konstruktoriin tähän tyyliin:<br />
+        Public Switch (int day)
+        {
+        day = Day;
+        }<br />
+        Tee luokkaan konstruktorin lisäksi stringin palauttava metodi nimeltä Viikonpäivät,
+        joka ottaa sisäänsä parametrinä int day-arvon: Viikonpäivät(int day). Täydennä metodin sisään switch-case -silmukka,
+        jossa case-valintaehto edustaa viikonpäivän numeroa ja vastaava case-lauseke viikonpäivää kirjoitettuna string-tyyppimuodossa.
+        Case-vastaavuuden lauseke palautetaan tässä tehtävässä sellaisenaan, ja käytettävä 6-kirjaiminen palautuskomento myös automaattisesti
+        keskeyttää silmukan. Palautuskomento näin ollen tässä tapauksessa korvaa sekä konsoliprinttikomennon, että myöskin break komennon
+        silmukassa. Lisää tekemääsi switch-silmukkaan  myös default-komento, joka palauttaa lauseen: "Anna viikonpäivän numero."
+
+        Esimerkkinä: day:n arvoa 1 edustaa case-tulos "Maanantai"<br />
+        switch (day)<br />
+        {<br />
+        case 1:<br />
+        ?????? "Maanantai";<br />
+        ....ja edelleen case 7:n, jota edustaa Sunnuntai, sekä default-komento palautuslauseineen.<br />
+        }<br />
+
+    </p>
+</div>
+
 <div>
     <h2>Ehtorakenne</h2>
     <p>
