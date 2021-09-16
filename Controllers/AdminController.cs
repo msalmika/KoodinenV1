@@ -18,17 +18,42 @@ namespace KoodinenV1.Controllers
 
         public IActionResult AdminPääsivu()
         {
-            int? id = HttpContext.Session.GetInt32("Id");
-            return View();
+            int? id = HttpContext.Session.GetInt32("id");
+            if (id == null)
+            {
+                return RedirectToAction("Kirjautuminen", "Etusivu");
+            }
+            if (_context.Kayttajas.Where(k => k.KayttajaId == id).Select(x => x.OnAdmin).FirstOrDefault() != true)
+            {
+                return RedirectToAction("Kirjautuminen", "Etusivu");
+            }
+            var kurssi = _context.Kurssis.Find(4);
+            return View(kurssi);
         }
         public IActionResult Oppitunti1()
         {
-
+            int? id = HttpContext.Session.GetInt32("id");
+            if (id == null)
+            {
+                return RedirectToAction("Kirjautuminen", "Etusivu");
+            }
+            if (_context.Kayttajas.Where(k => k.KayttajaId == id).Select(x => x.OnAdmin).FirstOrDefault() != true)
+            {
+                return RedirectToAction("Kirjautuminen", "Etusivu");
+            }
             return View();
         }
         public IActionResult Oppitunti3(int kurssiId = 4)
         {
-
+            int? id = HttpContext.Session.GetInt32("id");
+            if (id == null)
+            {
+                return RedirectToAction("Kirjautuminen", "Etusivu");
+            }
+            if (_context.Kayttajas.Where(k => k.KayttajaId == id).Select(x => x.OnAdmin).FirstOrDefault() != true)
+            {
+                return RedirectToAction("Kirjautuminen", "Etusivu");
+            }
             AdminViewModel AVM = new AdminViewModel() 
             { 
                 Ohje = _context.Ohjeistus.Where(o => o.OppituntiId == 11).First(), 
@@ -38,15 +63,32 @@ namespace KoodinenV1.Controllers
 
             return View(AVM);
         }
-        public IActionResult MuokkaaTehtava(int id)
+        public IActionResult MuokkaaTehtava(int tehtäväId)
         {
-            var tehtävä = _context.Tehtavas.Find(id);
+            int? id = HttpContext.Session.GetInt32("id");
+            if (id == null)
+            {
+                return RedirectToAction("Kirjautuminen", "Etusivu");
+            }
+            if (_context.Kayttajas.Where(k => k.KayttajaId == id).Select(x => x.OnAdmin).FirstOrDefault() != true)
+            {
+                return RedirectToAction("Kirjautuminen", "Etusivu");
+            }
+            var tehtävä = _context.Tehtavas.Find(tehtäväId);
             return View(tehtävä);
         }
         [HttpPost]
         public IActionResult MuokkaaTehtava(Tehtava tehtävä)
         {
-
+            int? id = HttpContext.Session.GetInt32("id");
+            if (id == null)
+            {
+                return RedirectToAction("Kirjautuminen", "Etusivu");
+            }
+            if (_context.Kayttajas.Where(k => k.KayttajaId == id).Select(x => x.OnAdmin).FirstOrDefault() != true)
+            {
+                return RedirectToAction("Kirjautuminen", "Etusivu");
+            }
             var teht = _context.Tehtavas.Where(t => t.TehtavaId == tehtävä.TehtavaId).FirstOrDefault();
             teht.Kuvaus = tehtävä.Kuvaus;
             _context.SaveChanges();
