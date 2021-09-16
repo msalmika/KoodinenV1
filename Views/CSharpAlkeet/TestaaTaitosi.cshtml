@@ -1,0 +1,22 @@
+﻿
+@{
+    Layout = "_CSharpAlkeetLayout";
+    ViewData["Title"] = "TestaaTaitosi";
+}
+
+<h1>Testaa Taitosi</h1>
+<div>
+    Täällä voit testailla taitojasi tehtäväpatteriston avulla. Klikkaa nappia ja saat satunnaisen tehtävän suoritettavaksesi.<br/><br/>
+    <button class="btn btn-outline-primary" style="margin-left:20px">@Html.ActionLink("Hae uusi tehtävä", "HaeTehtävä")</button><br/>
+    </div>
+<div>
+    @if (ViewBag.tehtavaId != null)
+    {
+        <form>
+            <b class="form-control" id="Kuvaus" name="Kuvaus" rows="1" style="margin-left:0px;color:darkmagenta;font-size:large">@ViewBag.kuvaus</b>
+            <label for="Tekstialue">Kirjoita pyydetty komento tähän: </label>
+            <textarea class="form-control" id="Tekstialue" name="Tekstialue" rows="5" style="margin-left:0px"></textarea><br/>
+            <input type="submit" value="Tarkista" class="btn btn-outline-primary" style="margin-left:20px;color:red" /><b style="color:red"> @ViewBag.TyönAlla</b>
+        </form>
+    }
+</div>

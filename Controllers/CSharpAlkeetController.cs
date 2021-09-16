@@ -57,40 +57,7 @@ namespace KoodinenV1.Controllers
             ViewBag.Suoritettu = suoritettu;
             return View();
         }
-        public IActionResult HaeVihje1(int tehtavaId)
-        {
-            var vihje1 = (from p in _context.Vihjes
-                          where p.TehtavaId == tehtavaId
-                          select p.Vihje1).FirstOrDefault();
-            if (tehtavaId == 11)
-            {
-                return RedirectToAction("Oppitunti2", new { vihje1 });
-            }
-            return RedirectToAction("Oppitunti1_Teht1", new { vihje1 });
-
-        }
-        public IActionResult HaeVihje2(int tehtavaId)
-        {
-            var vihje2 = (from p in _context.Vihjes
-                          where p.TehtavaId == tehtavaId
-                          select p.Vihje2).FirstOrDefault();
-            if (tehtavaId == 11)
-            {
-                return RedirectToAction("Oppitunti2", new { vihje2 });
-            }
-            return RedirectToAction("Oppitunti1_Teht1", new { vihje2 });
-        }
-        public IActionResult HaeVihje3(int tehtavaId)
-        {
-            var vihje3 = (from p in _context.Vihjes
-                          where p.TehtavaId == tehtavaId
-                          select p.Vihje3).FirstOrDefault();
-            if (tehtavaId == 11)
-            {
-                return RedirectToAction("Oppitunti2", new { vihje3 });
-            }
-            return RedirectToAction("Oppitunti1_Teht1", new { vihje3 });
-        }
+        
         public IActionResult Oppitunti1(string OpViesti = null)
         {
             ViewBag.OpViesti = OpViesti;    
@@ -461,6 +428,59 @@ namespace KoodinenV1.Controllers
         public IActionResult LunttiLappu()
         {
             return View();
+        }
+        public IActionResult HaeVihje1(int tehtavaId)
+        {
+            var vihje1 = (from p in _context.Vihjes
+                          where p.TehtavaId == tehtavaId
+                          select p.Vihje1).FirstOrDefault();
+            if (tehtavaId == 11)
+            {
+                return RedirectToAction("Oppitunti2", new { vihje1 });
+            }
+            return RedirectToAction("Oppitunti1_Teht1", new { vihje1 });
+
+        }
+        public IActionResult HaeVihje2(int tehtavaId)
+        {
+            var vihje2 = (from p in _context.Vihjes
+                          where p.TehtavaId == tehtavaId
+                          select p.Vihje2).FirstOrDefault();
+            if (tehtavaId == 11)
+            {
+                return RedirectToAction("Oppitunti2", new { vihje2 });
+            }
+            return RedirectToAction("Oppitunti1_Teht1", new { vihje2 });
+        }
+        public IActionResult HaeVihje3(int tehtavaId)
+        {
+            var vihje3 = (from p in _context.Vihjes
+                          where p.TehtavaId == tehtavaId
+                          select p.Vihje3).FirstOrDefault();
+            if (tehtavaId == 11)
+            {
+                return RedirectToAction("Oppitunti2", new { vihje3 });
+            }
+            return RedirectToAction("Oppitunti1_Teht1", new { vihje3 });
+        }
+        public IActionResult TestaaTaitosi (int? tehtavaId, string kuvaus)
+        {
+            ViewBag.tehtavaId = tehtavaId;
+            ViewBag.kuvaus = kuvaus;
+            ViewBag.TyönAlla = "Under Construction!";
+            return View();
+        }
+        public IActionResult HaeTehtävä ()
+        {
+            var tehtävät = (from t in _context.Tehtavas
+                          where t.TehtavaId > 30 && t.TehtavaId < 34
+                          select t).ToList();
+            var satunnainen = new Random();
+            int luku = satunnainen.Next(0, tehtävät.Count);
+            var stntehtävä = tehtävät[luku];
+
+            return RedirectToAction("TestaaTaitosi", new { stntehtävä.TehtavaId, stntehtävä.Kuvaus });
+
         }
     }
 
