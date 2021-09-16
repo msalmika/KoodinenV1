@@ -69,6 +69,7 @@ namespace KoodinenV1
         public List<Kurssi> HaeKurssit()
         {
             var kurssit = _context.Kurssis.Select(k => k).ToList();
+            kurssit.Remove(kurssit.Where(Kurssi => Kurssi.KurssiId == 6).First());
             return kurssit;
         }
 
